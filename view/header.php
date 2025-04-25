@@ -205,7 +205,7 @@
       </div>
       <div class="user-dropdown-menu" id="userDropdown">
         <a href="profil.php">Informasi Akun</a>
-        <a href="/pages/logout.php">Logout</a>
+        <a href="pages/logout.php">Logout</a>
       </div>
     </div>
   <?php else: ?>

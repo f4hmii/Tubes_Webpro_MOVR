@@ -153,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Verifikasi password
         if (password_verify($password, $user['password'])) {
             $_SESSION['username'] = $user['username'];
-            header("Location: index.php");
+            header("Location: ../index.php");
             exit();
         } else {
             $error = "Password salah!";
