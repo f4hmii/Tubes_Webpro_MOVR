@@ -13,226 +13,548 @@ include "view/header.php";
   <script src="https://unpkg.com/feather-icons"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"   />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
     * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    outline: none;
-    border: none;
-    text-decoration: none;
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+body {
+max-width: 100vw;
+max-height: 100vh;
+background-color: #f3f3f3;
+margin: 0; /* Menghapus margin default body */
+
+font-family: 'Roboto', sans-serif;
+}
+
+
+.nav-link {
+position: relative;
+display: inline-block;
+padding: 0.5rem 1rem;
+transition: color 0.3s ease;
+}
+
+.nav-link::after {
+content: '';
+position: absolute;
+width: 100%;
+transform: scaleX(0);
+height: 2px;
+bottom: 0;
+left: 0;
+background-color: #000;
+transform-origin: bottom right;
+transition: transform 0.25s ease-out;
+}
+
+.nav-link:hover::after {
+transform: scaleX(1);
+transform-origin: bottom left;
+}
+
+.nav-icon:hover {
+color: #000;
+transform: scale(1.2);
+}
+
+.hover-image {
+position: relative;
+}
+
+.hover-image img {
+transition: opacity 0.3s ease;
+}
+
+.hover-image img.second {
+position: absolute;
+top: 0;
+left: 0;
+opacity: 0;
+}
+
+.hover-image:hover img.first {
+opacity: 0;
+}
+
+.hover-image:hover img.second {
+opacity: 1;
+}
+
+.btn {
+transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn:active {
+transform: scale(0.95);
+}
+
+.dropdown-content {
+display: none;
+position: absolute;
+background-color: white;
+min-width: 600px;
+box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+z-index: 6;
+padding: 1rem;
+border-top: 1px solid #e5e7eb;
+
+}
+
+.dropdown:hover .dropdown-content {
+display: block;
+}
+
+.dropdown-voucher .dropdown-content {
+min-width: 150px;
+
+
+
+}
+
+.dropdown-outlet .dropdown-content {
+min-width: 150px;
+
+}
+
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 15px 20px;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.container {
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  column-gap: 10px;
+  justify-content: space-between;
+}
+
+.discount {
+  position: absolute;
+  top: 15px;
+  left: 1rem;
+  padding: .7rem 1rem;
+  font-size: 1rem;
+  color: white;
+  background-color: red;
+  /* background: rgba(255, 51, 153, .05); */
+  z-index: 1;
+  border-radius: .5rem;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 300px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  position: relative;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+.fa-regular {
+  position: absolute;
+  top: 320px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+.card-content {
+  padding: 15px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #333;
+  text-align: left;
+}
+
+.price {
+  font-size: 25px;
+  color: red;
+  margin: 5px 0;
+  font-weight: bold;
+  text-align: left;
+  top: 50%;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 20px;
+  text-align: left;
+}
+
+.description {
+  font-size: 14px;
+  color: #666;
+  margin: 10px 0;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 14px;
+  color: #333;
+}
+
+.stars {
+  color: #FFD700;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 15px 20px;
+  margin-top: 20px;
+}
+
+footer p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.button-container {
+  margin-top: 10px;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+
+/* styling courosel */
+.carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  background-color: white;
+  margin-bottom: 20px;
+  margin-top: 1rem;
+}
+
+
+.carousel-slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+
+}
+
+.slide {
+  min-width: 100%;
+  /* max-width: 300px; */
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  user-select: none;
   
-  body {
-    background-color: rgb(255, 255, 255);
-    color: #000000;
-    padding: 0;
-   margin: 0;
-  }
-    .content-section {
-             background-image: url(/imgproduk3/sprinter.jpg);
-              padding: 40px;
-              text-align: left;
-              height: 800px;
-              border-bottom-left-radius: 60px;
-          }
-          
-          .content-section h1 {
-              margin-top: 210px;
-              font-size: 36px;
-              font-weight: bold;
-          }
-          .content-section p {
-              font-size: 18px;
-              margin-top: 2px;
-              line-height: 1.4rem;
-              max-width: 600px;
-          }
-          .main-content {
-              padding: 40px;
-          }
-          .main-content h1 {
-              font-size: 36px;
-              font-weight: bold;
-              text-align: center;
-          }
-          .main-content .image-text {
-              display: flex;
-              justify-content: space-between;
-             
-              
-          }
-          .main-content .image-text img {
-              width: 100vw;
-              height: 50vh;
-             
-          }
-          .main-content .image-text .text {
-              width: 48%;
-              position: absolute;
-          }
-          .main-content .image-text .text p {
-              font-size: 18px;
-              position: absolute;
-              max-width: 600px;
-              padding: 50px;
-              margin-top: 5rem;
-              line-height: 1.4rem;
-          }
-       
-          
-  
-  
-  
-  
-  
-          .main-content .image-text2 {
-              display: flex;
-              justify-content: space-between;
-             margin-top: 2rem;
-              padding: 15rem;
-             
-          }
-          .main-content .image-text2 img {
-              width: 600px;
-              height: 400px;
-              
-          }
-          .main-content .image-text2 .text2 {
-              width: 48%;
-          }
-          .main-content .image-text2 .text2 p {
-              font-size: 18px;
-              line-height: 1.6rem;
-          }
-          .main-content .image-grid {
-              display: flex;
-              justify-content: space-between;
-              flex-wrap: wrap;
-              gap: 20px;
-            margin-top: 3rem;
-              margin-bottom: 3rem;
-          }
-          .main-content .image-grid img {
-              width: 30vw;
-              height: 20vh;
-          }
-  
-  
-  
-          .main-content .image-grid2 {
-              display: flex;
-              justify-content: space-between;
-              flex-wrap: wrap;
-              gap: 1px;
-              margin-top: 2rem;
-          }
-          .main-content .image-grid2 img {
-              width: 17vw;
-              
-          }
-          .main-content .image-grid2 .produkh2 {
-              position: relative;
-          }
-          .produkh2 .judul{
-              color: rgb(121, 120, 120);
-              content: 'produk';
-              position: absolute;
-              bottom: 10px;
-              left: 10px;
-              font-size: 24px;
-              font-weight: bold;
-              
-          }
-         
-          @media (max-width: 768px) {
-              .navbar .nav-links {
-                  flex-direction: column;
-                  gap: 10px;
-              }
-              .main-content .image-text {
-                  flex-direction: column;
-              }
-              .main-content .image-text img, .main-content .image-text .text {
-                  width: 100%;
-              }
-              .main-content .image-grid img {
-                  width: 100%;
-              }
-          }
+}
+
+.carousel-btn {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  font-size: 2rem;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1000;
+  border-radius: 50%;
+}
+
+.prev-btn {
+  left: 10px;
+}
+
+.next-btn {
+  right: 10px;
+}
+
+.carousel-btn:focus {
+  outline: none;
+}
+
+.carousel-btn:hover {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.fa-solid.fa-chevron-left,
+.fa-solid.fa-chevron-right {
+  font-size: 8px;
+}
   </style>
  </head>
  <body>
   
 
-  <div class="content-section">
-   <h1>
-    MOVR SPORTSWEAR
-   </h1>
-   <p>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-   </p>
-   <p>
-    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-   </p>
-  </div>
-  <div class="main-content">
-   <div class="image-text">
-    <img alt="Sunset over mountains" height="400" src="/imgproduk/PROMO SERU MEMBER BARU.jpg" width="600"/>
-    <div class="text">
-     <p>
-        kami percaya bahwa gerakan bukan hanya tentang olahraga, ini adalah gaya hidup. Terinspirasi oleh semangat untuk memberdayakan setiap individu dalam perjalanan kebugarannya, kami menciptakan sportswear yang menggabungkan performa, kenyamanan, dan gaya.
-     </p>
-    </div>
-   </div>
-   <div class="image-text2">
-    <div class="text2">
-     <p>
-        Misi kami adalah menginspirasi setiap orang untuk bergerak dengan percaya diri, kekuatan, dan tujuan. Baik saat Anda menaklukkan gym, menjelajahi alam bebas, atau menemukan keseimbangan dalam yoga, MOVR dirancang untuk mendukung setiap momen dalam hidup aktif Anda.
+ <div class="carousel">
+        <button class="carousel-btn prev-btn fa-solid fa-chevron-left">
+            <!-- <i class="fa-solid fa-chevron-left"></i> -->
+        </button>
+        <div class="carousel-slides">
 
-        Setiap produk kami dibuat dengan penuh perhatian menggunakan bahan berkelanjutan dan teknologi inovatif. Kami mengutamakan daya tahan, sirkulasi udara, dan kenyamanan sempurna—semuanya sambil tetap berkomitmen melindungi lingkungan.
-     </p>
-     <p>
-        Bergabunglah dengan komunitas MOVR dan ubah cara Anda bergerak. Bersama, kita akan mendefinisikan ulang arti gerakan yang penuh semangat dan tujuan.
-     </p>
+            <div class="slide">
+                <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner_desktop_2400_x_900-20241220-065408.jpg"
+                    alt="">
+            </div>
+            <div class="slide">
+                <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner-20240805-072521.jpg"
+                    alt="">
+            </div>
+            <div class="slide">
+                <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner_copy-20241118-093422.jpg"
+                    alt="">
+            </div>
+            <div class="slide">
+                <img src="https://i.pinimg.com/736x/d5/cf/48/d5cf48081afa823efe25b2275446725b.jpg" alt="">
+            </div>
+
+        </div>
+        <button class="carousel-btn next-btn fa-solid fa-chevron-right">
+
+        </button>
     </div>
-    <img alt="" height="400" src="/imgproduk/tenis.jpg" width="600"/>
-   </div>
-   <h1>
-    PROMO MENARIK
-   </h1>
-   <div class="image-grid">
-    <img alt="" height="300" src="/VOUCHER/5.jpg" width="300"/>
-    <img alt="" height="300" src="/VOUCHER/7.jpg" width="300"/>
-    <img alt="" height="300" src="/VOUCHER/6.jpg" width="300"/>
-   </div>
-   <h1>
-    PRODUK TERATAS
-   </h1>
-   <div class="image-grid2">
-   <a href=""> <div class="produkh2">
-        <h1 class="judul">Jersey MU</h1>
-     <img alt="" height="300" src="https://www.adidas.co.id/media/catalog/product/cache/da73f7d26ad11f1980ada40c1f6e78fa/j/d/jd7147_3_apparel_on20model_standard20view_grey.jpg" width="300"/>
-    </div></a>
-    <a href=""><div class="produkh2">
-        <h1 class="judul">Trail Running</h1>
-     <img alt="" height="300" src="https://www.adidas.co.id/media/catalog/product/cache/da73f7d26ad11f1980ada40c1f6e78fa/i/h/ih6348_2_footwear_photography_side20lateral20view_grey.jpg" width="300"/>
-    </div></a>
-    <a href=""><div class="produkh2">
-        <h1 class="judul">Jersey Black</h1>
-     <img alt="" height="300" src="https://www.adidas.co.id/media/catalog/product/cache/da73f7d26ad11f1980ada40c1f6e78fa/j/n/jn7093_5_apparel_on20model_back20view_grey.jpg" width="300"/>
-    </div></a>
-    <a href=""><div class="produkh2">
-        <h1 class="judul">T shirt</h1>
-     <img alt="" height="300" src="https://www.adidas.co.id/media/catalog/product/cache/da73f7d26ad11f1980ada40c1f6e78fa/i/x/ix7442_5_apparel_on20model_back20view_grey.jpg" width="300"/>
-    </div></a>
-    <a href=""><div class="produkh2">
-        <h1 class="judul">Kid Soes</h1>
-     <img alt="" height="300" src="https://www.adidas.co.id/media/catalog/product/cache/a2326ed7dcde4da57fee4197e095ea73/i/e/ie6534_2_footwear_photography_side_lateral_view_grey.jpeg" width="300"/>
-    </div></a>
-   </div>
-  </div>
+
+    <header>
+        <h1>Fashion Sale Collection</h1>
+    </header>
+    <br>
+
+    <div class="container">
+        <!-- Card 1 -->
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IS1657_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+                alt="jersey" width="150px">
+
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Tiro 24 T-Shirt Jersey</p>
+                <p class="original-price">Rp550.000</p>
+                <p class="price">Rp275.000</p>
+            </div>
+        </div>
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_DV4855-570_d%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1080&q=75"
+                alt="jersey" width="150px">
+
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Phoenix Suns Icon</p>
+                <p class="original-price">Rp1.379.000</p>
+                <p class="price">Rp827.000</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IL8260_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1080&q=75"
+                alt="jersey" width="150px">
+
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Knit Track Suits</p>
+                <p class="original-price">Rp1.109.000</p>
+                <p class="price">Rp800.000</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src=" https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FB7352-010_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+                alt="jersey" width="150px">
+
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Germian Tracktop</p>
+                <p class="original-price">Rp1.079.000</p>
+                <p class="price">Rp720.000</p>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FZ0767-410_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+                alt="jersey" width="150px">
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Athletics French Jogger</p>
+                <p class="original-price">Rp699.000</p>
+                <p class="price">Rp599.000</p>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_620138_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+                alt="jersey" width="150px">
+
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Jordan Sports Deman</p>
+                <p class="original-price">Rp599.000
+                <p class="price">Rp280.000</p>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FN7690-070_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+                alt="jersey" width="150px">
+
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Cuff Pants</p>
+                <p class="original-price">Rp949.000</p>
+                <p class="price">Rp430.000</p>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_MS41520-NNY_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+                alt="jersey" width="150px">
+
+
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Sports Essentials French</p>
+                <p class="original-price">Rp699.000</p>
+                <p class="price">Rp320.000</p>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IR7468_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+                alt="jersey" width="150px">
+
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Laica Dress</p>
+                <p class="original-price">Rp1.200.000</p>
+                <p class="price">Rp830.000</p>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_LA2404001-03_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+                alt="jersey" width="150px">
+
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">2in1 Phoenix</p>
+                <p class="original-price">Rp900.000</p>
+                <p class="price">Rp400.000</p>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_JE8808_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+                alt="jersey" width="150px">
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Red Lady Bra Sport</p>
+                <p class="original-price">Rp890.000</p>
+                <p class="price">Rp420.000</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <span class="discount">-50%</span>
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_ANZ0118317_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+                alt="jersey" width="150px">
+
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+                <p class="title">Pink Soda Sport</p>
+                <p class="original-price">Rp300.00</p>
+                <p class="price">Rp150.000</p>
+            </div>
+        </div>
+    </div>
   <footer class="bg-gray-800 text-white mt-12">
    <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
        <div class="py-8">
@@ -274,5 +596,51 @@ include "view/header.php";
   <script>
     feather.replace();
   </script>
+     <script>
+        const carouselSlides = document.querySelector('.carousel-slides');
+        const slides = document.querySelectorAll('.slide');
+        const slide = document.querySelectorAll('.slides');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+
+        let currentIndex = 0;
+
+        // Function to update carousel position
+        function updateCarousel() {
+            const offset = -currentIndex * 100;
+            carouselSlides.style.transform = `translateX(${offset}%)`;
+        }
+
+        // Go to the previous slide
+        prevBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            updateCarousel();
+            resetAutoSlide();
+        });
+
+
+        // Go to the next slide
+        nextBtn.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            updateCarousel();
+            resetAutoSlide();
+        });
+
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateCarousel();
+            }, 3000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+
+        startAutoSlide();
+
+    </script>
  </body>
 </html>

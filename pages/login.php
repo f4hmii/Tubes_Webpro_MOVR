@@ -73,7 +73,7 @@ body {
   top: 50%;
   transform: translateY(-50%);
   font-size: 20px;
-  color: #fff;
+  color: black;
 }
 .input-box input::placeholder {
   color: #fff;
@@ -111,16 +111,29 @@ body {
 .wrapper .register-link {
   font-size: 14.5px;
   text-align: center;
-  margin: 20px 0 15px;
+  margin: 40px 0 8px;
 }
+
+.register-link p {
+  margin-bottom: 20px; /* jarak antar p dan link "kembali" */
+}
+
 .register-link p a {
-  color: #fff;
+  color: red;
   text-decoration: none;
   font-weight: 600;
 }
+
 .register-link p a:hover {
   text-decoration: underline;
 }
+
+.register-link .back {
+  color: black;
+  text-decoration: none;
+  font-weight: 600;
+}
+
   </style>
 <?php
 session_start();
@@ -205,8 +218,8 @@ $conn->close();
       <button type="submit" class="btn">Login</button>
 
       <div class="register-link">
-        <p>Belum punya akun? <a href="#">Daftar</a></p>
-        <a href="Home1movr.html">kembali</a>
+        <p>Belum punya akun? <a href="register.php">Daftar</a></p>
+        <a class="back" href="../index.php">kembali</a>
       </div>
     </form>
   </div>

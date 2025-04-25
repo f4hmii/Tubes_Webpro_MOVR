@@ -18,22 +18,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Ambil data dari form
     $name = $_POST['name'];
+    $username = $_POST['username'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $role = $_POST['role'];
 
     // Cek apakah email sudah terdaftar
-    $cek = $conn->prepare("SELECT id_user FROM tb_user WHERE email = ?");
-    $cek->bind_param("s", $email);
-    $cek->execute();
-    $cek->store_result();
+    $cek_email = $conn->prepare("SELECT id_user FROM tb_user WHERE email = ?");
+    $cek_email->bind_param("s", $email);
+    $cek_email->execute();
+    $cek_email->store_result();
 
-    if ($cek->num_rows > 0) {
+    // Cek apakah username sudah terdaftar
+    $cek_user = $conn->prepare("SELECT id_user FROM tb_user WHERE username = ?");
+    $cek_user->bind_param("s", $username);
+    $cek_user->execute();
+    $cek_user->store_result();
+
+    if ($cek_email->num_rows > 0) {
         $error = "Email sudah terdaftar.";
+    } elseif ($cek_user->num_rows > 0) {
+        $error = "Username sudah digunakan.";
     } else {
-        $sql = "INSERT INTO tb_user (nama, email, password, role) VALUES (?, ?, ?, ?)";
+        // Menyimpan data ke dalam database
+        $sql = "INSERT INTO tb_user (nama, username, email, password, role) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssss", $name, $email, $password, $role);
+        $stmt->bind_param("sssss", $name, $username, $email, $password, $role);
 
         if ($stmt->execute()) {
             $success = "Akun berhasil dibuat";
@@ -45,7 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     }
 
-    $cek->close();
+    $cek_email->close();
+    $cek_user->close();
     $conn->close();
 }
 ?>
@@ -79,6 +90,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="mb-4">
+          <label for="username" class="block text-sm text-gray-300">Username</label>
+          <input type="text" id="username" name="username" required placeholder="Enter your username" class="w-full p-2 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500">
+        </div>
+
+        <div class="mb-4">
           <label for="email" class="block text-sm text-gray-300">Email</label>
           <input type="email" id="email" name="email" required placeholder="Enter your email" class="w-full p-2 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-red-500">
         </div>
@@ -100,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="text-sm text-gray-400 mb-6 text-center">
-          <a href="login.html" class="hover:text-white">Already have an account? Login</a>
+          <a href="login.html" class="hover:text-white">Already have an account? Login</a>7
         </div>
 
         <button type="submit" class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg">Create Account</button>

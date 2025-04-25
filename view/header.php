@@ -25,6 +25,8 @@
     color: #000000;
     padding: 0;
    margin: 0;
+   max-width: 100vw;
+   
   }
   
   .navbar {
@@ -33,12 +35,13 @@
     padding: 30px 40px;
     position: sticky;
     z-index: 999999;
-    width: 100vw;
+    width: 100%;
     height: 60px; 
     top: 0;
     box-shadow: 0 2px 5px rgb(31, 30, 30);
     align-items: center;
     background-color: #ffffff;
+  
   }
    
   .navbar .logo h1 {
@@ -209,7 +212,7 @@
       </div>
     </div>
   <?php else: ?>
-    <a href="pages/login.php">LOGIN</a>
+    <a href="pages/login.php"><i data-feather="log-in"></i></a>
   <?php endif; ?>
 </div>
 
