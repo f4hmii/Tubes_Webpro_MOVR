@@ -201,10 +201,10 @@
   <?php
 // Daftar kategori (nanti bisa diambil dari database juga)
 $kategori = [
-   'Baju' => 'view/p.php?kategori=baju',
-    'Celana' => 'view/p.php?kategori=celana',
-    'Sepatu' => 'view/p.php?kategori=sepatu',
-    'Aksesoris' => 'view/p.php?kategori=aksesoris'
+   'Baju' => 'view/kategori.php?kategori=baju',
+    'Celana' => 'view/kategori.php?kategori=celana',
+    'Sepatu' => 'view/kategori.php?kategori=sepatu',
+    'Aksesoris' => 'view/kategori.php?kategori=aksesoris'
 ];
 ?>
 
