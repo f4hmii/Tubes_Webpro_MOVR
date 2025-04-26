@@ -198,17 +198,27 @@
   <li><a href="servicefairuz.html">Service</a></li>
 
   <!-- Category Toggle Dropdown -->
-  <li class="category-dropdown">
+  <?php
+// Daftar kategori (nanti bisa diambil dari database juga)
+$kategori = [
+   'Baju' => 'view/p.php?kategori=baju',
+    'Celana' => 'view/p.php?kategori=celana',
+    'Sepatu' => 'view/p.php?kategori=sepatu',
+    'Aksesoris' => 'view/p.php?kategori=aksesoris'
+];
+?>
+
+<li class="category-dropdown">
     <div class="category-dropdown-toggle" onclick="toggleCategoryDropdown()">
       <a href="#">Category</a>
     </div>
     <div class="category-dropdown-menu" id="categoryDropdown">
-      <a href="#">Baju</a>
-      <a href="#">Celana</a>
-      <a href="#">Sepatu</a>
-      <a href="#">Aksesoris</a>
+      <?php foreach ($kategori as $nama => $link): ?>
+        <a href="<?php echo $link; ?>"><?php echo htmlspecialchars($nama); ?></a>
+      <?php endforeach; ?>
     </div>
-  </li>
+</li>
+
 </ul>
 
 
