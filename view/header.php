@@ -90,28 +90,6 @@
     transition: transform 0.3s linear;
   }
   
-  .navbar .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #333;
-    width: 100vw;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    z-index: 1;
-   
-  }
-  
-  .navbar .dropdown-content a {
-    color: white;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: flex;
-    
-  }
-  
-  .navbar ul li:hover .dropdown-content {
-    display: block;
-  }
-  
   .navbar .search a {
     
     color: #000000;
@@ -173,7 +151,38 @@
   background-color: #f0f0f0;
 }
 
+  .category-dropdown {
+    position: relative;
+  }
+
+  .category-dropdown-toggle {
+    cursor: pointer;
+  }
+
+  .category-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 40px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    width: 180px;
+  }
+
+  .category-dropdown-menu a {
+    display: block;
+    padding: 10px 15px;
+    color: #000;
+    text-decoration: none;
+  }
+
+  .category-dropdown-menu a:hover {
+    background-color: #f0f0f0;
+  }
 </style>
+
 
 <body>
   <div class="navbar">
@@ -182,19 +191,26 @@
     </div>
 
     <ul>
-      <li class="dropdown">
-        <a href="#">Home</a>
-        <div class="dropdown-content">
-          <a class="homedrop" href="Home1movr.html">Home 1</a>
-          <a class="homedrop" href="home4.html">Home 2</a>
-          <a class="homedrop" href="abcdefr.html">Home 3</a>
-        </div>
-      </li>
-      <li><a href="aboutfairuz.html">About</a></li>
-      <li><a href="#produk">Produk</a></li>
-      <li><a href="announcement.html">Announcement</a></li>
-      <li><a href="servicefairuz.html">Service</a></li>
-    </ul>
+  <li><a href="#">Home</a></li>
+  <li><a href="aboutfairuz.html">About</a></li>
+  <li><a href="#produk">Produk</a></li>
+  <li><a href="announcement.html">Announcement</a></li>
+  <li><a href="servicefairuz.html">Service</a></li>
+
+  <!-- Category Toggle Dropdown -->
+  <li class="category-dropdown">
+    <div class="category-dropdown-toggle" onclick="toggleCategoryDropdown()">
+      <a href="#">Category</a>
+    </div>
+    <div class="category-dropdown-menu" id="categoryDropdown">
+      <a href="#">Baju</a>
+      <a href="#">Celana</a>
+      <a href="#">Sepatu</a>
+      <a href="#">Aksesoris</a>
+    </div>
+  </li>
+</ul>
+
 
     <div class="icon-wrapper">
   <a href="keranjang.php" title="Keranjang">
@@ -208,7 +224,7 @@
       </div>
       <div class="user-dropdown-menu" id="userDropdown">
         <a href="profil.php">Informasi Akun</a>
-        <a href="pages/logout.php">Logout</a>
+        <a href="#" onclick="confirmLogout()">Logout</a>
       </div>
     </div>
   <?php else: ?>
@@ -236,6 +252,29 @@
       menu.style.display = "none";
     }
   });
+</script>
+<script>
+  function toggleCategoryDropdown() {
+    const dropdown = document.getElementById("categoryDropdown");
+    dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+  }
+
+  window.addEventListener("click", function (e) {
+    const toggle = document.querySelector(".category-dropdown-toggle");
+    const menu = document.getElementById("categoryDropdown");
+
+    if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+      menu.style.display = "none";
+    }
+  });
+</script>
+<script>
+  function confirmLogout() {
+    const yakin = confirm("Apakah Anda yakin ingin logout?");
+    if (yakin) {
+      window.location.href = "pages/logout.php"; // Redirect ke logout.php kalau user klik "OK"
+    }
+  }
 </script>
 
 </body>
