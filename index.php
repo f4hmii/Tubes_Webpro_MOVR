@@ -434,7 +434,7 @@ footer p {
 
         <div class="card">
             <span class="discount">-50%</span>
-            <img src=" https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FB7352-010_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+            <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FB7352-010_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
                 alt="jersey" width="150px">
 
             <i class="fa-regular fa-heart"></i>
