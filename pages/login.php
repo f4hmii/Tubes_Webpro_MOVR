@@ -142,40 +142,38 @@ session_start();
 $conn = new mysqli("localhost", "root", "", "movrdatabase");
 
 // Cek koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-}
-
-// Cek apakah form sudah disubmit
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Ambil data dari form
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+  // Ambil data dari form
+  $username = $_POST['username'];
+  $password = $_POST['password'];
 
-    // Gunakan prepared statement untuk menghindari SQL injection
-    $stmt = $conn->prepare("SELECT * FROM tb_user WHERE username = ?");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
+  // Gunakan prepared statement
+  $stmt = $conn->prepare("SELECT * FROM tb_user WHERE username = ?");
+  $stmt->bind_param("s", $username);
+  $stmt->execute();
+  $result = $stmt->get_result();
 
-    $result = $stmt->get_result();
+  // Cek user ketemu?
+  if ($result->num_rows === 1) {
+      $user = $result->fetch_assoc();
 
-    // Periksa apakah user ditemukan
-    if ($result->num_rows === 1) {
-        $user = $result->fetch_assoc();
+      // Verifikasi password
+      if (password_verify($password, $user['password'])) {
+          $_SESSION['user_id'] = $user['id'];        // Simpan ID user
+          $_SESSION['username'] = $user['username'];  // Simpan username
+          $_SESSION['role'] = $user['role'];          // ❗❗ Simpan role juga (penting buat seller/admin)
 
-        // Verifikasi password
-        if (password_verify($password, $user['password'])) {
-            $_SESSION['username'] = $user['username'];
-            header("Location: ../index.php");
-            exit();
-        } else {
-            $error = "Password salah!";
-        }
-    } else {
-        $error = "Username tidak ditemukan!";
-    }
+          header("Location: /TA_WEBPRO/index.php");
+          exit();
+          
+      } else {
+          $error = "Password salah!";
+      }
+  } else {
+      $error = "Username tidak ditemukan!";
+  }
 
-    $stmt->close();
+  $stmt->close();
 }
 
 $conn->close();

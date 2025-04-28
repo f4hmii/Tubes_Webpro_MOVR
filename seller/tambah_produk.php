@@ -2,13 +2,44 @@
 session_start();
 include '../configdb.php';
 
-// Cek apakah seller sudah login
-if (!isset($_SESSION['seller_id'])) {
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
     header("Location: ../login.php");
     exit;
 }
 
-$seller_id = $_SESSION['seller_id'];
+$seller_id = $_SESSION['user_id'];
+
+if (isset($_POST['tambah'])) {
+    $nama_produk = mysqli_real_escape_string($conn, $_POST['nama_produk']);
+    $deskripsi = mysqli_real_escape_string($conn, $_POST['deskripsi']);
+    $harga = intval($_POST['harga']);
+    $stock = intval($_POST['stock']);
+
+    if (isset($_FILES['foto']) && $_FILES['foto']['error'] == 0) {
+        $allowed = ['jpg', 'jpeg', 'png'];
+        $ext = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
+
+        if (in_array($ext, $allowed)) {
+            $new_filename = uniqid() . '.' . $ext;
+            $path = "../uploads/" . $new_filename;
+            if (move_uploaded_file($_FILES['foto']['tmp_name'], $path)) {
+                $foto_url = "/uploads/" . $new_filename;
+                $query = mysqli_query($conn, "INSERT INTO produk (seller_id, nama_produk, harga, stock, deskripsi, foto_url) VALUES ('$seller_id', '$nama_produk', '$harga', '$stock', '$deskripsi', '$foto_url')");
+                if ($query) {
+                    echo "<script>alert('Produk berhasil ditambahkan!'); window.location='produk.php';</script>";
+                } else {
+                    echo "<script>alert('Gagal menambahkan produk ke database!');</script>";
+                }
+            } else {
+                echo "<script>alert('Gagal upload gambar!');</script>";
+            }
+        } else {
+            echo "<script>alert('Format gambar harus JPG atau PNG!');</script>";
+        }
+    } else {
+        echo "<script>alert('Foto wajib diupload!');</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +48,6 @@ $seller_id = $_SESSION['seller_id'];
     <meta charset="UTF-8">
     <title>Tambah Produk</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
 </head>
 <body class="bg-gray-100 min-h-screen p-6">
 
@@ -27,58 +57,35 @@ $seller_id = $_SESSION['seller_id'];
     <form action="" method="post" enctype="multipart/form-data" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Nama Produk</label>
-            <input type="text" name="nama_produk" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <input type="text" name="nama_produk" class="w-full border rounded py-2 px-3" required>
+        </div>
+
+        <div class="mb-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">Deskripsi Produk</label>
+            <textarea name="deskripsi" class="w-full border rounded py-2 px-3" required></textarea>
         </div>
 
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Harga</label>
-            <input type="number" name="harga" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <input type="number" name="harga" class="w-full border rounded py-2 px-3" required>
         </div>
 
         <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2">Stok</label>
-            <input type="number" name="stock" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <input type="number" name="stock" class="w-full border rounded py-2 px-3" required>
         </div>
 
-        <div class="mb-4">
+        <div class="mb-6">
             <label class="block text-gray-700 text-sm font-bold mb-2">Foto Produk</label>
-            <input type="file" name="foto" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+            <input type="file" name="foto" class="w-full border rounded py-2 px-3" required>
         </div>
 
-        <div class="flex items-center justify-between">
-            <button type="submit" name="tambah" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Tambah Produk
-            </button>
-            <a href="produk.php" class="inline-block align-baseline font-bold text-sm text-green-500 hover:text-green-800">
-                Batal
-            </a>
+        <div class="flex justify-between">
+            <button type="submit" name="tambah" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Tambah Produk</button>
+            <a href="produk.php" class="text-green-600 hover:text-green-800">Batal</a>
         </div>
     </form>
-
-    <?php
-    if (isset($_POST['tambah'])) {
-        $nama_produk = mysqli_real_escape_string($conn, $_POST['nama_produk']);
-        $harga = intval($_POST['harga']);
-        $stock = intval($_POST['stock']);
-
-        $foto = $_FILES['foto']['name'];
-        $tmp = $_FILES['foto']['tmp_name'];
-        $path = "../uploads/" . $foto;
-
-        if (move_uploaded_file($tmp, $path)) {
-            $query = mysqli_query($conn, "INSERT INTO produk (seller_id, nama_produk, harga, stock, foto_url) VALUES ('$seller_id', '$nama_produk', '$harga', '$stock', '/uploads/$foto')");
-            if ($query) {
-                echo "<script>alert('Produk berhasil ditambahkan!'); window.location='produk.php';</script>";
-            } else {
-                echo "<script>alert('Gagal menambahkan produk!');</script>";
-            }
-        } else {
-            echo "<script>alert('Gagal mengupload gambar!');</script>";
-        }
-    }
-    ?>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 </body>
 </html>
