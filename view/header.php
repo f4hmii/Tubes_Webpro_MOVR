@@ -192,12 +192,28 @@
     </div>
 
     <ul>
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 07e5c037f3965422db8431793d1aaf44fd7b0e89
   <li><a href="#">Home</a></li>
   <li><a href="aboutfairuz.html">About</a></li>
   <li><a href="#produk">Produk</a></li>
   <li><a href="announcement.html">Announcement</a></li>
+<<<<<<< HEAD
+  <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'seller'): ?>
+    <li><a href="/TA_webpro/seller/produk.php">Service</a></li>
+  <?php endif; ?>
+=======
+      <li><a href="#">Home</a></li>
+      <li><a href="">About</a></li>
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="announcement.html">Announcement</a></li>
+      <li><a href="seller/produk.php">Service</a></li>
+>>>>>>> 1ca839ee78bc9499322e95295a009a3906f96177
+=======
   <li><a href="servicefairuz.html">Service</a></li>
-  <li><a href="sale.php">Salee</a></li>
+  <li><a href="sale.php">Sale</a></li>
 
       <!-- Category Toggle Dropdown -->
       <?php

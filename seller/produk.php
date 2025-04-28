@@ -1,12 +1,13 @@
 <?php
 session_start();
-// sementara buat testing login seller
-$_SESSION['seller_id'] = 1; 
+include '../configdb.php';
 
-include '../configdb.php'; // ganti sesuai koneksi kamu
+if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
+    header("Location: ../login.php");
+    exit;
+}
 
-// Ambil produk berdasarkan seller yang login
-$seller_id = $_SESSION['seller_id'];
+$seller_id = $_SESSION['user_id'];
 $query = "SELECT * FROM produk WHERE seller_id = $seller_id";
 $result = mysqli_query($conn, $query);
 ?>
@@ -31,7 +32,7 @@ $result = mysqli_query($conn, $query);
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php while ($row = mysqli_fetch_assoc($result)): ?>
             <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                <img src="<?= htmlspecialchars($row['foto_url']); ?>" alt="Produk" class="w-full h-48 object-cover">
+                <img src="<?= htmlspecialchars($row['foto_url']); ?>" alt="<?= htmlspecialchars($row['nama_produk']); ?>" class="w-full h-48 object-cover">
                 <div class="p-4">
                     <h2 class="text-xl font-bold"><?= htmlspecialchars($row['nama_produk']); ?></h2>
                     <p class="text-gray-600 mb-2">Rp<?= number_format($row['harga'], 0, ',', '.'); ?></p>
@@ -47,4 +48,5 @@ $result = mysqli_query($conn, $query);
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
-</body
+</body>
+</html>
