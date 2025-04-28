@@ -197,7 +197,7 @@
   <li><a href="#produk">Produk</a></li>
   <li><a href="announcement.html">Announcement</a></li>
   <li><a href="servicefairuz.html">Service</a></li>
-  <li><a href="sale.php">Sale</a></li>
+  <li><a href="sale.php">Salee</a></li>
 
       <!-- Category Toggle Dropdown -->
       <?php
