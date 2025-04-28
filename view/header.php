@@ -192,18 +192,16 @@
     </div>
 
     <ul>
-
   <li><a href="#">Home</a></li>
   <li><a href="aboutfairuz.html">About</a></li>
   <li><a href="#produk">Produk</a></li>
   <li><a href="announcement.html">Announcement</a></li>
-
   <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'seller'): ?>
     <li><a href="/TA_webpro/seller/produk.php">Service</a></li>
   <?php endif; ?>
   <li><a href="sale.php">Sale</a></li>
-
-
+  <li><a href="servicefairuz.html">Service</a></li>
+  
       <!-- Category Toggle Dropdown -->
       <?php
       // Daftar kategori (nanti bisa diambil dari database juga)
@@ -225,7 +223,7 @@
           <?php endforeach; ?>
         </div>
       </li>
-
+      <li><a href="sale.php">Sale</a></li>
     </ul>
 
 
