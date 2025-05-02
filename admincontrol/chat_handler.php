@@ -51,3 +51,4 @@ if ($action && $index !== null && isset($_SESSION['chat'][$index])) {
 header('Location: chet.php');
 exit;
 ?>
+    

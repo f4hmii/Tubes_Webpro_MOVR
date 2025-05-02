@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../configdb.php';
+include '../db_connection.php';
 
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
     header("Location: ../login.php");
