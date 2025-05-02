@@ -139,7 +139,7 @@ body {
 session_start();
 
 // Koneksi ke database
-$conn = new mysqli("localhost", "root", "", "movrdatabase");
+$conn = new mysqli("localhost", "root", "", "movr");
 
 // Cek koneksi
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

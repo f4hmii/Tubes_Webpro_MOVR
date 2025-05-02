@@ -222,12 +222,22 @@
       </li>
       <li><a href="sale.php">Sale</a></li>
     </ul>
-
+      
+    <form method="GET" action="search.php" class="search-form">
+    <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" name="query" placeholder="Cari produk" required>
+    </div>
+</form>
 
     <div class="icon-wrapper">
       <a href="favorit.php" title="Favorit" style="margin-right: 10px;">
         <i data-feather="heart"></i>
       </a>
+
+      <a href="chat.php" title="Chat" style="margin-right: 10px;">
+    <i data-feather="message-circle"></i>
+  </a>
 
       <a href="keranjang.php" title="Keranjang" style="margin-right: 10px;">
         <i data-feather="shopping-cart"></i>
