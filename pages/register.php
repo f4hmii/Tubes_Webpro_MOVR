@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $host = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "movrdatabase"; // Ganti sesuai database kamu
+    $dbname = "movr"; // Ganti sesuai database kamu
 
     $conn = new mysqli($host, $username, $password, $dbname);
 

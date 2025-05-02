@@ -1,52 +1,46 @@
-<?php
-session_start();
-include '../db_connection.php';
-
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'seller') {
-    header("Location: ../login.php");
-    exit;
-}
-
-$seller_id = $_SESSION['user_id'];
-$query = "SELECT * FROM produk WHERE seller_id = $seller_id";
-$result = mysqli_query($conn, $query);
-?>
-
+<?php include '../configdb.php'; ?>
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Produk Saya</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
+    <title>Data Produk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100 min-h-screen p-6">
-
-<div class="max-w-7xl mx-auto">
-    <h1 class="text-3xl font-bold mb-6">Produk Saya</h1>
-
-    <a href="tambah_produk.php" class="mb-6 inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
-        + Tambah Produk
+<body class="container py-5">
+<a href="../index.php" class="btn btn-secondary position-absolute top-0 start-0 m-3">
+         Kembali
     </a>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <?php while ($row = mysqli_fetch_assoc($result)): ?>
-            <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                <img src="<?= htmlspecialchars($row['foto_url']); ?>" alt="<?= htmlspecialchars($row['nama_produk']); ?>" class="w-full h-48 object-cover">
-                <div class="p-4">
-                    <h2 class="text-xl font-bold"><?= htmlspecialchars($row['nama_produk']); ?></h2>
-                    <p class="text-gray-600 mb-2">Rp<?= number_format($row['harga'], 0, ',', '.'); ?></p>
-                    <p class="text-sm text-gray-500 mb-4">Stok: <?= $row['stock']; ?></p>
-                    <div class="flex gap-2">
-                        <a href="edit_produk.php?id=<?= $row['produk_id']; ?>" class="bg-yellow-400 hover:bg-yellow-500 text-white py-1 px-3 rounded">Edit</a>
-                        <a href="hapus_produk.php?id=<?= $row['produk_id']; ?>" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded" onclick="return confirm('Yakin mau hapus produk ini?')">Hapus</a>
-                    </div>
-                </div>
-            </div>
-        <?php endwhile; ?>
-    </div>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <h2>Data Produk</h2>
+    <a href="tambah.php" class="btn btn-primary mb-3">Tambah Produk</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Gambar</th>
+                <th>Nama</th>
+                <th>Deskripsi</th>
+                <th>Stok</th>
+                <th>Harga</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php
+        $sql = "SELECT * FROM produk";
+        $result = $conn->query($sql);
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                <td><img src='../uploads/{$row['foto_url']}' width='80'></td>
+                <td>{$row['nama_produk']}</td>
+                <td>{$row['deskripsi']}</td>
+                <td>{$row['stock']}</td>
+                <td>Rp " . number_format($row['harga']) . "</td>
+                <td>
+                    <a href='edit.php?id={$row['produk_id']}' class='btn btn-warning btn-sm'>Edit</a>
+                    <a href='hapus.php?produk_id={$row['produk_id']}' class='btn btn-danger btn-sm' onclick=\"return confirm('Yakin?')\">Hapus</a>
+                </td>
+            </tr>";
+        }
+        ?>
+        </tbody>
+    </table>
 </body>
 </html>
