@@ -37,7 +37,7 @@
 }
 
     .from-buyer {
-      background-color: #dcf8c6;
+      background-color:rgb(180, 186, 196);
       float: right;
       text-align: right;
     }
