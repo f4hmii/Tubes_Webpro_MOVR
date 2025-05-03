@@ -104,7 +104,7 @@
 
     .search-form {
   flex-grow: 1;
-  max-width: 350px; /* Bisa kamu sesuaikan */
+  max-width: 380px; /* Bisa kamu sesuaikan */
   margin: 0 20px;
 }
 
@@ -229,7 +229,7 @@
   <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'seller'): ?>
     <li><a href="/TA_webpro/seller/produk.php">Service</a></li>
   <?php endif; ?>
-  <li><a href="sale.php">Sale</a></li>
+  <li><a href="pages/sale.php">Sale</a></li>
   <li><a href="servicefairuz.html">Service</a></li>
   
       <!-- Category Toggle Dropdown -->
@@ -253,7 +253,7 @@
           <?php endforeach; ?>
         </div>
       </li>
-      <li><a href="sale.php">Sale</a></li>
+      
     </ul>
       
     <form method="GET" action="search.php" class="search-form">
