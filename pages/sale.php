@@ -1,7 +1,7 @@
 <?php
 session_start();
-include 'db_connection.php'; 
-include('../view/header.php');
+include 'db_connection.php';
+
 
 if (isset($_GET['add_favorite'])) {
     $productId = intval($_GET['add_favorite']);
@@ -32,6 +32,9 @@ if (isset($_GET['add_favorite'])) {
     header('Location: favorite.php');
     exit;
 }
+
+include('../view/header.php');  
+
 ?>
 
 

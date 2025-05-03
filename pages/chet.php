@@ -15,7 +15,7 @@
     margin: auto;
     display: flex;
     flex-direction: column; /* Mengatur tata letak vertikal */
-    height: 90vh; /* Tinggi penuh untuk menyesuaikan layar */
+    height: 90vh; 
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
