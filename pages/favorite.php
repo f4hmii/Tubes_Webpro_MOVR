@@ -219,6 +219,11 @@ document.querySelectorAll('.heart-icon').forEach(icon => {
 
         }
 
+        h1 {
+            font-size: 4rem;
+           
+        }
+
         .nav-link {
             position: relative;
             display: inline-block;
