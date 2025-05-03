@@ -3,6 +3,26 @@ session_start();
 include "view/header.php";
 ?>
 
+<?php
+$host = 'localhost';
+$db = 'movr';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+];
+
+try {
+    $pdo = new PDO($dsn, $user, $pass, $options);
+} catch (\PDOException $e) {
+    die("Database connection failed: " . $e->getMessage());
+}
+?>
+
 <html>
 
 <head>
@@ -108,27 +128,25 @@ include "view/header.php";
                 <h1 class="text-3xl font-bold mb-2">Dry Running T-shirt</h1>
                 <p class="text-4xl font-bold text-red-600">Rp 128.124</p>
                 <div class="flex items-center space-x-4 mb-4">
-                    <!-- Tombol Favorit -->
+
                     <button id="favoriteButton" class="p-2 rounded-full border hover:bg-red-100" title="Tambah ke Favorit">
-                        <i id="favoriteIcon" class="far fa-heart text-red-500 text-2xl"></i>
+                        <i id="favoriteIcon" class="far fa-heart text-black text-2xl"></i>
                     </button>
 
-                    <!-- Rating Bintang -->
-                    <a href="rating.html" class="flex items-center space-x-1 cursor-pointer">
-                        <i class="fas fa-star text-yellow-500"></i>
-                        <i class="fas fa-star text-yellow-500"></i>
-                        <i class="fas fa-star text-yellow-500"></i>
-                        <i class="fas fa-star text-yellow-500"></i>
-                        <i class="fas fa-star text-yellow-500"></i>
+                    <!-- Tambahkan ikon chat di sini -->
+                    <a href="chat.php" title="Chat" class="p-2 rounded-full border hover:bg-blue-100">
+                        <i data-feather="message-circle" class="text-black"></i>
                     </a>
 
-
-                    <span class="text-gray-600">(12 Review)</span>
+                    <a href="rating.php" class="flex items-center space-x-1 cursor-pointer">
+                        <i class="fas fa-star text-yellow-500"></i>
+                        <i class="fas fa-star text-yellow-500"></i>
+                        <i class="fas fa-star text-yellow-500"></i>
+                        <i class="fas fa-star text-yellow-500"></i>
+                        <i class="fas fa-star text-yellow-500"></i>
+                        <span class="text-gray-600">(12 Review)</span>
+                    </a>
                 </div>
-
-
-
-
 
                 <div class="mb-4">
                     <span class="text-gray-700">Colour:</span>
@@ -143,16 +161,13 @@ include "view/header.php";
                     <span class="text-gray-700">Size: <span id="selected-size"></span></span>
                     <div class="flex space-x-2 mt-2">
                         <button onclick="showSize('XS')"
-                            class="border px-4 py-2 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                            disabled>XS</button>
+                            class="border px-4 py-2 rounded-lg hover:bg-gray-200 disabled:opacity-50">XS</button>
                         <button onclick="showSize('S')"
                             class="border px-4 py-2 rounded-lg hover:bg-gray-200 ">S</button>
                         <button onclick="showSize('M')" class="border px-4 py-2 rounded-lg hover:bg-gray-200">M</button>
                         <button onclick="showSize('L')" class="border px-4 py-2 rounded-lg hover:bg-gray-200">L</button>
                         <button onclick="showSize('XL')"
                             class="border px-4 py-2 rounded-lg hover:bg-gray-200">XL</button>
-                        <button onclick="showSize('XXL')"
-                            class="border px-4 py-2 rounded-lg hover:bg-gray-200">XXL</button>
                     </div>
                 </div>
                 <button class="mt-6 bg-black text-white px-6 py-3 w-full rounded-lg btn hover:bg-gray-800">Add to
@@ -183,6 +198,7 @@ include "view/header.php";
             </div>
         </div>
         <div class="mt-8">
+
             <h2 class="text-xl font-semibold text-center">Customers Also Viewed</h2>
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
                 <a href="product1.html"
@@ -279,15 +295,22 @@ include "view/header.php";
     </script>
 
     <script>
-        const favoriteButton = document.getElementById('favoriteButton');
-        const favoriteIcon = document.getElementById('favoriteIcon');
+        const favoriteButton = document.getElementById("favoriteButton");
+        const favoriteIcon = document.getElementById("favoriteIcon");
 
-        favoriteButton.addEventListener('click', () => {
-            favoriteIcon.classList.toggle('far'); // Outline heart
-            favoriteIcon.classList.toggle('fas'); // Solid heart
+        favoriteButton.addEventListener("click", () => {
+            favoriteIcon.classList.toggle("far"); // Outline heart
+            favoriteIcon.classList.toggle("fas"); // Solid heart
+            favoriteIcon.classList.toggle("text-black"); // Hitam awal
+            favoriteIcon.classList.toggle("text-red-500"); // Merah saat aktif
         });
     </script>
 
+
+    <script src="https://unpkg.com/feather-icons"></script>
+    <script>
+        feather.replace()
+    </script>
 
 </body>
 
