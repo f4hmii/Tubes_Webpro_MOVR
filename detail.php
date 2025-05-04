@@ -106,7 +106,7 @@ try {
     }
 </style>
 
-
+x
 <body class="bg-gray-100 text-gray-900">
     <main class="container mx-auto py-8 px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">

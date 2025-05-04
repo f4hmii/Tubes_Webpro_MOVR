@@ -1,13 +1,12 @@
 <?php
 session_start();
-include 'db_connection.php'; // Koneksi database
+include 'db_connection.php';
 
-// Handle adding product to favorites via GET parameter
+
 if (isset($_GET['add_favorite'])) {
-	echo "ID Produk: " . $_GET['add_favorite'];
-    $productId = intval($_GET['add_favorite']); // Ambil ID produk dari parameter
-    $userId = 1; // Gunakan ID pengguna tetap (1) untuk testing
-    $quantity = 1; // Default quantity untuk favorit
+    $productId = intval($_GET['add_favorite']);
+    $userId = 1; // ID pengguna tetap (sementara)
+    $quantity = 1;
 
     // Cek apakah produk sudah ada di favorit
     $stmt = $conn->prepare("SELECT * FROM favorit WHERE pengguna_id = ? AND produk_id = ?");
@@ -16,15 +15,10 @@ if (isset($_GET['add_favorite'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows === 0) {
-        // Jika belum ada, tambahkan ke favorit
+        // Tambahkan ke favorit
         $stmt = $conn->prepare("INSERT INTO favorit (pengguna_id, produk_id, quantity) VALUES (?, ?, ?)");
-		
-if ($stmt->execute()) {
-    echo "Data berhasil ditambahkan ke tabel favorit!";
-} else {
-    echo "Error: " . $stmt->error;
-}
         $stmt->bind_param("iii", $userId, $productId, $quantity);
+        
         if ($stmt->execute()) {
             echo "Data berhasil ditambahkan ke tabel favorit!";
         } else {
@@ -38,7 +32,13 @@ if ($stmt->execute()) {
     header('Location: favorite.php');
     exit;
 }
+
+include('../view/header.php');  
+
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,20 +53,6 @@ if ($stmt->execute()) {
 </head>
 
 <body>
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center py-2 px-6">
-            <img alt="MOVR Logo" class="h-10" height="40" src="imgproduk/logo1.png" width="50" />
-            <nav class="space-x-4">
-                <!-- Navigation omitted for brevity -->
-            </nav>
-            <div class="space-x-4">
-                <i class="fas fa-search text-gray-700 nav-icon cursor-pointer" id="search-icon"></i>
-                <i class="fas fa-user text-gray-700 nav-icon"></i>
-                <a href="favorite.php"><i class="fas fa-star text-gray-700 nav-icon"></i></a>
-            </div>
-        </div>
-    </header>
-
 <div class="carousel">
         <button class="carousel-btn prev-btn fa-solid fa-chevron-left">
             <!-- <i class="fa-solid fa-chevron-left"></i> -->
@@ -283,6 +269,45 @@ if ($stmt->execute()) {
 
         <!-- Add more product cards similarly -->
     </div>
+    <footer class="bg-gray-800 text-white mt-12">
+   <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+       <div class="py-8">
+           <h3 class="text-lg font-semibold mb-4">About Us</h3>
+           <p class="text-gray-400">We are a leading sportswear brand committed to providing high-quality
+               products
+               for athletes and fitness enthusiasts.</p>
+           <div class="mt-4">
+               <a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-facebook-f"></i></a>
+               <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-twitter"></i></a>
+               <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-instagram"></i></a>
+               <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-linkedin-in"></i></a>
+           </div>
+       </div>
+       <div class="py-8">
+           <h3 class="text-lg font-semibold mb-4">Customer Service</h3>
+           <ul class="text-gray-400">
+               <li class="mb-2"><a class="hover:text-white" href="#">Contact Us</a></li>
+               <li class="mb-2"><a class="hover:text-white" href="#">Order Tracking</a></li>
+               <li class="mb-2"><a class="hover:text-white" href="#">Returns & Exchanges</a></li>
+               <li class="mb-2"><a class="hover:text-white" href="#">Shipping & Delivery</a></li>
+               <li class="mb-2"><a class="hover:text-white" href="#">FAQs</a></li>
+           </ul>
+       </div>
+       <div class="py-8">
+           <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+           <p class="text-gray-400">Subscribe to get the latest information on new products and upcoming sales.
+           </p>
+           <form class="mt-4">
+               <input class="w-full p-2 rounded-lg text-gray-900" placeholder="Enter your email" type="email" />
+               <button class="mt-2 w-full bg-red-600 p-2 rounded-lg hover:bg-red-700"
+                   type="submit">Subscribe</button>
+           </form>
+       </div>
+       <div class="mt-8 text-center text-gray-400">
+           <p>© 2023 Movr. All rights reserved.</p>
+       </div>
+</footer>
+
 	
 	<style>
 	
@@ -625,6 +650,6 @@ if ($stmt->execute()) {
   }
   
 	</style>
-</body>
 
+</body>
 </html>

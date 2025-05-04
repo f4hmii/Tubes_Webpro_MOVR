@@ -15,7 +15,7 @@
     margin: auto;
     display: flex;
     flex-direction: column; /* Mengatur tata letak vertikal */
-    height: 90vh; /* Tinggi penuh untuk menyesuaikan layar */
+    height: 90vh; 
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
@@ -37,7 +37,7 @@
 }
 
     .from-buyer {
-      background-color: #dcf8c6;
+      background-color:rgb(180, 186, 196);
       float: right;
       text-align: right;
     }

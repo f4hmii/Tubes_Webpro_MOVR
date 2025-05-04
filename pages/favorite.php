@@ -1,18 +1,19 @@
 <?php
 session_start();
 include 'db_connection.php'; // Koneksi database
+include '../view/header.php';
 
 // Tangani penghapusan produk favorit
 if (isset($_GET['remove_favorite'])) {
     $productId = intval($_GET['remove_favorite']);
-    $userId = 1; // Gunakan ID pengguna tetap (1) untuk testing
+    $userId = 1; //ID pengguna tetap (1) untuk testing
 
     // Hapus produk dari tabel favorit
     $stmt = $conn->prepare("DELETE FROM favorit WHERE pengguna_id = ? AND produk_id = ?");
     $stmt->bind_param("ii", $userId, $productId);
 
     if ($stmt->execute()) {
-        echo "Produk berhasil dihapus dari favorit!";
+       
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -197,6 +198,7 @@ document.querySelectorAll('.heart-icon').forEach(icon => {
 });
 </script>
 
+
 <style>
     * {
             margin: 0;
@@ -215,6 +217,11 @@ document.querySelectorAll('.heart-icon').forEach(icon => {
             background-color: #f9f9f9;
              width: 100vw;
 
+        }
+
+        h1 {
+            font-size: 4rem;
+           
         }
 
         .nav-link {
