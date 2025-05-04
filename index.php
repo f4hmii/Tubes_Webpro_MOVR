@@ -29,7 +29,7 @@ while ($row = $result->fetch_assoc()) {
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<<<<<<< HEAD
+
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -450,7 +450,6 @@ while ($row = $result->fetch_assoc()) {
       <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IL8260_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1080&q=75"
         alt="jersey" width="150px">
 
-<<<<<<< HEAD
       <i class="fa-regular fa-heart"></i>
       <div class="card-content">
         <p class="title">Knit Track Suits</p>

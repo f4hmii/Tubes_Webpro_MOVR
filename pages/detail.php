@@ -134,7 +134,7 @@ x
                     </button>
 
                     <!-- Tambahkan ikon chat di sini -->
-                    <a href="chat.php" title="Chat" class="p-2 rounded-full border hover:bg-blue-100">
+                    <a href="pages/chet.php" title="Chat" class="p-2 rounded-full border hover:bg-blue-100">
                         <i data-feather="message-circle" class="text-black"></i>
                     </a>
 
