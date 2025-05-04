@@ -192,7 +192,7 @@
     </div>
 
     <ul>
-  <li><a href="#">Home</a></li>
+  <li><a href="../index.php">Home</a></li>
   <li><a href="aboutfairuz.html">About</a></li>
   <li><a href="#produk">Produk</a></li>
   <li><a href="announcement.html">Announcement</a></li>
@@ -253,6 +253,7 @@
           </div>
           <div class="user-dropdown-menu" id="userDropdown">
             <a href="profil.php">Informasi Akun</a>
+            <a href="seller/produk.php">Kontrol Produk</a>
             <a href="#" onclick="confirmLogout()">Logout</a>
           </div>
         </div>

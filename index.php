@@ -3,6 +3,20 @@ session_start();
 include "view/header.php";
 ?>
 
+<?php
+include 'configdb.php';
+
+// Ambil data dari tabel produk
+$query = "SELECT * FROM produk";
+$result = $conn->query($query);
+
+// Simpan hasil query ke array $products
+$products = [];
+while ($row = $result->fetch_assoc()) {
+    $products[] = $row;
+}
+?>
+
 <html>
 
 <head>
@@ -15,6 +29,7 @@ include "view/header.php";
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<<<<<<< HEAD
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
@@ -358,6 +373,14 @@ include "view/header.php";
     }
   </style>
 </head>
+=======
+    <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="index.css">
+
+ </head>
+ <body>
+  
+>>>>>>> 60d9370f84b679464cdcad03ca3ddf732bdf9319
 
 <body>
 
@@ -427,6 +450,7 @@ include "view/header.php";
       <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IL8260_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1080&q=75"
         alt="jersey" width="150px">
 
+<<<<<<< HEAD
       <i class="fa-regular fa-heart"></i>
       <div class="card-content">
         <p class="title">Knit Track Suits</p>
@@ -558,6 +582,21 @@ include "view/header.php";
       </div>
     </div>
   </div>
+=======
+    <div class="container">
+    <?php foreach ($products as $product): ?>
+    <div class="card">
+    <img src="uploads/<?= $product['foto_url'] ?>" alt="product image" width="150px">
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+            <p class="title"><?= $product['nama_produk'] ?></p>
+            <p class="price">Rp<?= number_format($product['harga'], 0, ',', '.') ?></p>
+            <p class="description"><?= $product['deskripsi'] ?></p>
+        </div>
+    </div>
+    <?php endforeach; ?>
+</div>
+>>>>>>> 60d9370f84b679464cdcad03ca3ddf732bdf9319
   <footer class="bg-gray-800 text-white mt-12">
     <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
       <div class="py-8">
