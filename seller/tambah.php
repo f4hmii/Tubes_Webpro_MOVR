@@ -1,4 +1,8 @@
-<?php include '../configdb.php'; ?>
+<?php
+session_start();
+include '../db_connection.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,43 +36,55 @@
             <label>Gambar</label>
             <input type="file" name="gambar" class="form-control" required>
         </div>
+        <div class="mb-3">
+            <label>Kategori</label>
+            <select name="kategori_id" class="form-control" required>
+                <option value="">-- Pilih Kategori --</option>
+                <?php
+                $kategori = $conn->query("SELECT * FROM kategori");
+                while ($row = $kategori->fetch_assoc()) {
+                    echo "<option value='{$row['kategori_id']}'>{$row['nama_kategori']}</option>";
+                }
+                ?>
+            </select>
+        </div>
         <button class="btn btn-success" name="simpan">Simpan</button>
         <a href="produk.php" class="btn btn-secondary">Kembali</a>
     </form>
 
 <?php
 if (isset($_POST['simpan'])) {
-    // Ambil data form
-    $produk_id  = intval($_POST['produk_id']);
-    $nama       = htmlspecialchars($_POST['nama']);
-    $deskripsi  = htmlspecialchars($_POST['deskripsi']);
-    $stok       = intval($_POST['stok']);
-    $harga      = floatval($_POST['harga']);
-    
-    // Upload file
+    $produk_id   = intval($_POST['produk_id']);
+    $nama        = htmlspecialchars($_POST['nama']);
+    $deskripsi   = htmlspecialchars($_POST['deskripsi']);
+    $stok        = intval($_POST['stok']);
+    $harga       = floatval($_POST['harga']);
+    $kategori_id = intval($_POST['kategori_id']);
+    $pengguna_id = intval($_SESSION['id']);
+
     $gambar     = $_FILES['gambar']['name'];
     $tmp_name   = $_FILES['gambar']['tmp_name'];
     $upload_dir = "../uploads/";
 
-    // Validasi ekstensi file (opsional)
     $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
     $file_ext = strtolower(pathinfo($gambar, PATHINFO_EXTENSION));
-    
+
     if (in_array($file_ext, $allowed_ext)) {
         move_uploaded_file($tmp_name, $upload_dir . $gambar);
 
-        // Simpan ke DB
-        $sql = "INSERT INTO produk (produk_id, nama_produk, deskripsi, stock, harga, foto_url) 
-                VALUES ($produk_id, '$nama', '$deskripsi', $stok, $harga, '$gambar')";
+        $sql = "INSERT INTO produk (produk_id, nama_produk, deskripsi, stock, harga, foto_url, seller_id, kategori_id) 
+                VALUES ($produk_id, '$nama', '$deskripsi', $stok, $harga, '$gambar', $pengguna_id, $kategori_id)";
+
         if ($conn->query($sql)) {
             echo "<script>location='produk.php';</script>";
         } else {
             echo "<div class='alert alert-danger'>Gagal menyimpan: " . $conn->error . "</div>";
         }
     } else {
-        echo "<div class='alert alert-warning'>Format file tidak diizinkan. Gunakan JPG, PNG, atau GIF.</div>";
+        echo "<div class='alert alert-warning'>Format file tidak diizinkan.</div>";
     }
 }
 ?>
+
 </body>
 </html>

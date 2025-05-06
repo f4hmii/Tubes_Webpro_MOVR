@@ -8,13 +8,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $host = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "movr"; // Ganti sesuai database kamu
+    $dbname = "movr"; 
 
     $conn = new mysqli($host, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Koneksi gagal: " . $conn->connect_error);
-    }
 
     // Ambil data dari form
     $name = $_POST['name'];
@@ -24,13 +20,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $role = $_POST['role'];
 
     // Cek apakah email sudah terdaftar
-    $cek_email = $conn->prepare("SELECT id_user FROM tb_user WHERE email = ?");
+    $cek_email = $conn->prepare("SELECT pengguna_id FROM pengguna WHERE email = ?");
     $cek_email->bind_param("s", $email);
     $cek_email->execute();
     $cek_email->store_result();
 
     // Cek apakah username sudah terdaftar
-    $cek_user = $conn->prepare("SELECT id_user FROM tb_user WHERE username = ?");
+    $cek_user = $conn->prepare("SELECT pengguna_id FROM pengguna WHERE username = ?");
     $cek_user->bind_param("s", $username);
     $cek_user->execute();
     $cek_user->store_result();
@@ -41,9 +37,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Username sudah digunakan.";
     } else {
         // Menyimpan data ke dalam database
-        $sql = "INSERT INTO tb_user (nama, username, email, password, role) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO pengguna (nama_pengguna, username, email, sandi, role) VALUES (?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sssss", $name, $username, $email, $password, $role);
+
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+        
 
         if ($stmt->execute()) {
             $success = "Akun berhasil dibuat";

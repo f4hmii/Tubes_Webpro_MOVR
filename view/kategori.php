@@ -1,7 +1,7 @@
 <?php
 session_start();
 include "header.php";
-$conn = new mysqli("localhost", "root", "", "movrdatabase");
+include '../db_connection.php'; // Koneksi database
 
 $kategori = isset($_GET['kategori']) ? $_GET['kategori'] : 'semua';
 
@@ -32,7 +32,7 @@ $result = mysqli_query($conn, $query);
 <?php
 
 while ($produk = mysqli_fetch_assoc($result)) {
-    $gambar = !empty($produk['gambar_produk']) ? 'gambar/' . htmlspecialchars($produk['gambar_produk']) : 'gambar/default.jpg';
+    $gambar = !empty($produk['foto_url']) ? '../uploads/' . htmlspecialchars($produk['foto_url']) : 'gambar/default.jpg';
     ?>
 
     <div class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm">

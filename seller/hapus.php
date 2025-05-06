@@ -1,5 +1,5 @@
 <?php
-include '../configdb.php';
+include '../db_connection.php';
 
 // Periksa apakah parameter produk_id tersedia dan valid (harus angka)
 if (isset($_GET['produk_id']) && is_numeric($_GET['produk_id'])) {

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'db_connection.php'; // Koneksi database
+include '../db_connection.php'; // Koneksi database
 include '../view/header.php';
 
 // Tangani penghapusan produk favorit
@@ -18,9 +18,7 @@ if (isset($_GET['remove_favorite'])) {
         echo "Error: " . $stmt->error;
     }
 
-    // // Redirect kembali ke halaman favorit
-    // header('Location: favorite.php');
-    // exit;
+   
 }
 
 // Ambil data favorit dari database
