@@ -1,22 +1,57 @@
 <?php
 include 'db_connection.php';
 
-// Ambil input pencarian
-$keyword = isset($_GET['q']) ? $koneksi->real_escape_string($_GET['q']) : '';
+// Ambil kata kunci pencarian dari URL
+$search = isset($_GET['query']) ? trim($_GET['query']) : '';
 
-// Query pencarian
-$sql = "SELECT * FROM produk WHERE nama LIKE '%$keyword%'";
-$result = $koneksi->query($sql);
-
-// Tampilkan hasil
-if ($result->num_rows > 0) {
-    echo "<h3>Hasil Pencarian:</h3>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<p>{$row['nama']} - Rp " . number_format($row['harga']) . "</p>";
-    }
-} else {
-    echo "Produk tidak ditemukan.";
-}
-
-$koneksi->close();
 ?>
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Hasil Pencarian Produk</title>
+</head>
+<body>
+
+<!-- Form Pencarian -->
+<form method="GET" action="search.php">
+    <input type="text" name="query" placeholder="Cari produk..." value="<?= htmlspecialchars($search); ?>" required>
+    <button type="submit">Cari</button>
+</form>
+
+<hr>
+
+<?php
+// Jika form telah diisi
+if ($search !== '') {
+    // Hindari SQL injection
+    $search = $koneksi->real_escape_string($search);
+
+    // Query pencarian
+    $sql = "SELECT * FROM produk 
+            WHERE nama_produk LIKE '%$search%' 
+            OR deskripsi LIKE '%$search%' 
+            OR harga LIKE '%$search%'";
+
+    $result = $koneksi->query($sql);
+
+    echo "<h2>Hasil Pencarian untuk: <em>" . htmlspecialchars($search) . "</em></h2>";
+
+    if ($result && $result->num_rows > 0) {
+        echo "<ul>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<li>";
+            echo "<strong>" . htmlspecialchars($row['nama_produk']) . "</strong> - ";
+            echo "Rp" . number_format($row['harga'], 0, ',', '.');
+            echo "</li>";
+        }
+        echo "</ul>";
+    } else {
+        echo "<p>Tidak ada produk ditemukan.</p>";
+    }
+}
+?>
+
+</body>
+</html>
