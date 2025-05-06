@@ -28,7 +28,7 @@ if ($action && $index !== null && isset($_SESSION['chat'][$index])) {
     if ($_SESSION['chat'][$index]['type'] === 'tawar') {
         if ($action === 'accept') {
             $_SESSION['chat'][$index]['status'] = 'diterima';
-            // Tambahkan balasan otomatis dari penjual
+            
             $_SESSION['chat'][] = [
                 'sender' => 'penjual',
                 'message' => 'Tawaran Rp ' . number_format($_SESSION['chat'][$index]['harga']) . ' diterima.',
@@ -47,7 +47,7 @@ if ($action && $index !== null && isset($_SESSION['chat'][$index])) {
     }
 }
 
-// Kembali ke halaman chat
+
 header('Location: chet.php');
 exit;
 ?>

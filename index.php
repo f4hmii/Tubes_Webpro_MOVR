@@ -1,18 +1,24 @@
 <?php
 session_start();
 include "view/header.php";
-?>
-
-<?php
 include 'db_connection.php';
 
 // Ambil data dari tabel produk
 $query = "SELECT * FROM produk";
 $result = $conn->query($query);
 
-// Simpan hasil query ke array $products
+// Gabungkan produk dengan ukuran (size)
 $products = [];
 while ($row = $result->fetch_assoc()) {
+    $produk_id = $row['produk_id'];
+    $size_result = $conn->query("SELECT size FROM produk_size WHERE produk_id = $produk_id");
+
+    $sizes = [];
+    while ($s = $size_result->fetch_assoc()) {
+        $sizes[] = $s['size'];
+    }
+
+    $row['sizes'] = $sizes; // Tambahkan size ke array produk
     $products[] = $row;
 }
 ?>
@@ -71,19 +77,25 @@ while ($row = $result->fetch_assoc()) {
     <h1>Fashion Sale Collection</h1>
   </header>
   <br>
-    <div class="container">
+  <div class="container grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
     <?php foreach ($products as $product): ?>
-    <div class="card">
-    <img src="uploads/<?= $product['foto_url'] ?>" alt="product image" width="150px">
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-            <p class="title"><?= $product['nama_produk'] ?></p>
-            <p class="price">Rp<?= number_format($product['harga'], 0, ',', '.') ?></p>
-            <p class="description"><?= $product['deskripsi'] ?></p>
-        </div>
+    <div class="card border rounded-lg shadow-md p-4 bg-white">
+      <img src="uploads/<?= $product['foto_url'] ?>" alt="product image" class="w-full h-48 object-cover mb-4 rounded">
+      <i class="fa-regular fa-heart text-red-500 text-xl"></i>
+      <div class="card-content">
+        <p class="title text-lg font-bold"><?= $product['nama_produk'] ?></p>
+        <p class="price text-green-600 font-semibold">Rp<?= number_format($product['harga'], 0, ',', '.') ?></p>
+        <p class="description text-gray-700 text-sm"><?= $product['deskripsi'] ?></p>
+        <?php if (!empty($product['sizes'])): ?>
+          <p class="mt-2 text-sm text-gray-600">Ukuran: <span class="font-medium"><?= implode(', ', $product['sizes']) ?></span></p>
+        <?php else: ?>
+          <p class="mt-2 text-sm text-gray-500 italic">Ukuran: Tidak tersedia</p>
+        <?php endif; ?>
+      </div>
     </div>
     <?php endforeach; ?>
-</div>
+  </div>
+
 
   <footer class="bg-gray-800 text-white mt-12">
     <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">

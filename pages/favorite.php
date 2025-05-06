@@ -1,14 +1,14 @@
 <?php
 session_start();
-include '../db_connection.php'; // Koneksi database
+include '../db_connection.php'; 
 include '../view/header.php';
 
-// Tangani penghapusan produk favorit
+
 if (isset($_GET['remove_favorite'])) {
     $productId = intval($_GET['remove_favorite']);
-    $userId = 1; //ID pengguna tetap (1) untuk testing
+    $userId = 1; 
 
-    // Hapus produk dari tabel favorit
+   
     $stmt = $conn->prepare("DELETE FROM favorit WHERE pengguna_id = ? AND produk_id = ?");
     $stmt->bind_param("ii", $userId, $productId);
 
@@ -21,8 +21,8 @@ if (isset($_GET['remove_favorite'])) {
    
 }
 
-// Ambil data favorit dari database
-$userId = 1; // Gunakan ID pengguna tetap (1) untuk testing
+
+$userId = 1; 
 $stmt = $conn->prepare("SELECT produk_id FROM favorit WHERE pengguna_id = ?");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
@@ -33,7 +33,7 @@ while ($row = $result->fetch_assoc()) {
     $favorites[] = $row['produk_id'];
 }
 
-// Helper function to check if product is favorited
+
 function isFavorited($productId, $favorites) {
     return in_array($productId, $favorites);
 }
@@ -166,12 +166,12 @@ function isFavorited($productId, $favorites) {
 document.querySelectorAll('.heart-icon').forEach(icon => {
     icon.addEventListener('click', () => {
         const productId = icon.getAttribute('data-product-id');
-        const isFavorited = icon.textContent === '♥'; // filled heart
+        const isFavorited = icon.textContent === '♥'; 
 
-        // Toggle heart icon immediately
+       
         icon.textContent = isFavorited ? '♡' : '♥';
 
-        // Send AJAX request to update favorite status
+       
         fetch('favorite_action.php', {
             method: 'POST',
             headers: {
@@ -182,13 +182,13 @@ document.querySelectorAll('.heart-icon').forEach(icon => {
         .then(response => response.json())
         .then(data => {
             if (!data.success) {
-                // Revert icon if failed
+              
                 icon.textContent = isFavorited ? '♥' : '♡';
                 alert('Failed to update favorite status.');
             }
         })
         .catch(() => {
-            // Revert icon if error
+            
             icon.textContent = isFavorited ? '♥' : '♡';
             alert('Error updating favorite status.');
         });
@@ -319,18 +319,18 @@ document.querySelectorAll('.heart-icon').forEach(icon => {
         }
 
         .product-container {
-            margin: 0 auto;      /*0 untuk mengatur atas dan bawah dan auto kanan kiri */
-            padding: 20px;  /*  spasi */
+            margin: 0 auto;      
+            padding: 20px; 
             background: #ffffff;
             border: 1px solid #e0e0e0;
             border-radius: 5px;
-            display: grid;      /*mengaktifkan tata letak grid */
-            grid-template-columns: repeat(2, 1fr); /* Dua kolom per baris */
+            display: grid;     
+            grid-template-columns: repeat(2, 1fr); 
             grid-gap: 20px;
             width: 90%;
             display: flex;
             flex-wrap: wrap;
-            /* untuk berpindah ke baris berikutnya ketika item tersebut melebihi ruang */
+         
           
             
 
@@ -342,10 +342,10 @@ document.querySelectorAll('.heart-icon').forEach(icon => {
             align-items: center;
             justify-content: space-between;
             padding: 15px 0;
-            /* border-bottom: 1px solid #e0e0e0; */
+
             border: 1px solid #ccc;
              padding: 20px;
-             flex: 1 1 45%; /* Setiap kolom menggunakan sekitar 45% lebar */
+             flex: 1 1 45%;
              align-items: flex-start;
              margin-bottom: 20px; 
         }

@@ -14,7 +14,7 @@
     max-width: 600px;
     margin: auto;
     display: flex;
-    flex-direction: column; /* Mengatur tata letak vertikal */
+    flex-direction: column;
     height: 90vh; 
     background: #fff;
     border-radius: 10px;
@@ -30,8 +30,8 @@
     position: relative;
     }
 	.chat-messages {
-    flex: 1; /* Membuat bagian pesan mengambil ruang yang tersisa */
-    overflow-y: auto; /* Menambahkan scroll jika pesan terlalu banyak */
+    flex: 1; 
+    overflow-y: auto;
     padding: 10px;
     background: #f0f0f0;
 }
@@ -122,7 +122,7 @@
 
     <!-- Form Input -->
    <form action="chat_handler.php" method="post">
-  <!-- Kirim sender sebagai pembeli secara tersembunyi -->
+  
   <input type="hidden" name="sender" value="pembeli">
 
   <select name="type" required onchange="toggleTawar(this.value)">

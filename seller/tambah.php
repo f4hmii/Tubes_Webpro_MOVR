@@ -48,6 +48,22 @@ include '../db_connection.php';
                 ?>
             </select>
         </div>
+        <div class="mb-3">
+    <label>Ukuran Produk</label><br>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="size[]" value="S"> <label class="form-check-label">S</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="size[]" value="M"> <label class="form-check-label">M</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="size[]" value="L"> <label class="form-check-label">L</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" name="size[]" value="XL"> <label class="form-check-label">XL</label>
+    </div>
+</div>
+
         <button class="btn btn-success" name="simpan">Simpan</button>
         <a href="produk.php" class="btn btn-secondary">Kembali</a>
     </form>
@@ -76,15 +92,27 @@ if (isset($_POST['simpan'])) {
                 VALUES ($produk_id, '$nama', '$deskripsi', $stok, $harga, '$gambar', $pengguna_id, $kategori_id)";
 
         if ($conn->query($sql)) {
+            // Simpan ukuran jika tersedia
+            if (!empty($_POST['size'])) {
+                $sizes = $_POST['size'];
+                foreach ($sizes as $size) {
+                    $size = $conn->real_escape_string($size);
+                    $conn->query("INSERT INTO produk_size (produk_id, size) VALUES ($produk_id, '$size')");
+                }
+            }
+
             echo "<script>location='produk.php';</script>";
         } else {
-            echo "<div class='alert alert-danger'>Gagal menyimpan: " . $conn->error . "</div>";
+            echo "<div class='alert alert-danger'>Gagal menyimpan produk: " . $conn->error . "</div>";
         }
     } else {
         echo "<div class='alert alert-warning'>Format file tidak diizinkan.</div>";
     }
 }
+
 ?>
+
+
 
 </body>
 </html>
