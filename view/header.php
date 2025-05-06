@@ -103,33 +103,34 @@
     }
 
     .search-form {
-  flex-grow: 1;
-  max-width: 380px; /* Bisa kamu sesuaikan */
-  margin: 0 20px;
-}
+      flex-grow: 1;
+      max-width: 380px;
+      /* Bisa kamu sesuaikan */
+      margin: 0 20px;
+    }
 
-.search-box {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  padding: 6px 10px;
-  background-color: #fff;
-}
+    .search-box {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 6px 10px;
+      background-color: #fff;
+    }
 
-.search-box i {
-  color: #888;
-  margin-right: 8px;
-}
+    .search-box i {
+      color: #888;
+      margin-right: 8px;
+    }
 
-.search-box input {
-  width: 100%;
-  border: none;
-  outline: none;
-  font-size: 14px;
-  background: transparent;
-}
+    .search-box input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      background: transparent;
+    }
 
 
     .navbar .icon-wrapper {
@@ -222,16 +223,16 @@
     </div>
 
     <ul>
-  <li><a href="../index.php">Home</a></li>
-  <li><a href="aboutfairuz.html">About</a></li>
-  <li><a href="#produk">Produk</a></li>
-  <li><a href="announcement.html">Announcement</a></li>
-  <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'seller'): ?>
-    <li><a href="/TA_webpro/seller/produk.php">Service</a></li>
-  <?php endif; ?>
-  <li><a href="pages/sale.php">Sale</a></li>
-  <li><a href="servicefairuz.html">Service</a></li>
-  
+      <li><a href="index.php">Home</a></li>
+      <li><a href="aboutfairuz.html">About</a></li>
+      <li><a href="#produk">Produk</a></li>
+      <li><a href="announcement.html">Announcement</a></li>
+      <?php if (isset($_SESSION['user_id']) && $_SESSION['role'] == 'seller'): ?>
+        <li><a href="/TA_webpro/seller/produk.php">Service</a></li>
+      <?php endif; ?>
+      <li><a href="pages/sale.php">Sale</a></li>
+      <li><a href="servicefairuz.html">Service</a></li>
+
       <!-- Category Toggle Dropdown -->
       <?php
       // Daftar kategori (nanti bisa diambil dari database juga)
@@ -253,15 +254,15 @@
           <?php endforeach; ?>
         </div>
       </li>
-      
+
     </ul>
-      
+
     <form method="GET" action="search.php" class="search-form">
-    <div class="search-box">
+      <div class="search-box">
         <i class="fas fa-search"></i>
         <input type="text" name="query" placeholder="Cari produk" required>
-    </div>
-</form>
+      </div>
+    </form>
 
     <div class="icon-wrapper">
       <a href="favorit.php" title="Favorit" style="margin-right: 10px;">
@@ -269,10 +270,10 @@
       </a>
 
       <a href="chat.php" title="Chat" style="margin-right: 10px;">
-    <i data-feather="message-circle"></i>
-  </a>
+        <i data-feather="message-circle"></i>
+      </a>
 
-      <a href="keranjang.php" title="Keranjang" style="margin-right: 10px;">
+      <a href="view/cart.php" title="Keranjang" style="margin-right: 10px;">
         <i data-feather="shopping-cart"></i>
       </a>
 

@@ -3,31 +3,11 @@ session_start();
 include "view/header.php";
 ?>
 
-<?php
-$host = 'localhost';
-$db = 'movr';
-$user = 'root';
-$pass = '';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (\PDOException $e) {
-    die("Database connection failed: " . $e->getMessage());
-}
-?>
-
 <html>
 
 <head>
     <title>
-        Web Page
+        Detail
     </title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
@@ -106,8 +86,8 @@ try {
     }
 </style>
 
-x
 <body class="bg-gray-100 text-gray-900">
+
     <main class="container mx-auto py-8 px-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div class="space-y-4">
@@ -133,7 +113,6 @@ x
                         <i id="favoriteIcon" class="far fa-heart text-black text-2xl"></i>
                     </button>
 
-                    <!-- Tambahkan ikon chat di sini -->
                     <a href="pages/chet.php" title="Chat" class="p-2 rounded-full border hover:bg-blue-100">
                         <i data-feather="message-circle" class="text-black"></i>
                     </a>
@@ -170,8 +149,15 @@ x
                             class="border px-4 py-2 rounded-lg hover:bg-gray-200">XL</button>
                     </div>
                 </div>
-                <button class="mt-6 bg-black text-white px-6 py-3 w-full rounded-lg btn hover:bg-gray-800">Add to
-                    cart</button>
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-1">Stock: <span id="stock">15</span></label>
+                    <label for="quantity" class="block text-gray-700 mb-1">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" max="15" value="1"
+                        class="w-24 border px-2 py-1 rounded-md" />
+                </div>
+
+                <button class="mt-6 bg-black text-white px-6 py-3 w-full rounded-lg btn hover:bg-gray-800">Add to cart</button>
+
                 <button class="mt-2 border px-6 py-3 w-full rounded-lg btn hover:bg-gray-200">Find in store</button>
                 <div class="mt-4">
                     <h2 class="text-lg font-semibold">Dry Running T-shirt</h2>
@@ -288,11 +274,15 @@ x
                 searchBar.classList.add('hidden');
             }
         });
+    </script>
 
+    <script>
         function showSize(size) {
             document.getElementById('selected-size').innerText = size;
+            document.getElementById('selected-size').dataset.value = size;
         }
     </script>
+
 
     <script>
         const favoriteButton = document.getElementById("favoriteButton");
@@ -306,11 +296,12 @@ x
         });
     </script>
 
-
     <script src="https://unpkg.com/feather-icons"></script>
     <script>
         feather.replace()
     </script>
+
+    <?php include "view/cart.php"; ?>
 
 </body>
 

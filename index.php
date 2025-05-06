@@ -13,7 +13,7 @@ $result = $conn->query($query);
 // Simpan hasil query ke array $products
 $products = [];
 while ($row = $result->fetch_assoc()) {
-    $products[] = $row;
+  $products[] = $row;
 }
 ?>
 
@@ -373,315 +373,312 @@ while ($row = $result->fetch_assoc()) {
     }
   </style>
 </head>
-=======
-    <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="index.css">
 
- </head>
- <body>
-  
->>>>>>> 60d9370f84b679464cdcad03ca3ddf732bdf9319
+</head>
 
 <body>
 
+  <body>
 
-  <div class="carousel">
-    <button class="carousel-btn prev-btn fa-solid fa-chevron-left">
-      <!-- <i class="fa-solid fa-chevron-left"></i> -->
-    </button>
-    <div class="carousel-slides">
 
-      <div class="slide">
-        <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner_desktop_2400_x_900-20241220-065408.jpg"
-          alt="">
+    <div class="carousel">
+      <button class="carousel-btn prev-btn fa-solid fa-chevron-left">
+        <!-- <i class="fa-solid fa-chevron-left"></i> -->
+      </button>
+      <div class="carousel-slides">
+
+        <div class="slide">
+          <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner_desktop_2400_x_900-20241220-065408.jpg"
+            alt="">
+        </div>
+        <div class="slide">
+          <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner-20240805-072521.jpg"
+            alt="">
+        </div>
+        <div class="slide">
+          <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner_copy-20241118-093422.jpg"
+            alt="">
+        </div>
+        <div class="slide">
+          <img src="https://i.pinimg.com/736x/d5/cf/48/d5cf48081afa823efe25b2275446725b.jpg" alt="">
+        </div>
+
       </div>
-      <div class="slide">
-        <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner-20240805-072521.jpg"
-          alt="">
-      </div>
-      <div class="slide">
-        <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner_copy-20241118-093422.jpg"
-          alt="">
-      </div>
-      <div class="slide">
-        <img src="https://i.pinimg.com/736x/d5/cf/48/d5cf48081afa823efe25b2275446725b.jpg" alt="">
-      </div>
+      <button class="carousel-btn next-btn fa-solid fa-chevron-right">
 
-    </div>
-    <button class="carousel-btn next-btn fa-solid fa-chevron-right">
-
-    </button>
-  </div>
-
-  <header>
-    <h1>Fashion Sale Collection</h1>
-  </header>
-  <br>
-
-  <div class="container">
-    <!-- Card 1 -->
-    <a href="detail.php" class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IS1657_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-        alt="jersey" width="150px">
-
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Tiro 24 T-Shirt Jersey</p>
-        <p class="original-price">Rp550.000</p>
-        <p class="price">Rp275.000</p>
-      </div>
-    </a>
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_DV4855-570_d%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1080&q=75"
-        alt="jersey" width="150px">
-
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Phoenix Suns Icon</p>
-        <p class="original-price">Rp1.379.000</p>
-        <p class="price">Rp827.000</p>
-      </div>
+      </button>
     </div>
 
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IL8260_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1080&q=75"
-        alt="jersey" width="150px">
+    <header>
+      <h1>Fashion Sale Collection</h1>
+    </header>
+    <br>
 
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Knit Track Suits</p>
-        <p class="original-price">Rp1.109.000</p>
-        <p class="price">Rp800.000</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FB7352-010_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-        alt="jersey" width="150px">
-
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Germian Tracktop</p>
-        <p class="original-price">Rp1.079.000</p>
-        <p class="price">Rp720.000</p>
-      </div>
-    </div>
-
-
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FZ0767-410_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-        alt="jersey" width="150px">
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Athletics French Jogger</p>
-        <p class="original-price">Rp699.000</p>
-        <p class="price">Rp599.000</p>
-      </div>
-    </div>
-
-
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_620138_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-        alt="jersey" width="150px">
-
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Jordan Sports Deman</p>
-        <p class="original-price">Rp599.000
-        <p class="price">Rp280.000</p>
-      </div>
-    </div>
-
-
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FN7690-070_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-        alt="jersey" width="150px">
-
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Cuff Pants</p>
-        <p class="original-price">Rp949.000</p>
-        <p class="price">Rp430.000</p>
-      </div>
-    </div>
-
-
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_MS41520-NNY_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-        alt="jersey" width="150px">
-
-
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Sports Essentials French</p>
-        <p class="original-price">Rp699.000</p>
-        <p class="price">Rp320.000</p>
-      </div>
-    </div>
-
-
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IR7468_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-        alt="jersey" width="150px">
-
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Laica Dress</p>
-        <p class="original-price">Rp1.200.000</p>
-        <p class="price">Rp830.000</p>
-      </div>
-    </div>
-
-
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_LA2404001-03_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-        alt="jersey" width="150px">
-
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">2in1 Phoenix</p>
-        <p class="original-price">Rp900.000</p>
-        <p class="price">Rp400.000</p>
-      </div>
-    </div>
-
-
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_JE8808_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-        alt="jersey" width="150px">
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Red Lady Bra Sport</p>
-        <p class="original-price">Rp890.000</p>
-        <p class="price">Rp420.000</p>
-      </div>
-    </div>
-
-    <div class="card">
-      <span class="discount">-50%</span>
-      <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_ANZ0118317_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-        alt="jersey" width="150px">
-
-      <i class="fa-regular fa-heart"></i>
-      <div class="card-content">
-        <p class="title">Pink Soda Sport</p>
-        <p class="original-price">Rp300.00</p>
-        <p class="price">Rp150.000</p>
-      </div>
-    </div>
-  </div>
-=======
     <div class="container">
-    <?php foreach ($products as $product): ?>
-    <div class="card">
-    <img src="uploads/<?= $product['foto_url'] ?>" alt="product image" width="150px">
+      <!-- Card 1 -->
+      <a href="detail.php" class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IS1657_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+          alt="jersey" width="150px">
+
         <i class="fa-regular fa-heart"></i>
         <div class="card-content">
+          <p class="title">Tiro 24 T-Shirt Jersey</p>
+          <p class="original-price">Rp550.000</p>
+          <p class="price">Rp275.000</p>
+        </div>
+      </a>
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_DV4855-570_d%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1080&q=75"
+          alt="jersey" width="150px">
+
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">Phoenix Suns Icon</p>
+          <p class="original-price">Rp1.379.000</p>
+          <p class="price">Rp827.000</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IL8260_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1080&q=75"
+          alt="jersey" width="150px">
+
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">Knit Track Suits</p>
+          <p class="original-price">Rp1.109.000</p>
+          <p class="price">Rp800.000</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FB7352-010_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+          alt="jersey" width="150px">
+
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">Germian Tracktop</p>
+          <p class="original-price">Rp1.079.000</p>
+          <p class="price">Rp720.000</p>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FZ0767-410_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+          alt="jersey" width="150px">
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">Athletics French Jogger</p>
+          <p class="original-price">Rp699.000</p>
+          <p class="price">Rp599.000</p>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_620138_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+          alt="jersey" width="150px">
+
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">Jordan Sports Deman</p>
+          <p class="original-price">Rp599.000
+          <p class="price">Rp280.000</p>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FN7690-070_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+          alt="jersey" width="150px">
+
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">Cuff Pants</p>
+          <p class="original-price">Rp949.000</p>
+          <p class="price">Rp430.000</p>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_MS41520-NNY_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+          alt="jersey" width="150px">
+
+
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">Sports Essentials French</p>
+          <p class="original-price">Rp699.000</p>
+          <p class="price">Rp320.000</p>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IR7468_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+          alt="jersey" width="150px">
+
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">Laica Dress</p>
+          <p class="original-price">Rp1.200.000</p>
+          <p class="price">Rp830.000</p>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_LA2404001-03_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+          alt="jersey" width="150px">
+
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">2in1 Phoenix</p>
+          <p class="original-price">Rp900.000</p>
+          <p class="price">Rp400.000</p>
+        </div>
+      </div>
+
+
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_JE8808_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+          alt="jersey" width="150px">
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">Red Lady Bra Sport</p>
+          <p class="original-price">Rp890.000</p>
+          <p class="price">Rp420.000</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <span class="discount">-50%</span>
+        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_ANZ0118317_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
+          alt="jersey" width="150px">
+
+        <i class="fa-regular fa-heart"></i>
+        <div class="card-content">
+          <p class="title">Pink Soda Sport</p>
+          <p class="original-price">Rp300.00</p>
+          <p class="price">Rp150.000</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <?php foreach ($products as $product): ?>
+        <div class="card">
+          <img src="uploads/<?= $product['foto_url'] ?>" alt="product image" width="150px">
+          <i class="fa-regular fa-heart"></i>
+          <div class="card-content">
             <p class="title"><?= $product['nama_produk'] ?></p>
             <p class="price">Rp<?= number_format($product['harga'], 0, ',', '.') ?></p>
             <p class="description"><?= $product['deskripsi'] ?></p>
+          </div>
         </div>
+      <?php endforeach; ?>
     </div>
-    <?php endforeach; ?>
-</div>
->>>>>>> 60d9370f84b679464cdcad03ca3ddf732bdf9319
-  <footer class="bg-gray-800 text-white mt-12">
-    <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
-      <div class="py-8">
-        <h3 class="text-lg font-semibold mb-4">About Us</h3>
-        <p class="text-gray-400">We are a leading sportswear brand committed to providing high-quality
-          products
-          for athletes and fitness enthusiasts.</p>
-        <div class="mt-4">
-          <a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-facebook-f"></i></a>
-          <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-twitter"></i></a>
-          <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-instagram"></i></a>
-          <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-linkedin-in"></i></a>
+    <footer class="bg-gray-800 text-white mt-12">
+      <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="py-8">
+          <h3 class="text-lg font-semibold mb-4">About Us</h3>
+          <p class="text-gray-400">We are a leading sportswear brand committed to providing high-quality
+            products
+            for athletes and fitness enthusiasts.</p>
+          <div class="mt-4">
+            <a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-facebook-f"></i></a>
+            <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-twitter"></i></a>
+            <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-instagram"></i></a>
+            <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-linkedin-in"></i></a>
+          </div>
         </div>
-      </div>
-      <div class="py-8">
-        <h3 class="text-lg font-semibold mb-4">Customer Service</h3>
-        <ul class="text-gray-400">
-          <li class="mb-2"><a class="hover:text-white" href="#">Contact Us</a></li>
-          <li class="mb-2"><a class="hover:text-white" href="#">Order Tracking</a></li>
-          <li class="mb-2"><a class="hover:text-white" href="#">Returns & Exchanges</a></li>
-          <li class="mb-2"><a class="hover:text-white" href="#">Shipping & Delivery</a></li>
-          <li class="mb-2"><a class="hover:text-white" href="#">FAQs</a></li>
-        </ul>
-      </div>
-      <div class="py-8">
-        <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
-        <p class="text-gray-400">Subscribe to get the latest information on new products and upcoming sales.
-        </p>
-        <form class="mt-4">
-          <input class="w-full p-2 rounded-lg text-gray-900" placeholder="Enter your email" type="email" />
-          <button class="mt-2 w-full bg-red-600 p-2 rounded-lg hover:bg-red-700"
-            type="submit">Subscribe</button>
-        </form>
-      </div>
-      <div class="mt-8 text-center text-gray-400">
-        <p>© 2023 Movr. All rights reserved.</p>
-      </div>
-  </footer>
-  <script>
-    feather.replace();
-  </script>
-  <script>
-    const carouselSlides = document.querySelector('.carousel-slides');
-    const slides = document.querySelectorAll('.slide');
-    const slide = document.querySelectorAll('.slides');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
+        <div class="py-8">
+          <h3 class="text-lg font-semibold mb-4">Customer Service</h3>
+          <ul class="text-gray-400">
+            <li class="mb-2"><a class="hover:text-white" href="#">Contact Us</a></li>
+            <li class="mb-2"><a class="hover:text-white" href="#">Order Tracking</a></li>
+            <li class="mb-2"><a class="hover:text-white" href="#">Returns & Exchanges</a></li>
+            <li class="mb-2"><a class="hover:text-white" href="#">Shipping & Delivery</a></li>
+            <li class="mb-2"><a class="hover:text-white" href="#">FAQs</a></li>
+          </ul>
+        </div>
+        <div class="py-8">
+          <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+          <p class="text-gray-400">Subscribe to get the latest information on new products and upcoming sales.
+          </p>
+          <form class="mt-4">
+            <input class="w-full p-2 rounded-lg text-gray-900" placeholder="Enter your email" type="email" />
+            <button class="mt-2 w-full bg-red-600 p-2 rounded-lg hover:bg-red-700"
+              type="submit">Subscribe</button>
+          </form>
+        </div>
+        <div class="mt-8 text-center text-gray-400">
+          <p>© 2023 Movr. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
+      feather.replace();
+    </script>
+    <script>
+      const carouselSlides = document.querySelector('.carousel-slides');
+      const slides = document.querySelectorAll('.slide');
+      const slide = document.querySelectorAll('.slides');
+      const prevBtn = document.querySelector('.prev-btn');
+      const nextBtn = document.querySelector('.next-btn');
 
-    let currentIndex = 0;
+      let currentIndex = 0;
 
-    // Function to update carousel position
-    function updateCarousel() {
-      const offset = -currentIndex * 100;
-      carouselSlides.style.transform = `translateX(${offset}%)`;
-    }
+      // Function to update carousel position
+      function updateCarousel() {
+        const offset = -currentIndex * 100;
+        carouselSlides.style.transform = `translateX(${offset}%)`;
+      }
 
-    // Go to the previous slide
-    prevBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-      updateCarousel();
-      resetAutoSlide();
-    });
-
-
-    // Go to the next slide
-    nextBtn.addEventListener('click', () => {
-      currentIndex = (currentIndex + 1) % slides.length;
-      updateCarousel();
-      resetAutoSlide();
-    });
+      // Go to the previous slide
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateCarousel();
+        resetAutoSlide();
+      });
 
 
-    function startAutoSlide() {
-      autoSlideInterval = setInterval(() => {
+      // Go to the next slide
+      nextBtn.addEventListener('click', () => {
         currentIndex = (currentIndex + 1) % slides.length;
         updateCarousel();
-      }, 3000);
-    }
+        resetAutoSlide();
+      });
 
-    function resetAutoSlide() {
-      clearInterval(autoSlideInterval);
+
+      function startAutoSlide() {
+        autoSlideInterval = setInterval(() => {
+          currentIndex = (currentIndex + 1) % slides.length;
+          updateCarousel();
+        }, 3000);
+      }
+
+      function resetAutoSlide() {
+        clearInterval(autoSlideInterval);
+        startAutoSlide();
+      }
+
       startAutoSlide();
-    }
-
-    startAutoSlide();
-  </script>
-</body>
+    </script>
+  </body>
 
 </html>
