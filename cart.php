@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "configdb.php";
+include "db_connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['edit_index'])) {
     $item = [

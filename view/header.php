@@ -277,7 +277,7 @@
       </a>
 
 
-      <a href="view/cart.php" title="Keranjang" style="margin-right: 10px;">
+      <a href="cart.php" title="Keranjang" style="margin-right: 10px;">
         <i data-feather="shopping-cart"></i>
       </a>
 
