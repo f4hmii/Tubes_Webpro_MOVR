@@ -263,13 +263,19 @@
     </form>
 
     <div class="icon-wrapper">
-      <a href="favorit.php" title="Favorit" style="margin-right: 10px;">
+      <a href="pages/favorite.php" title="Favorit" style="margin-right: 10px;">
         <i data-feather="heart"></i>
       </a>
+
 
       <a href="chat.php" title="Chat" style="margin-right: 10px;">
         <i data-feather="message-circle"></i>
       </a>
+
+      <a href="pages/chet.php" title="Chet" style="margin-right: 10px;">
+        <i data-feather="message-circle"></i>
+      </a>
+
 
       <a href="view/cart.php" title="Keranjang" style="margin-right: 10px;">
         <i data-feather="shopping-cart"></i>

@@ -137,48 +137,51 @@ body {
   </style>
 <?php
 session_start();
+$error = "";
 
 // Koneksi ke database
 $conn = new mysqli("localhost", "root", "", "movr");
 
 // Cek koneksi
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // Ambil data dari form
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+if ($conn->connect_error) {
+  die("Koneksi gagal: " . $conn->connect_error);
+}
 
-  // Gunakan prepared statement
-  $stmt = $conn->prepare("SELECT * FROM tb_user WHERE username = ?");
-  $stmt->bind_param("s", $username);
-  $stmt->execute();
-  $result = $stmt->get_result();
+// Proses login hanya jika form dikirim (POST)
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+  $username = $_POST['username'] ?? '';
+  $password = $_POST['password'] ?? '';
 
-  // Cek user ketemu?
-  if ($result->num_rows === 1) {
-      $user = $result->fetch_assoc();
-
-      // Verifikasi password
-      if (password_verify($password, $user['password'])) {
-          $_SESSION['user_id'] = $user['id'];        // Simpan ID user
-          $_SESSION['username'] = $user['username'];  // Simpan username
-          $_SESSION['role'] = $user['role'];          // ❗❗ Simpan role juga (penting buat seller/admin)
-
-          header("Location: /TA_WEBPRO/index.php");
-          exit();
-          
-      } else {
-          $error = "Password salah!";
-      }
+  if (empty($username) || empty($password)) {
+    $error = "Username dan password harus diisi!";
   } else {
-      $error = "Username tidak ditemukan!";
-  }
+    $stmt = $conn->prepare("SELECT * FROM pengguna WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-  $stmt->close();
+    if ($result && $result->num_rows === 1) {
+      $user = $result->fetch_assoc();
+      if (password_verify($password, $user['sandi'])) {
+        $_SESSION['id'] = $user['pengguna_id'];
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
+
+        header("Location: ../index.php");
+        exit();
+      } else {
+        $error = "Password salah!";
+      }
+    } else {
+      $error = "Username tidak ditemukan!";
+    }
+
+    $stmt->close();
+  }
 }
 
 $conn->close();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="id">

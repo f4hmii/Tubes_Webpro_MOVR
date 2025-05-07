@@ -1,21 +1,21 @@
 <?php
 session_start();
-include 'db_connection.php';
+include '../db_connection.php';
 
 
 if (isset($_GET['add_favorite'])) {
     $productId = intval($_GET['add_favorite']);
-    $userId = 1; // ID pengguna tetap (sementara)
+    $userId = 1; 
     $quantity = 1;
 
-    // Cek apakah produk sudah ada di favorit
+   
     $stmt = $conn->prepare("SELECT * FROM favorit WHERE pengguna_id = ? AND produk_id = ?");
     $stmt->bind_param("ii", $userId, $productId);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows === 0) {
-        // Tambahkan ke favorit
+       
         $stmt = $conn->prepare("INSERT INTO favorit (pengguna_id, produk_id, quantity) VALUES (?, ?, ?)");
         $stmt->bind_param("iii", $userId, $productId, $quantity);
         
@@ -28,7 +28,7 @@ if (isset($_GET['add_favorite'])) {
         echo "Produk sudah ada di favorit.";
     }
 
-    // Redirect ke halaman favorit
+   
     header('Location: favorite.php');
     exit;
 }
