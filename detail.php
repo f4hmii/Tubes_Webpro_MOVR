@@ -1,6 +1,7 @@
 <?php
 session_start();
 include "view/header.php";
+include "configdb.php";
 ?>
 
 <html>
@@ -24,14 +25,6 @@ include "view/header.php";
         font-family: 'Roboto', sans-serif;
     }
 
-    .hover-image {
-        position: relative;
-    }
-
-    .hover-image img {
-        transition: opacity 0.3 s ease;
-    }
-
     .hover-image img.second {
         position: absolute;
         top: 0;
@@ -45,44 +38,6 @@ include "view/header.php";
 
     .hover-image:hover img.second {
         opacity: 1;
-    }
-
-    .btn {
-        transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-
-    .btn:active {
-        transform: scale(0.95);
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: white;
-        min-width: 600px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        padding: 1rem;
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .dropdown-voucher .dropdown-content {
-        min-width: 150px;
-
-
-
-    }
-
-    .dropdown-outlet .dropdown-content {
-        min-width: 150px;
-
-    }
-
-    .disabled {
-        cursor: not-allowed;
-        opacity: 0.5;
     }
 </style>
 
@@ -156,7 +111,19 @@ include "view/header.php";
                         class="w-24 border px-2 py-1 rounded-md" />
                 </div>
 
-                <button class="mt-6 bg-black text-white px-6 py-3 w-full rounded-lg btn hover:bg-gray-800">Add to cart</button>
+                <form id="cart-form" action="cart.php" method="POST" class="hidden">
+                    <input type="hidden" name="produk_id" value="1">
+                    <input type="hidden" name="product_name" value="Dry Running T-shirt">
+                    <input type="hidden" name="price" value="128124">
+                    <input type="hidden" name="size" id="form-size">
+                    <input type="hidden" name="quantity" id="form-quantity">
+                </form>
+
+                <button onclick="submitCart()" id="add-to-cart-btn" disabled class="mt-6 bg-black text-white px-6 py-3 w-full rounded-lg btn hover:bg-gray-800">
+                    Add to cart
+                </button>
+
+
 
                 <button class="mt-2 border px-6 py-3 w-full rounded-lg btn hover:bg-gray-200">Find in store</button>
                 <div class="mt-4">
@@ -265,16 +232,6 @@ include "view/header.php";
                 <p>© 2023 Movr. All rights reserved.</p>
             </div>
     </footer>
-    <script>
-        document.getElementById('search-icon').addEventListener('click', function() {
-            const searchBar = document.getElementById('search-bar');
-            if (searchBar.classList.contains('hidden')) {
-                searchBar.classList.remove('hidden');
-            } else {
-                searchBar.classList.add('hidden');
-            }
-        });
-    </script>
 
     <script>
         function showSize(size) {
@@ -283,25 +240,42 @@ include "view/header.php";
         }
     </script>
 
-
     <script>
-        const favoriteButton = document.getElementById("favoriteButton");
-        const favoriteIcon = document.getElementById("favoriteIcon");
+        let selectedSize = null;
 
-        favoriteButton.addEventListener("click", () => {
-            favoriteIcon.classList.toggle("far"); // Outline heart
-            favoriteIcon.classList.toggle("fas"); // Solid heart
-            favoriteIcon.classList.toggle("text-black"); // Hitam awal
-            favoriteIcon.classList.toggle("text-red-500"); // Merah saat aktif
+        function showSize(size) {
+            selectedSize = size;
+            document.getElementById('selected-size').innerText = size;
+            document.getElementById('form-size').value = size;
+            checkAddToCartButton();
+        }
+
+        document.getElementById('quantity').addEventListener('input', function() {
+            document.getElementById('form-quantity').value = this.value;
+            checkAddToCartButton();
         });
+
+        function checkAddToCartButton() {
+            const quantity = document.getElementById('quantity').value;
+            const addToCartBtn = document.getElementById('add-to-cart-btn');
+            addToCartBtn.disabled = !(selectedSize && quantity > 0);
+        }
+
+        function submitCart() {
+            const quantity = document.getElementById("quantity").value;
+            document.getElementById("form-quantity").value = quantity;
+
+            if (!selectedSize) {
+                alert("Pilih ukuran terlebih dahulu.");
+                return;
+            }
+
+            document.getElementById("cart-form").submit();
+        }
     </script>
 
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script>
-        feather.replace()
-    </script>
 
-    <?php include "view/cart.php"; ?>
+
 
 </body>
 

@@ -1,7 +1,7 @@
 <head>
-  <title>
+  <!-- <title>
     Web Page
-  </title>
+  </title> -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
   <script src="https://unpkg.com/feather-icons"></script>
@@ -234,9 +234,7 @@
       <li><a href="servicefairuz.html">Service</a></li>
 
       <!-- Category Toggle Dropdown -->
-      <?php
-      // Daftar kategori (nanti bisa diambil dari database juga)
-      $kategori = [
+      <?php $kategori = [
         'Baju' => 'view/kategori.php?kategori=baju',
         'Celana' => 'view/kategori.php?kategori=celana',
         'Sepatu' => 'view/kategori.php?kategori=sepatu',
