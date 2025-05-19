@@ -63,6 +63,10 @@ include '../db_connection.php';
         <input class="form-check-input" type="checkbox" name="size[]" value="XL"> <label class="form-check-label">XL</label>
     </div>
 </div>
+ <div class="mb-3">
+            <label>Warna</label>
+            <input type="text" name="color" class="form-control" required>
+        </div>
 
         <button class="btn btn-success" name="simpan">Simpan</button>
         <a href="produk.php" class="btn btn-secondary">Kembali</a>
@@ -75,6 +79,8 @@ if (isset($_POST['simpan'])) {
     $deskripsi   = htmlspecialchars($_POST['deskripsi']);
     $stok        = intval($_POST['stok']);
     $harga       = floatval($_POST['harga']);
+    $ukuran       = floatval($_POST['size']);
+    $warna       = floatval($_POST['color']);
     $kategori_id = intval($_POST['kategori_id']);
     $pengguna_id = intval($_SESSION['id']);
 
@@ -88,8 +94,8 @@ if (isset($_POST['simpan'])) {
     if (in_array($file_ext, $allowed_ext)) {
         move_uploaded_file($tmp_name, $upload_dir . $gambar);
 
-        $sql = "INSERT INTO produk (produk_id, nama_produk, deskripsi, stock, harga, foto_url, seller_id, kategori_id) 
-                VALUES ($produk_id, '$nama', '$deskripsi', $stok, $harga, '$gambar', $pengguna_id, $kategori_id)";
+        $sql = "INSERT INTO produk (produk_id, nama_produk, deskripsi, stock, harga, foto_url, seller_id, kategori_id, size, color) 
+                VALUES ($produk_id, '$nama', '$deskripsi', $stok, $harga, '$gambar', $pengguna_id, $kategori_id , '$ukuran', '$warna')";
 
         if ($conn->query($sql)) {
             // Simpan ukuran jika tersedia
@@ -97,7 +103,7 @@ if (isset($_POST['simpan'])) {
                 $sizes = $_POST['size'];
                 foreach ($sizes as $size) {
                     $size = $conn->real_escape_string($size);
-                    $conn->query("INSERT INTO produk_size (produk_id, size) VALUES ($produk_id, '$size')");
+                    $conn->query("INSERT INTO produk (produk_id, size) VALUES ($produk_id, '$size')");
                 }
             }
 
