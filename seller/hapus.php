@@ -14,8 +14,8 @@ if (isset($_GET['produk_id']) && is_numeric($_GET['produk_id'])) {
     $stmt2 = $conn->prepare("DELETE FROM produk WHERE produk_id = ?");
     $stmt2->bind_param("i", $id);
 
-    if ($stmt2->execute()) {
-        header("Location: produk.php");
+    if ($stmt->execute()) {
+        header("Location: index.php");
         exit();
     } else {
         echo "Gagal menghapus produk.";
