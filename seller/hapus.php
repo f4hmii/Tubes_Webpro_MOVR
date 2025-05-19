@@ -10,7 +10,7 @@ if (isset($_GET['produk_id']) && is_numeric($_GET['produk_id'])) {
     $stmt->bind_param("i", $id);
 
     if ($stmt->execute()) {
-        header("Location: index.php");
+        header("Location: ../admincontrol/kelola_produk.php");
         exit();
     } else {
         echo "Gagal menghapus produk.";

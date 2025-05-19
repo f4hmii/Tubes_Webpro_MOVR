@@ -1,7 +1,7 @@
 <?php
-<include '../db_connection.php';
-$id = $_GET['id'];
-$data = $conn->query("SELECT * FROM produk WHERE id=$id")->fetch_assoc();
+include '../db_connection.php';
+$id = $_GET['produk_id'];
+$data = $conn->query("SELECT * FROM produk WHERE produk_id=$id")->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +14,7 @@ $data = $conn->query("SELECT * FROM produk WHERE id=$id")->fetch_assoc();
     <form method="POST" enctype="multipart/form-data">
         <div class="mb-3">
             <label>Nama</label>
-            <input type="text" name="nama" value="<?= $data['nama'] ?>" class="form-control">
+            <input type="text" name="nama" value="<?= $data['nama_produk'] ?>" class="form-control">
         </div>
         <div class="mb-3">
             <label>Deskripsi</label>
@@ -22,7 +22,7 @@ $data = $conn->query("SELECT * FROM produk WHERE id=$id")->fetch_assoc();
         </div>
         <div class="mb-3">
             <label>Stok</label>
-            <input type="number" name="stok" value="<?= $data['stok'] ?>" class="form-control">
+            <input type="number" name="stok" value="<?= $data['stock'] ?>" class="form-control">
         </div>
         <div class="mb-3">
             <label>Harga</label>
@@ -30,11 +30,11 @@ $data = $conn->query("SELECT * FROM produk WHERE id=$id")->fetch_assoc();
         </div>
         <div class="mb-3">
             <label>Gambar</label><br>
-            <img src="upload/<?= $data['gambar'] ?>" width="80"><br>
+            <img src="../uploads/<?= $data['foto_url'] ?>" width="80"><br>
             <input type="file" name="gambar" class="form-control mt-2">
         </div>
         <button class="btn btn-primary" name="update">Update</button>
-        <a href="index.php" class="btn btn-secondary">Kembali</a>
+        <a href="../admincontrol/kelola_produk.php" class="btn btn-secondary">Kembali</a>
     </form>
 
 <?php

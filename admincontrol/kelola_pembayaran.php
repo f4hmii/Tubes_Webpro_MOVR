@@ -1,16 +1,16 @@
 <?php
-include '.../db_connection.php' ; // koneksi ke DB
+include '../db_connection.php' ; // koneksi ke DB
 
 // Proses update status
 if (isset($_POST['update_status'])) {
     $id = $_POST['id'];
     $status = $_POST['status'];
-    $query = "UPDATE payments SET status='$status' WHERE id=$id";
+    $query = "UPDATE pembayaran SET status='$status' WHERE id=$id";
     mysqli_query($conn, $query);
 }
 
 // Ambil data pembayaran
-$result = mysqli_query($conn, "SELECT * FROM payments ORDER BY waktu DESC");
+$result = mysqli_query($conn, "SELECT * FROM pembayaran ORDER BY tanggal_pembayaran DESC");
 ?>
 
 <h2>Kelola Pembayaran</h2>
@@ -33,18 +33,20 @@ $result = mysqli_query($conn, "SELECT * FROM payments ORDER BY waktu DESC");
     ?>
         <tr>
             <td><?= $no++ ?></td>
-            <td><?= $row['pembeli'] ?></td>
-            <td><?= $row['nim'] ?></td>
-            <td>Rp <?= number_format($row['total'], 0, ',', '.') ?></td>
-            <td><?= $row['metode_pembayaran'] ?></td>
-            <td><?= $row['pengiriman'] ?></td>
-            <td><?= $row['catatan'] ?></td>
-            <td><a href="bukti/<?= $row['bukti'] ?>" target="_blank">Lihat Bukti</a></td>
-            <td><?= $row['waktu'] ?></td>
-            <td><?= $row['status'] ?></td>
+            <td><?= $row['nama_pengguna'] ?></td>
+             <td><?= $row['jumlah_pembayaran'] ?></td>
+              <td><?= $row['metode_pembayaran'] ?></td>
+              <td><?= $row['pengiriman'] ?></td>
+              <!-- <td><a href="bukti/<?= $row['bukti_pembayaran'] ?>" target="_blank">Lihat Bukti</a></td> -->
+               <?php
+                $bukti_pembayaran = base64_encode($row['bukti_pembayaran']);
+               ?>
+                <td><img src= "data:image/jpeg;base64, <?= $bukti_pembayaran;?>" width="100" height="100"></td>
+              <td><?= $row['tanggal_pembayaran'] ?></td>
+              <td><?= $row['status'] ?></td>    
             <td>
                 <form method="post">
-                    <input type="hidden" name="id" value="<?= $row['id'] ?>">
+                    <input type="hidden" name="status" value="<?= $row['status'] ?>">
                     <select name="status">
                         <option <?= $row['status'] == 'Pending' ? 'selected' : '' ?>>Pending</option>
                         <option <?= $row['status'] == 'Approved' ? 'selected' : '' ?>>Approved</option>
