@@ -88,11 +88,14 @@ $gambarLain = []; // Kosongkan array karena tidak ada gambar tambahan di databas
             <div class="mb-4">
                 <span class="text-gray-700">Colour: <span id="selected-color" class="font-semibold"></span></span>
                 <div class="flex space-x-2 mt-2">
-                    <?php foreach ($warna as $color): ?>
-                        <button type="button" onclick="selectColor('<?php echo $color; ?>')" id="color-<?php echo $color; ?>"
-                            class="w-10 h-10 rounded-full border" style="background-color: <?php echo $color; ?>;">
-                        </button>
-                    <?php endforeach; ?>
+                    <?php if (!empty($warna)): ?>
+    <?php foreach ($warna as $color): ?>
+        <button type="button" onclick="selectColor('<?php echo $color; ?>')" id="color-<?php echo $color; ?>"
+            class="w-10 h-10 rounded-full border" style="background-color:<?php echo $color; ?>;">
+        </button>
+    <?php endforeach; ?>
+<?php endif; ?>
+
                 </div>
             </div>
 
@@ -100,12 +103,15 @@ $gambarLain = []; // Kosongkan array karena tidak ada gambar tambahan di databas
             <div class="mb-4">
                 <span class="text-gray-700">Size: <span id="selected-size" class="font-semibold"></span></span>
                 <div class="flex space-x-2 mt-2">
-                    <?php foreach ($ukuran as $size): ?>
-                        <button type="button" onclick="showSize('<?php echo $size; ?>')"
-                            class="border px-4 py-2 rounded-lg hover:bg-gray-200">
-                            <?php echo $size; ?>
-                        </button>
-                    <?php endforeach; ?>
+                    <?php if (!empty($ukuran)): ?>
+    <?php foreach ($ukuran as $size): ?>
+        <button type="button" onclick="showSize('<?php echo $size; ?>')"
+            class="border px-4 py-2 rounded-lg hover:bg-gray-200">
+            <?php echo $size; ?>
+        </button>
+    <?php endforeach; ?>
+<?php endif; ?>
+
                 </div>
             </div>
 
