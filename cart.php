@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "configdb.php";
+include "db_connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['edit_index'])) {
     $item = [
@@ -44,6 +44,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_index'])) {
 
 <body class="bg-gray-100 p-6">
     <div class="container mx-auto">
+        <div class="mt-6">
+            <a href="detail.php" class="inline-block bg-black hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+                &larr; Kembali ke Detail Produk
+            </a>
+        </div>
+
         <h1 class="text-3xl font-bold mb-6">Keranjang Belanja</h1>
         <?php if (!empty($_SESSION['cart'])): ?>
             <table class="min-w-full bg-white shadow rounded-lg overflow-hidden">
@@ -116,11 +122,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_index'])) {
             const price = parseInt(input.dataset.price);
             const subtotal = quantity * price;
 
-            // Update subtotal display
+
             const subtotalElement = document.getElementById('subtotal-' + index);
             subtotalElement.innerText = formatRupiah(subtotal);
 
-            // Update total
+
             let total = 0;
             document.querySelectorAll('.quantity-input').forEach(el => {
                 const qty = parseInt(el.value) || 0;

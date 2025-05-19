@@ -1,7 +1,7 @@
 <?php
 session_start();
 include "view/header.php";
-include "configdb.php";
+include "db_connection.php";
 ?>
 
 <html>
@@ -153,7 +153,7 @@ include "configdb.php";
         <div class="mt-8">
 
             <h2 class="text-xl font-semibold text-center">Customers Also Viewed</h2>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+            <div class="grid lg:grid-cols-4 gap-4 mt-4">
                 <a href="product1.html"
                     class="border p-4 hover-image rounded-lg shadow-md transform transition duration-500 hover:scale-105">
                     <div class="hover-image ">
