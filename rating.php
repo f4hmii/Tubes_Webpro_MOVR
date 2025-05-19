@@ -7,7 +7,7 @@ include "view/header.php";
 
 <head>
     <title>
-        Web Page
+        rating
     </title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
@@ -17,74 +17,6 @@ include "view/header.php";
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-
-<style>
-    body {
-        font-family: 'Roboto', sans-serif;
-    }
-
-    .hover-image {
-        position: relative;
-    }
-
-    .hover-image img {
-        transition: opacity 0.3 s ease;
-    }
-
-    .hover-image img.second {
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-    }
-
-    .hover-image:hover img.first {
-        opacity: 0;
-    }
-
-    .hover-image:hover img.second {
-        opacity: 1;
-    }
-
-    .btn {
-        transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-
-    .btn:active {
-        transform: scale(0.95);
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        background-color: white;
-        min-width: 600px;
-        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-        padding: 1rem;
-    }
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .dropdown-voucher .dropdown-content {
-        min-width: 150px;
-
-
-
-    }
-
-    .dropdown-outlet .dropdown-content {
-        min-width: 150px;
-
-    }
-
-    .disabled {
-        cursor: not-allowed;
-        opacity: 0.5;
-    }
-</style>
-
 
 <body class="bg-gray-100 text-gray-900">
     <main class="container mx-auto py-8 px-6">
@@ -206,68 +138,7 @@ include "view/header.php";
             <p>© 2023 Movr. All rights reserved.</p>
         </div>
 </footer>
-<script>
-    document.getElementById('search-icon').addEventListener('click', function() {
-        const searchBar = document.getElementById('search-bar');
-        if (searchBar.classList.contains('hidden')) {
-            searchBar.classList.remove('hidden');
-        } else {
-            searchBar.classList.add('hidden');
-        }
-    });
 
-    function showSize(size) {
-        document.getElementById('selected-size').innerText = size;
-    }
-</script>
-<script>
-    feather.replace();
-</script>
-<script>
-    const carouselSlides = document.querySelector('.carousel-slides');
-    const slides = document.querySelectorAll('.slide');
-    const slide = document.querySelectorAll('.slides');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-
-    let currentIndex = 0;
-
-    // Function to update carousel position
-    function updateCarousel() {
-        const offset = -currentIndex * 100;
-        carouselSlides.style.transform = `translateX(${offset}%)`;
-    }
-
-    // Go to the previous slide
-    prevBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        updateCarousel();
-        resetAutoSlide();
-    });
-
-
-    // Go to the next slide
-    nextBtn.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % slides.length;
-        updateCarousel();
-        resetAutoSlide();
-    });
-
-
-    function startAutoSlide() {
-        autoSlideInterval = setInterval(() => {
-            currentIndex = (currentIndex + 1) % slides.length;
-            updateCarousel();
-        }, 3000);
-    }
-
-    function resetAutoSlide() {
-        clearInterval(autoSlideInterval);
-        startAutoSlide();
-    }
-
-    startAutoSlide();
-</script>
 </body>
 
 </html>
