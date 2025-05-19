@@ -579,17 +579,20 @@ while ($row = $result->fetch_assoc()) {
 
     <div class="container">
       <?php foreach ($products as $product): ?>
-        <div class="card">
-          <img src="uploads/<?= $product['foto_url'] ?>" alt="product image" width="150px">
-          <i class="fa-regular fa-heart"></i>
-          <div class="card-content">
-            <p class="title"><?= $product['nama_produk'] ?></p>
-            <p class="price">Rp<?= number_format($product['harga'], 0, ',', '.') ?></p>
-            <p class="description"><?= $product['deskripsi'] ?></p>
+        <a href="detail.php?id=<?= $product['produk_id'] ?>" style="text-decoration: none; color: inherit;">
+          <div class="card">
+            <img src="uploads/<?= $product['foto_url'] ?>" alt="product image" width="150px">
+            <i class="fa-regular fa-heart"></i>
+            <div class="card-content">
+              <p class="title"><?= $product['nama_produk'] ?></p>
+              <p class="price">Rp<?= number_format($product['harga'], 0, ',', '.') ?></p>
+              <p class="description"><?= $product['deskripsi'] ?></p>
+            </div>
           </div>
-        </div>
+        </a>
       <?php endforeach; ?>
     </div>
+
 
     <footer class="bg-gray-800 text-white mt-12">
       <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
