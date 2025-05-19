@@ -74,7 +74,7 @@ while ($row = $result->fetch_assoc()) {
       
       
 
-    <div class="container">
+    <div class="container" id="product-list">
      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
   <?php foreach ($products as $product): ?>
     <div class="relative w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
@@ -86,12 +86,12 @@ while ($row = $result->fetch_assoc()) {
         </button>
       </form>
 
-      <a href="detail.php?id=<?= $product['produk_id'] ?>">
+      <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
         <img class="p-6 rounded-t-lg mx-auto max-h-48 object-contain" src="uploads/<?= $product['foto_url'] ?>" alt="<?= $product['nama_produk'] ?>" />
       </a>
 
       <div class="px-5 pb-5">
-        <a href="detail.php?id=<?= $product['produk_id'] ?>">
+        <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
           <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"><?= $product['nama_produk'] ?></h5>
         </a>
         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-2"><?= $product['deskripsi'] ?></p>
