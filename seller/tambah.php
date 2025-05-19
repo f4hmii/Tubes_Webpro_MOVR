@@ -12,10 +12,7 @@ include '../db_connection.php';
 <body class="container py-5">
     <h2>Tambah Produk</h2>
     <form method="POST" enctype="multipart/form-data">
-        <div class="mb-3">
-            <label>ID Produk</label>
-            <input type="number" name="produk_id" class="form-control" required>
-        </div>
+       
         <div class="mb-3">
             <label>Nama Produk</label>
             <input type="text" name="nama" class="form-control" required>
@@ -49,21 +46,21 @@ include '../db_connection.php';
             </select>
         </div>
         <div class="mb-3">
-    <label>Ukuran Produk</label><br>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="size[]" value="S"> <label class="form-check-label">S</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="size[]" value="M"> <label class="form-check-label">M</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="size[]" value="L"> <label class="form-check-label">L</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" name="size[]" value="XL"> <label class="form-check-label">XL</label>
-    </div>
-</div>
- <div class="mb-3">
+            <label>Ukuran Produk</label><br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="size[]" value="S"> <label class="form-check-label">S</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="size[]" value="M"> <label class="form-check-label">M</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="size[]" value="L"> <label class="form-check-label">L</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" name="size[]" value="XL"> <label class="form-check-label">XL</label>
+            </div>
+        </div>
+        <div class="mb-3">
             <label>Warna</label>
             <input type="text" name="color" class="form-control" required>
         </div>
@@ -74,15 +71,15 @@ include '../db_connection.php';
 
 <?php
 if (isset($_POST['simpan'])) {
-    $produk_id   = intval($_POST['produk_id']);
+   
     $nama        = htmlspecialchars($_POST['nama']);
     $deskripsi   = htmlspecialchars($_POST['deskripsi']);
     $stok        = intval($_POST['stok']);
     $harga       = floatval($_POST['harga']);
-    $ukuran       = floatval($_POST['size']);
-    $warna       = floatval($_POST['color']);
+    $warna       = htmlspecialchars($_POST['color']);
     $kategori_id = intval($_POST['kategori_id']);
     $pengguna_id = intval($_SESSION['id']);
+    $sizes       = isset($_POST['size']) ? $_POST['size'] : [];
 
     $gambar     = $_FILES['gambar']['name'];
     $tmp_name   = $_FILES['gambar']['tmp_name'];
@@ -92,19 +89,20 @@ if (isset($_POST['simpan'])) {
     $file_ext = strtolower(pathinfo($gambar, PATHINFO_EXTENSION));
 
     if (in_array($file_ext, $allowed_ext)) {
-        move_uploaded_file($tmp_name, $upload_dir . $gambar);
+        // Tambahkan timestamp untuk nama file agar unik
+        $new_filename = time() . '_' . preg_replace("/[^a-zA-Z0-9.]/", "_", $gambar);
+        move_uploaded_file($tmp_name, $upload_dir . $new_filename);
 
-        $sql = "INSERT INTO produk (produk_id, nama_produk, deskripsi, stock, harga, foto_url, seller_id, kategori_id, size, color) 
-                VALUES ($produk_id, '$nama', '$deskripsi', $stok, $harga, '$gambar', $pengguna_id, $kategori_id , '$ukuran', '$warna')";
+        $sql = "INSERT INTO produk (nama_produk, deskripsi, stock, harga, foto_url, seller_id, kategori_id, color) 
+                VALUES ('$nama', '$deskripsi', $stok, $harga, '$new_filename', $pengguna_id, $kategori_id, '$warna')";
 
         if ($conn->query($sql)) {
-            // Simpan ukuran jika tersedia
-            if (!empty($_POST['size'])) {
-                $sizes = $_POST['size'];
-                foreach ($sizes as $size) {
-                    $size = $conn->real_escape_string($size);
-                    $conn->query("INSERT INTO produk (produk_id, size) VALUES ($produk_id, '$size')");
-                }
+            $produk_id = $conn->insert_id;
+
+            // Simpan ukuran
+            foreach ($sizes as $size) {
+                $size = $conn->real_escape_string($size);
+                $conn->query("INSERT INTO produk_size (produk_id, size) VALUES ($produk_id, '$size')");
             }
 
             echo "<script>location='produk.php';</script>";
@@ -115,10 +113,7 @@ if (isset($_POST['simpan'])) {
         echo "<div class='alert alert-warning'>Format file tidak diizinkan.</div>";
     }
 }
-
 ?>
-
-
 
 </body>
 </html>

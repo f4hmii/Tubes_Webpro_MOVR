@@ -26,351 +26,7 @@ while ($row = $result->fetch_assoc()) {
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      outline: none;
-      border: none;
-      text-decoration: none;
-      font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-    }
-
-    body {
-      max-width: 100vw;
-      max-height: 100vh;
-      background-color: #f3f3f3;
-      margin: 0;
-      /* Menghapus margin default body */
-
-      font-family: 'Roboto', sans-serif;
-    }
-
-
-    .nav-link {
-      position: relative;
-      display: inline-block;
-      padding: 0.5rem 1rem;
-      transition: color 0.3s ease;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      width: 100%;
-      transform: scaleX(0);
-      height: 2px;
-      bottom: 0;
-      left: 0;
-      background-color: #000;
-      transform-origin: bottom right;
-      transition: transform 0.25s ease-out;
-    }
-
-    .nav-link:hover::after {
-      transform: scaleX(1);
-      transform-origin: bottom left;
-    }
-
-    .nav-icon:hover {
-      color: #000;
-      transform: scale(1.2);
-    }
-
-    .hover-image {
-      position: relative;
-    }
-
-    .hover-image img {
-      transition: opacity 0.3s ease;
-    }
-
-    .hover-image img.second {
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-    }
-
-    .hover-image:hover img.first {
-      opacity: 0;
-    }
-
-    .hover-image:hover img.second {
-      opacity: 1;
-    }
-
-    .btn {
-      transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-
-    .btn:active {
-      transform: scale(0.95);
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: white;
-      min-width: 600px;
-      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-      z-index: 6;
-      padding: 1rem;
-      border-top: 1px solid #e5e7eb;
-
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-
-    .dropdown-voucher .dropdown-content {
-      min-width: 150px;
-
-
-
-    }
-
-    .dropdown-outlet .dropdown-content {
-      min-width: 150px;
-
-    }
-
-
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 15px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-
-    .container {
-      position: relative;
-      margin: auto;
-      overflow: hidden;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 3rem;
-      column-gap: 10px;
-      justify-content: space-between;
-    }
-
-    .discount {
-      position: absolute;
-      top: 15px;
-      left: 1rem;
-      padding: .7rem 1rem;
-      font-size: 1rem;
-      color: white;
-      background-color: red;
-      /* background: rgba(255, 51, 153, .05); */
-      z-index: 1;
-      border-radius: .5rem;
-    }
-
-    .card {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      width: 300px;
-      overflow: hidden;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
-      position: relative;
-    }
-
-    .card:hover {
-      transform: scale(1.05);
-    }
-
-    .card img {
-      width: 100%;
-      height: auto;
-      position: relative;
-      text-align: center;
-      overflow: hidden;
-      object-fit: cover;
-    }
-
-    .fa-regular {
-      position: absolute;
-      top: 320px;
-      right: 10px;
-      background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-
-
-    .card-content {
-      padding: 15px;
-    }
-
-    .title {
-      font-size: 18px;
-      font-weight: bold;
-      margin: 10px 0;
-      color: #333;
-      text-align: left;
-    }
-
-    .price {
-      font-size: 25px;
-      color: red;
-      margin: 5px 0;
-      font-weight: bold;
-      text-align: left;
-      top: 50%;
-    }
-
-    .original-price {
-      text-decoration: line-through;
-      color: #888;
-      font-size: 20px;
-      text-align: left;
-    }
-
-    .description {
-      font-size: 14px;
-      color: #666;
-      margin: 10px 0;
-    }
-
-    .rating {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      font-size: 14px;
-      color: #333;
-    }
-
-    .stars {
-      color: #FFD700;
-    }
-
-    footer {
-      background-color: #333;
-      color: #fff;
-      text-align: center;
-      padding: 15px 20px;
-      margin-top: 20px;
-    }
-
-    footer p {
-      margin: 0;
-      font-size: 14px;
-    }
-
-    .button-container {
-      margin-top: 10px;
-    }
-
-    .button {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      text-decoration: none;
-      font-size: 14px;
-      transition: background-color 0.3s;
-    }
-
-    .button:hover {
-      background-color: #555;
-    }
-
-
-    /* styling courosel */
-    .carousel {
-      position: relative;
-      width: 100%;
-      overflow: hidden;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-      background-color: white;
-      margin-bottom: 20px;
-      margin-top: 1rem;
-    }
-
-
-    .carousel-slides {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-
-    }
-
-    .slide {
-      min-width: 100%;
-      /* max-width: 300px; */
-      height: 700px;
-      display: flex;
-      justify-content: center;
-      /* align-items: center; */
-      font-size: 2rem;
-      font-weight: bold;
-      color: #fff;
-      user-select: none;
-
-    }
-
-    .carousel-btn {
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
-      border: none;
-      font-size: 2rem;
-      padding: 10px;
-      cursor: pointer;
-      z-index: 1000;
-      border-radius: 50%;
-    }
-
-    .prev-btn {
-      left: 10px;
-    }
-
-    .next-btn {
-      right: 10px;
-    }
-
-    .carousel-btn:focus {
-      outline: none;
-    }
-
-    .carousel-btn:hover {
-      background-color: rgba(0, 0, 0, 0.7);
-    }
-
-    .fa-solid.fa-chevron-left,
-    .fa-solid.fa-chevron-right {
-      font-size: 8px;
-    }
-  </style>
-</head>
-<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="index.css">
 
 </head>
@@ -415,184 +71,47 @@ while ($row = $result->fetch_assoc()) {
 
     <div class="container">
       <!-- Card 1 -->
-      <a href="detail.php" class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IS1657_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-          alt="jersey" width="150px">
-
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Tiro 24 T-Shirt Jersey</p>
-          <p class="original-price">Rp550.000</p>
-          <p class="price">Rp275.000</p>
-        </div>
-      </a>
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_DV4855-570_d%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1080&q=75"
-          alt="jersey" width="150px">
-
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Phoenix Suns Icon</p>
-          <p class="original-price">Rp1.379.000</p>
-          <p class="price">Rp827.000</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IL8260_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1080&q=75"
-          alt="jersey" width="150px">
-
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Knit Track Suits</p>
-          <p class="original-price">Rp1.109.000</p>
-          <p class="price">Rp800.000</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FB7352-010_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-          alt="jersey" width="150px">
-
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Germian Tracktop</p>
-          <p class="original-price">Rp1.079.000</p>
-          <p class="price">Rp720.000</p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FZ0767-410_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-          alt="jersey" width="150px">
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Athletics French Jogger</p>
-          <p class="original-price">Rp699.000</p>
-          <p class="price">Rp599.000</p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_620138_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-          alt="jersey" width="150px">
-
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Jordan Sports Deman</p>
-          <p class="original-price">Rp599.000
-          <p class="price">Rp280.000</p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_FN7690-070_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-          alt="jersey" width="150px">
-
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Cuff Pants</p>
-          <p class="original-price">Rp949.000</p>
-          <p class="price">Rp430.000</p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_MS41520-NNY_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-          alt="jersey" width="150px">
-
-
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Sports Essentials French</p>
-          <p class="original-price">Rp699.000</p>
-          <p class="price">Rp320.000</p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_IR7468_c%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-          alt="jersey" width="150px">
-
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Laica Dress</p>
-          <p class="original-price">Rp1.200.000</p>
-          <p class="price">Rp830.000</p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_LA2404001-03_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-          alt="jersey" width="150px">
-
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">2in1 Phoenix</p>
-          <p class="original-price">Rp900.000</p>
-          <p class="price">Rp400.000</p>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_JE8808_a%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-          alt="jersey" width="150px">
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Red Lady Bra Sport</p>
-          <p class="original-price">Rp890.000</p>
-          <p class="price">Rp420.000</p>
-        </div>
-      </div>
-
-      <div class="card">
-        <span class="discount">-50%</span>
-        <img src="https://jdsports.id/_next/image?url=https%3A%2F%2Fimages.jdsports.id%2Fi%2Fjpl%2Fjd_ANZ0118317_b%3Fw%3D700%26resmode%3Dsharp%26qlt%3D70%26fmt%3Dwebp&w=1920&q=75"
-          alt="jersey" width="150px">
-
-        <i class="fa-regular fa-heart"></i>
-        <div class="card-content">
-          <p class="title">Pink Soda Sport</p>
-          <p class="original-price">Rp300.00</p>
-          <p class="price">Rp150.000</p>
-        </div>
-      </div>
-    </div>
+      
+      
 
     <div class="container">
-      <?php foreach ($products as $product): ?>
-        <a href="detail.php?id=<?= $product['produk_id'] ?>" style="text-decoration: none; color: inherit;">
-          <div class="card">
-            <img src="uploads/<?= $product['foto_url'] ?>" alt="product image" width="150px">
-            <i class="fa-regular fa-heart"></i>
-            <div class="card-content">
-              <p class="title"><?= $product['nama_produk'] ?></p>
-              <p class="price">Rp<?= number_format($product['harga'], 0, ',', '.') ?></p>
-              <p class="description"><?= $product['deskripsi'] ?></p>
-            </div>
-          </div>
-        </a>
-      <?php endforeach; ?>
-    </div>
+     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+  <?php foreach ($products as $product): ?>
+    <div class="relative w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+      <!-- Icon Love (favorite) -->
+      <form method="POST" action="favorite.php" class="absolute top-3 right-3">
+        <input type="hidden" name="produk_id" value="<?= $product['produk_id'] ?>">
+        <button type="submit" class="text-gray-500 hover:text-red-500">
+          <i data-feather="heart" class="w-5 h-5"></i>
+        </button>
+      </form>
 
+      <a href="detail.php?id=<?= $product['produk_id'] ?>">
+        <img class="p-6 rounded-t-lg mx-auto max-h-48 object-contain" src="uploads/<?= $product['foto_url'] ?>" alt="<?= $product['nama_produk'] ?>" />
+      </a>
+
+      <div class="px-5 pb-5">
+        <a href="detail.php?id=<?= $product['produk_id'] ?>">
+          <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"><?= $product['nama_produk'] ?></h5>
+        </a>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-2"><?= $product['deskripsi'] ?></p>
+
+        <div class="flex items-center justify-between mt-4 mb-3">
+          <span class="text-2xl font-bold text-gray-900 dark:text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
+          <a href="add_to_cart.php?id=<?= $product['produk_id'] ?>" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:focus:ring-blue-800">
+            Add to Cart
+          </a>
+        </div>
+
+        <a href="checkout.php?id=<?= $product['produk_id'] ?>" class="block w-full text-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-green-800">
+          Checkout Sekarang
+        </a>
+      </div>
+    </div>
+  <?php endforeach; ?>
+</div>
+</div>
+</div>
 
     <footer class="bg-gray-800 text-white mt-12">
       <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -680,6 +199,13 @@ while ($row = $result->fetch_assoc()) {
 
       startAutoSlide();
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+
+
+    <script src="https://unpkg.com/feather-icons"></script>
+<script>
+    feather.replace();
+</script>
   </body>
 
 </html>
