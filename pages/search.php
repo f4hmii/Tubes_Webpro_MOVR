@@ -1,7 +1,7 @@
 <?php
 include 'db_connection.php';
 
-// Ambil kata kunci pencarian dari URL
+
 $search = isset($_GET['query']) ? trim($_GET['query']) : '';
 
 ?>
@@ -23,12 +23,12 @@ $search = isset($_GET['query']) ? trim($_GET['query']) : '';
 <hr>
 
 <?php
-// Jika form telah diisi
+
 if ($search !== '') {
-    // Hindari SQL injection
+ 
     $search = $koneksi->real_escape_string($search);
 
-    // Query pencarian
+  
     $sql = "SELECT * FROM produk 
             WHERE nama_produk LIKE '%$search%' 
             OR deskripsi LIKE '%$search%' 

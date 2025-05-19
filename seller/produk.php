@@ -17,9 +17,12 @@
                 <th>Gambar</th>
                 <th>Nama</th>
                 <th>Deskripsi</th>
-                <th>Stok</th>
+                <th>Stok</th>  
+                <th>Size</th>
+                <th>Color</th>
                 <th>Harga</th>
                 <th>Aksi</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -32,6 +35,8 @@
                 <td>{$row['nama_produk']}</td>
                 <td>{$row['deskripsi']}</td>
                 <td>{$row['stock']}</td>
+                <td>{$row['size']}</td>
+                <td>{$row['color']}</td>
                 <td>Rp " . number_format($row['harga']) . "</td>
                 <td>
                     <a href='edit.php?id={$row['produk_id']}' class='btn btn-warning btn-sm'>Edit</a>

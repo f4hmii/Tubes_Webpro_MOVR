@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// Ambil data yang dikirim via POST
+
 $sender = $_POST['sender'] ?? '';
 $message = $_POST['message'] ?? '';
-$type = $_POST['type'] ?? 'biasa'; // default biasa
+$type = $_POST['type'] ?? 'biasa'; 
 $tawar_harga = $_POST['tawar_harga'] ?? null;
 $action = $_GET['action'] ?? null;
 $index = $_GET['index'] ?? null;
