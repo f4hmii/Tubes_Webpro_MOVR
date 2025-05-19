@@ -167,6 +167,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
 
+        // Redirect berdasarkan role
+        if ($user['role'] === 'admin') {
+          header("Location: ../admin/index.php");
+        } elseif ($user['role'] === 'user') {
+          header("Location: ../user/index.php");
+        } else {
+          $error = "Role tidak dikenali!";
+        }
+
         header("Location: ../index.php");
         exit();
       } else {
