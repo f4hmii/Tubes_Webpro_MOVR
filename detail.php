@@ -2,6 +2,7 @@
 session_start();
 include "view/header.php";
 include "db_connection.php";
+include "db_connection.php";    
 ?>
 
 <html>
