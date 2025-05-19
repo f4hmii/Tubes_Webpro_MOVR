@@ -19,12 +19,11 @@ include "view/header.php";
 </head>
 
 
-
 <body class="bg-gray-100 text-gray-900">
     <main class="container mx-auto py-8 px-6">
         <div class="max-w-3xl mx-auto">
             <h1 class="text-2xl font-bold mb-6 text-center">Customer Reviews</h1>
-    
+
             
             <div class="bg-white p-6 rounded-lg shadow-md mb-6">
                 <div class="flex items-center mb-2">
