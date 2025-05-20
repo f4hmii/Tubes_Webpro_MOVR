@@ -15,7 +15,8 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
   <script src="https://unpkg.com/feather-icons"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"   />
-  <link rel="stylesheet" href="view/header.css">
+  <link rel="stylesheet" href="/Tubes_Webpro_MOVR/view/header.css">
+
 
 <body>
   <div class="navbar">
