@@ -54,8 +54,8 @@ $result = mysqli_query($conn, "SELECT
               <td><?= $row['nama_kategori'] ?></td>
               <td><?= $row['harga'] ?></td>    
             <td>
-                <button><a href="../seller/edit.php?produk_id=<?= $row['produk_id'] ?>">Edit</a></button>
-                <button><a href="../seller/hapus.php?produk_id=<?= $row['produk_id'] ?>" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a></button>
+                <button><a href="editProduk.php?produk_id=<?= $row['produk_id'] ?>">Edit</a></button>
+                <button><a href="hapusProduk.php?produk_id=<?= $row['produk_id'] ?>" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a></button>
             </td>
         </tr>
     <?php } ?>
