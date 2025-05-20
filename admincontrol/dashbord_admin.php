@@ -97,7 +97,7 @@
         <a href="kelola_pembayaran.php">Kelola Pembayaran</a>
         <!-- <a href="buat_pengguna.php">Buat Pengguna</a>
         <a href="notifikasi.php">Notification</a> -->
-        <a href="../logout.php">Logout</a>
+        <a href="../index.php">Logout</a>
     </div>
 
     <div class="main">
