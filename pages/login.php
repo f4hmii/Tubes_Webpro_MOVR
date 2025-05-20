@@ -25,6 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($result && $result->num_rows === 1) {
       $user = $result->fetch_assoc();
+
       if (password_verify($password, $user['sandi'])) {
         $_SESSION['id'] = $user['pengguna_id'];
         $_SESSION['username'] = $user['username'];
@@ -32,16 +33,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Redirect berdasarkan role
         if ($user['role'] === 'admin') {
-           $_SESSION['admin_logged_in'] = true;
-            header("Location: ../dashboard_admin.php");
-            exit;
+          header("Location: ../admin/index.php");
         } elseif ($user['role'] === 'user') {
           header("Location: ../user/index.php");
+          exit();
         } else {
           $error = "Role tidak dikenali!";
         }
-        header("Location: ../index.php");
-        exit();
       } else {
         $error = "Password salah!";
       }
