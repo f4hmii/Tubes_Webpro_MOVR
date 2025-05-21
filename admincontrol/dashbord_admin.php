@@ -93,7 +93,7 @@
         <h2>Admin Dashboard</h2>
         <a href="#" class="active">Dashboard</a>
         <a href="kelola_user.php">Kelola User</a>
-        <a href="kelola_barang.php">Kelola Produk</a>
+        <a href="kelola_produk.php">Kelola Produk</a>
         <a href="kelola_pembayaran.php">Kelola Pembayaran</a>
         <!-- <a href="buat_pengguna.php">Buat Pengguna</a>
         <a href="notifikasi.php">Notification</a> -->

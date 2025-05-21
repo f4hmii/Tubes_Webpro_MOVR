@@ -13,7 +13,7 @@ if (isset($_POST['update_status'])) {
 $result = mysqli_query($conn, "SELECT * FROM pengguna ORDER BY pengguna_id ASC");
 ?>
 
-<h2>Kelola Produk</h2>
+<h2>Kelola User</h2>
 <table border="1" cellpadding="10">
     <tr>
         <th>No</th>
