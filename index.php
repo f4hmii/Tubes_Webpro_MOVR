@@ -26,8 +26,8 @@ while ($row = $result->fetch_assoc()) {
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"   />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="index.css">
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="index.css">
 
 </head>
 
@@ -71,47 +71,47 @@ while ($row = $result->fetch_assoc()) {
 
     <div class="container">
       <!-- Card 1 -->
-      
-      
 
-    <div class="container" id="product-list">
-     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-  <?php foreach ($products as $product): ?>
-    <div class="relative w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-      <!-- Icon Love (favorite) -->
-      <form method="POST" action="favorite.php" class="absolute top-3 right-3">
-        <input type="hidden" name="produk_id" value="<?= $product['produk_id'] ?>">
-        <button type="submit" class="text-gray-500 hover:text-red-500">
-          <i data-feather="heart" class="w-5 h-5"></i>
-        </button>
-      </form>
 
-      <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
-        <img class="p-6 rounded-t-lg mx-auto max-h-48 object-contain" src="uploads/<?= $product['foto_url'] ?>" alt="<?= $product['nama_produk'] ?>" />
-      </a>
 
-      <div class="px-5 pb-5">
-        <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
-          <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"><?= $product['nama_produk'] ?></h5>
-        </a>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-2"><?= $product['deskripsi'] ?></p>
+      <div class="container" id="product-list">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+          <?php foreach ($products as $product): ?>
+            <div class="relative w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+              <!-- Icon Love (favorite) -->
+              <form method="POST" action="favorite.php" class="absolute top-3 right-3">
+                <input type="hidden" name="produk_id" value="<?= $product['produk_id'] ?>">
+                <button type="submit" class="text-gray-500 hover:text-red-500">
+                  <i data-feather="heart" class="w-5 h-5"></i>
+                </button>
+              </form>
 
-        <div class="flex items-center justify-between mt-4 mb-3">
-          <span class="text-2xl font-bold text-gray-900 dark:text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
-          <a href="add_to_cart.php?id=<?= $product['produk_id'] ?>" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:focus:ring-blue-800">
-            Add to Cart
-          </a>
+              <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
+                <img class="p-6 rounded-t-lg mx-auto max-h-48 object-contain" src="uploads/<?= $product['foto_url'] ?>" alt="<?= $product['nama_produk'] ?>" />
+              </a>
+
+              <div class="px-5 pb-5">
+                <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
+                  <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"><?= $product['nama_produk'] ?></h5>
+                </a>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-2"><?= $product['deskripsi'] ?></p>
+
+                <div class="flex items-center justify-between mt-4 mb-3">
+                  <span class="text-2xl font-bold text-gray-900 dark:text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
+                  <a href="add_to_cart.php?id=<?= $product['produk_id'] ?>" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:focus:ring-blue-800">
+                    Add to Cart
+                  </a>
+                </div>
+
+                <a href="checkout.php?id=<?= $product['produk_id'] ?>" class="block w-full text-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-green-800">
+                  Checkout Sekarang
+                </a>
+              </div>
+            </div>
+          <?php endforeach; ?>
         </div>
-
-        <a href="checkout.php?id=<?= $product['produk_id'] ?>" class="block w-full text-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-green-800">
-          Checkout Sekarang
-        </a>
       </div>
     </div>
-  <?php endforeach; ?>
-</div>
-</div>
-</div>
 
     <footer class="bg-gray-800 text-white mt-12">
       <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -148,7 +148,7 @@ while ($row = $result->fetch_assoc()) {
           </form>
         </div>
         <div class="mt-8 text-center text-gray-400">
-          <p>© 2023 Movr. All rights reserved.</p>
+          <p>©️ 2023 Movr. All rights reserved.</p>
         </div>
     </footer>
     <script>
@@ -203,9 +203,9 @@ while ($row = $result->fetch_assoc()) {
 
 
     <script src="https://unpkg.com/feather-icons"></script>
-<script>
-    feather.replace();
-</script>
+    <script>
+      feather.replace();
+    </script>
   </body>
 
 </html>
