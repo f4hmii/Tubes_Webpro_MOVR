@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           header("Location: ../admincontrol/dashbord_admin.php");
           exit();
         } elseif ($user['role'] === 'seller' || $user['role'] === 'buyer') {
-          header("Location: ../user/index.php");
+          header("Location: ../index.php");
           exit();
         } else {
           $error = "Role tidak dikenali!";
