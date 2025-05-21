@@ -95,6 +95,8 @@
         <a href="kelola_user.php">Kelola User</a>
         <a href="kelola_produk.php">Kelola Produk</a>
         <a href="kelola_pembayaran.php">Kelola Pembayaran</a>
+        <a href="category_admin.php">Category</a>
+         <a href="verifikasi_produk.php">Verifikasi Produk</a>
         <!-- <a href="buat_pengguna.php">Buat Pengguna</a>
         <a href="notifikasi.php">Notification</a> -->
         <a href="../index.php">Logout</a>
@@ -120,4 +122,4 @@
     </div>
 
     </body>
-    </html>
+    </html> 
