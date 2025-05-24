@@ -1,6 +1,32 @@
 <?php
 session_start();
 include '../db_connection.php';
+
+// Pastikan hanya seller yang bisa akses
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'seller') {
+    header("Location: ../login.php");
+    exit;
+}
+
+// Pastikan session id pengguna ada dan valid
+if (!isset($_SESSION['id'])) {
+    die("Error: Anda belum login atau session pengguna tidak ditemukan.");
+}
+
+$pengguna_id = intval($_SESSION['id']);
+
+// Cek apakah pengguna_id ada di tabel pengguna
+$resultCheck = $conn->query("SELECT pengguna_id FROM pengguna WHERE pengguna_id = $pengguna_id");
+if ($resultCheck->num_rows == 0) {
+    die("Error: Pengguna tidak valid.");
+}
+
+// Setelah pengecekan di atas berhasil, kamu bisa lanjut ke proses insert produk di bagian form handler
+// Misalnya setelah form submit:
+if (isset($_POST['simpan'])) {
+    // proses simpan produk ...
+    // gunakan $pengguna_id untuk kolom pengguna_id di tabel produk
+}
 ?>
 
 <!DOCTYPE html>
@@ -71,16 +97,17 @@ include '../db_connection.php';
 
 <?php
 if (isset($_POST['simpan'])) {
-   
-    $nama        = htmlspecialchars($_POST['nama']);
-    $deskripsi   = htmlspecialchars($_POST['deskripsi']);
+    // Sanitasi input
+    $nama        = $conn->real_escape_string(htmlspecialchars($_POST['nama']));
+    $deskripsi   = $conn->real_escape_string(htmlspecialchars($_POST['deskripsi']));
     $stok        = intval($_POST['stok']);
     $harga       = floatval($_POST['harga']);
-    $warna       = htmlspecialchars($_POST['color']);
+    $warna       = $conn->real_escape_string(htmlspecialchars($_POST['color']));
     $kategori_id = intval($_POST['kategori_id']);
     $pengguna_id = intval($_SESSION['id']);
-    $sizes       = isset($_POST['size']) ? $_POST['size'] : [];
+    $sizes       = isset($_POST['size']) ? $_POST['size'] : [];  // ini array
 
+    // Upload gambar
     $gambar     = $_FILES['gambar']['name'];
     $tmp_name   = $_FILES['gambar']['tmp_name'];
     $upload_dir = "../uploads/";
@@ -89,30 +116,37 @@ if (isset($_POST['simpan'])) {
     $file_ext = strtolower(pathinfo($gambar, PATHINFO_EXTENSION));
 
     if (in_array($file_ext, $allowed_ext)) {
-        // Tambahkan timestamp untuk nama file agar unik
-        $new_filename = time() . '_' . preg_replace("/[^a-zA-Z0-9.]/", "_", $gambar);
-        move_uploaded_file($tmp_name, $upload_dir . $new_filename);
+        $new_filename = time() . '_' . uniqid() . '.' . $file_ext;
+        $target_file = $upload_dir . $new_filename;
 
-        $sql = "INSERT INTO produk (nama_produk, deskripsi, stock, harga, foto_url, seller_id, kategori_id, color) 
-                VALUES ('$nama', '$deskripsi', $stok, $harga, '$new_filename', $pengguna_id, $kategori_id, '$warna')";
+        if (move_uploaded_file($tmp_name, $target_file)) {
+            // Insert produk (gunakan kolom yang benar, misal nama_produk)
+           $sql = "INSERT INTO produk (nama_produk, deskripsi, stock, harga, foto_url, seller_id, kategori_id, color, verified) 
+        VALUES ('$nama', '$deskripsi', $stok, $harga, '$new_filename', $pengguna_id, $kategori_id, '$warna', 0)";
 
-        if ($conn->query($sql)) {
-            $produk_id = $conn->insert_id;
 
-            // Simpan ukuran
-            foreach ($sizes as $size) {
-                $size = $conn->real_escape_string($size);
-                $conn->query("INSERT INTO produk_size (produk_id, size) VALUES ($produk_id, '$size')");
+            if ($conn->query($sql)) {
+                $produk_id = $conn->insert_id;
+
+                // Insert ukuran produk ke tabel produk_size (atau nama tabel kamu)
+                foreach ($sizes as $size) {
+                    $size_escaped = $conn->real_escape_string($size);
+                    $conn->query("INSERT INTO produk_size (produk_id, size) VALUES ($produk_id, '$size_escaped')");
+                }
+
+                echo "<div class='alert alert-success mt-3'>Produk berhasil ditambahkan dan menunggu verifikasi admin</div>";
+                echo "<script>setTimeout(() => { location.href = 'produk.php'; }, 1500);</script>";
+            } else {
+                echo "<div class='alert alert-danger mt-3'>Gagal menyimpan produk: " . $conn->error . "</div>";
             }
-
-            echo "<script>location='produk.php';</script>";
         } else {
-            echo "<div class='alert alert-danger'>Gagal menyimpan produk: " . $conn->error . "</div>";
+            echo "<div class='alert alert-danger mt-3'>Gagal mengupload gambar</div>";
         }
     } else {
-        echo "<div class='alert alert-warning'>Format file tidak diizinkan.</div>";
+        echo "<div class='alert alert-warning mt-3'>Format file tidak diizinkan. Hanya JPG, JPEG, PNG, dan GIF yang diperbolehkan.</div>";
     }
 }
+
 ?>
 
 </body>
