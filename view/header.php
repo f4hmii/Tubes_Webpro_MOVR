@@ -70,10 +70,6 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
       </a>
 
 
-      <a href="chat.php" title="Chat" style="margin-right: 10px;">
-        <i data-feather="message-circle"></i>
-      </a>
-
       <a href="pages/chet.php" title="Chet" style="margin-right: 10px;">
         <i data-feather="message-circle"></i>
       </a>
