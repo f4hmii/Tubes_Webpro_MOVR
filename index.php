@@ -79,12 +79,13 @@ while ($row = $result->fetch_assoc()) {
           <?php foreach ($products as $product): ?>
             <div class="relative w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
               <!-- Icon Love (favorite) -->
-              <form method="POST" action="favorite.php" class="absolute top-3 right-3">
+              <form method="POST" action="wishlist/favorite.php" class="absolute top-3 right-3">
                 <input type="hidden" name="produk_id" value="<?= $product['produk_id'] ?>">
                 <button type="submit" class="text-gray-500 hover:text-red-500">
                   <i data-feather="heart" class="w-5 h-5"></i>
                 </button>
               </form>
+
 
               <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
                 <img class="p-6 rounded-t-lg mx-auto max-h-48 object-contain" src="uploads/<?= $product['foto_url'] ?>" alt="<?= $product['nama_produk'] ?>" />
