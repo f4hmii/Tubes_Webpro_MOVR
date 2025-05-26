@@ -11,10 +11,11 @@ $pengguna_id = $_SESSION['pengguna_id'];
 $produk_id = $_POST['produk_id'] ?? null;
 
 if ($produk_id && is_numeric($produk_id)) {
-    $stmt = $conn->prepare("DELETE FROM favorit WHERE pengguna_id = ? AND produk_id = ?");
-    $stmt->bind_param("ii", $pengguna_id, $produk_id);
-    $stmt->execute();
+    $delete = $conn->prepare("DELETE FROM favorit WHERE pengguna_id = ? AND produk_id = ?");
+    $delete->bind_param("ii", $pengguna_id, $produk_id);
+    $delete->execute();
 }
 
-header("Location: ../favorite.php");
+// Kembali ke halaman favorit
+header("Location: ../wishlist/favorite.php");
 exit();

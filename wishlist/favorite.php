@@ -60,11 +60,12 @@ $result = $query->get_result();
                     <p class="text-gray-600">Rp <?= number_format($product['harga'], 0, ',', '.') ?></p>
                     <p class="text-sm text-gray-500"><?= $product['deskripsi'] ?></p>
 
-                    <!-- ✅ Form hapus dari favorit -->
-                    <form action="wishlist/delete_favorite.php" method="POST" class="mt-2">
+                    <!-- Form hapus dari favorit -->
+                    <form action="delete_favorite.php" method="POST" class="mt-2" onsubmit="return confirm('Yakin ingin menghapus produk ini dari favorit?');">
                         <input type="hidden" name="produk_id" value="<?= $product['produk_id'] ?>">
                         <button type="submit" class="text-red-500 hover:text-red-700 text-sm">Hapus dari Favorit</button>
                     </form>
+
                 </div>
             <?php endwhile; ?>
 
