@@ -50,6 +50,12 @@ $result = $query->get_result();
 
 <body class="bg-gray-100 p-6">
     <h1 class="text-3xl font-bold mb-6">Produk Favorit Anda</h1>
+    <div class="mt-6">
+        <a href="../index.php" class="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Kembali ke Beranda
+        </a>
+    </div>
+
 
     <?php if ($result->num_rows > 0): ?>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
