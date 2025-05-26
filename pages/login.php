@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
       if (password_verify($password, $user['sandi'])) {
         $_SESSION['id'] = $user['pengguna_id'];
+        $_SESSION['pengguna_id'] = $user['pengguna_id']; // ⬅️ Tambahan penting
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
 
@@ -57,24 +58,26 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>    
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
-    <script src="https://unpkg.com/feather-icons"></script>
-  </head>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/feather-icons"></script>
+</head>
 
 <body class="min-h-screen flex items-start justify-center pt-32 bg-gray-100 dark:bg-gray-900">
   <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
     <form class="space-y-6" action="" method="POST">
-      <?php if (!empty($error)) { echo "<p style='color:red;'>$error</p>"; } ?>
+      <?php if (!empty($error)) {
+        echo "<p style='color:red;'>$error</p>";
+      } ?>
       <h5 class="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h5>
       <div>
         <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>
@@ -99,10 +102,11 @@ $conn->close();
   </div>
 
 
-<script src="https://unpkg.com/feather-icons"></script>
-<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
- <script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+  <script>
     feather.replace();
   </script>
 </body>
+
 </html>

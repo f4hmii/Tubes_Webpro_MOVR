@@ -24,15 +24,15 @@ if (!$product) {
 // Assign data produk
 $product_name = $product['nama_produk'];
 $price = $product['harga'];
-$stock = $product['stock']; // Perhatikan ini 'stock' bukan 'stok'
+$stock = $product['stock'];
 $deskripsi = $product['deskripsi'];
 $gambarUtama = $product['foto_url'];
+$color = $product['warna'];
+$size = $product['ukuran'];
 
-// Karena di database hanya ada 1 gambar (foto_url), kita tidak bisa menampilkan gambar lain
-$gambarLain = []; // Kosongkan array karena tidak ada gambar tambahan di database
 
-// Jika Anda ingin menampilkan gambar yang sama sebagai thumbnail, bisa diisi dengan gambar utama
-// $gambarLain = [$gambarUtama];
+$gambarLain = [];
+
 ?>
 
 <!DOCTYPE html>
@@ -81,20 +81,20 @@ $gambarLain = []; // Kosongkan array karena tidak ada gambar tambahan di databas
 
         <!-- Informasi Produk -->
         <div>
-            <h2 class="text-3xl font-bold mb-2"><?php echo htmlspecialchars($product_name); ?></h2>
-            <p class="text-xl text-gray-800 mb-4">Rp <?php echo number_format($price, 0, ',', '.'); ?></p>
+            <h2 class="text-4xl font-bold mb-2"><?php echo htmlspecialchars($product_name); ?></h2>
+            <p class="text-3xl text-red-500 mb-4">Rp <?php echo number_format($price, 0, ',', '.'); ?></p>
 
             <!-- Warna -->
             <div class="mb-4">
-                <span class="text-gray-700">Colour: <span id="selected-color" class="font-semibold"></span></span>
+                <span class="text-gray-700">Color: <span id="selected-color" class="font-semibold"></span></span>
                 <div class="flex space-x-2 mt-2">
                     <?php if (!empty($warna)): ?>
-    <?php foreach ($warna as $color): ?>
-        <button type="button" onclick="selectColor('<?php echo $color; ?>')" id="color-<?php echo $color; ?>"
-            class="w-10 h-10 rounded-full border" style="background-color:<?php echo $color; ?>;">
-        </button>
-    <?php endforeach; ?>
-<?php endif; ?>
+                        <?php foreach ($warna as $color): ?>
+                            <button type="button" onclick="selectColor('<?php echo $color; ?>')" id="color-<?php echo $color; ?>"
+                                class="w-10 h-10 rounded-full border" style="background-color:<?php echo $color; ?>;">
+                            </button>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 
                 </div>
             </div>
@@ -104,13 +104,13 @@ $gambarLain = []; // Kosongkan array karena tidak ada gambar tambahan di databas
                 <span class="text-gray-700">Size: <span id="selected-size" class="font-semibold"></span></span>
                 <div class="flex space-x-2 mt-2">
                     <?php if (!empty($ukuran)): ?>
-    <?php foreach ($ukuran as $size): ?>
-        <button type="button" onclick="showSize('<?php echo $size; ?>')"
-            class="border px-4 py-2 rounded-lg hover:bg-gray-200">
-            <?php echo $size; ?>
-        </button>
-    <?php endforeach; ?>
-<?php endif; ?>
+                        <?php foreach ($ukuran as $size): ?>
+                            <button type="button" onclick="showSize('<?php echo $size; ?>')"
+                                class="border px-4 py-2 rounded-lg hover:bg-gray-200">
+                                <?php echo $size; ?>
+                            </button>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
 
                 </div>
             </div>

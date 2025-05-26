@@ -79,22 +79,24 @@ while ($row = $result->fetch_assoc()) {
           <?php foreach ($products as $product): ?>
             <div class="relative w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
               <!-- Icon Love (favorite) -->
-              <form method="POST" action="favorite.php" class="absolute top-3 right-3">
+              <form method="POST" action="wishlist/favorite.php" class="absolute top-3 right-3">
                 <input type="hidden" name="produk_id" value="<?= $product['produk_id'] ?>">
                 <button type="submit" class="text-gray-500 hover:text-red-500">
                   <i data-feather="heart" class="w-5 h-5"></i>
                 </button>
               </form>
 
-              <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
+
+              <a href="detail.php?id=<?= $product['produk_id'] ?>">
                 <img class="p-6 rounded-t-lg mx-auto max-h-48 object-contain" src="uploads/<?= $product['foto_url'] ?>" alt="<?= $product['nama_produk'] ?>" />
               </a>
 
               <div class="px-5 pb-5">
-                <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
+                <a href="detail.php?id=<?= $product['produk_id'] ?>">
                   <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"><?= $product['nama_produk'] ?></h5>
                 </a>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-2"><?= $product['deskripsi'] ?></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-2 truncate whitespace-nowrap overflow-hidden"><?= $product['deskripsi'] ?></p>
+
 
                 <div class="flex items-center justify-between mt-4 mb-3">
                   <span class="text-2xl font-bold text-gray-900 dark:text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
