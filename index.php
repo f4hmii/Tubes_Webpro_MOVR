@@ -92,10 +92,11 @@ while ($row = $result->fetch_assoc()) {
               </a>
 
               <div class="px-5 pb-5">
-                <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
+                <a href="detail.php?id=<?= $product['produk_id'] ?>">
                   <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"><?= $product['nama_produk'] ?></h5>
                 </a>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-2"><?= $product['deskripsi'] ?></p>
+                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-2 truncate whitespace-nowrap overflow-hidden"><?= $product['deskripsi'] ?></p>
+
 
                 <div class="flex items-center justify-between mt-4 mb-3">
                   <span class="text-2xl font-bold text-gray-900 dark:text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
