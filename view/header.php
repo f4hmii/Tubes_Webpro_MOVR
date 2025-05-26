@@ -3,6 +3,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,7 +66,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
     </form>
 
     <div class="icon-wrapper">
-      <a href="pages/favorite.php" title="Favorit" style="margin-right: 10px;">
+      <a href="wishlist/favorite.php" title="Favorit" style="margin-right: 10px;">
         <i data-feather="heart"></i>
       </a>
 
@@ -147,4 +148,5 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
   </script>
 
 </body>
+
 </html>
