@@ -100,12 +100,12 @@ while ($row = $result->fetch_assoc()) {
 
                 <div class="flex items-center justify-between mt-4 mb-3">
                   <span class="text-2xl font-bold text-gray-900 dark:text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
-                  <a href="add_to_cart.php?id=<?= $product['produk_id'] ?>" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:focus:ring-blue-800">
+                  <a href="add_to_cart.php?id=<?= $product['produk_id'] ?>" class="text-white bg-black hover:bg-gray-700 focus:ring-4 focus:ring-gray-500 font-medium rounded-lg text-sm px-4 py-2 dark:focus:ring-gray-500">
                     Add to Cart
                   </a>
                 </div>
 
-                <a href="checkout.php?id=<?= $product['produk_id'] ?>" class="block w-full text-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-green-800">
+                <a href="checkout.php?id=<?= $product['produk_id'] ?>" class="block w-full text-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-green-800">
                   Checkout Sekarang
                 </a>
               </div>
