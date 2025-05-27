@@ -1,86 +1,94 @@
 <?php
+session_start();
 include 'db_connection.php';
+include "view/header.php";
 
-// Tangani penambahan ke keranjang
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $produk_id = $_POST['produk_id'];
-    $nama_produk = $_POST['nama_produk'];
-    $harga = $_POST['harga'];
-    $size = $_POST['size'];
-    $color = $_POST['color'];
-    $quantity = $_POST['quantity'];
-
-    // Validasi input dasar
-    if (!$produk_id || !$size || !$color || !$quantity) {
-        echo "Data tidak lengkap.";
-        exit;
-    }
-
-    // Simpan ke database (tabel cart)
-    $stmt = $conn->prepare("INSERT INTO cart (produk_id, nama_produk, harga, size, color, quantity) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("isissi", $produk_id, $nama_produk, $harga, $size, $color, $quantity);
-    $stmt->execute();
+if (!isset($_SESSION['id'])) {
+    die("Silakan login terlebih dahulu.");
 }
+$pengguna_id = intval($_SESSION['id']);
 
-// Ambil semua item dari keranjang
-$result = $conn->query("SELECT * FROM cart ORDER BY created_at DESC");
+// Ambil data cart user beserta foto produk
+$stmt = $conn->prepare("
+    SELECT c.*, p.foto_url 
+    FROM cart c
+    JOIN produk p ON c.produk_id = p.produk_id
+    WHERE c.pengguna_id = ?
+    ORDER BY c.created_at DESC
+");
+$stmt->bind_param("i", $pengguna_id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Keranjang Belanja</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Keranjang Belanja</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
 </head>
+<body class="bg-gray-100 font-sans text-gray-900">
 
-<body class="bg-gray-100">
+<section class="max-w-7xl mx-auto bg-white mt-4 divide-y divide-gray-200 border border-gray-200 rounded-md shadow-lg">
+  <h1 class="text-2xl font-semibold p-6">Keranjang Belanja Kamu</h1>
 
-    <div class="max-w-4xl mx-auto p-6">
-        <h1 class="text-3xl font-bold mb-6">Keranjang Belanja</h1>
+  <?php if ($result->num_rows > 0): ?>
+    <?php 
+      $grandTotal = 0; 
+    ?>
+    <?php while ($row = $result->fetch_assoc()): 
+      $total = $row['harga'] * $row['quantity'];
+      $grandTotal += $total;
+    ?>
+    <article class="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition duration-200 cursor-pointer" onclick="location.href='detail.php?id=<?= $row['produk_id'] ?>'">
+  <div class="flex items-center space-x-4">
+    <img alt="<?= htmlspecialchars($row['nama_produk']) ?>" class="w-16 h-16 object-cover rounded flex-shrink-0" src="uploads/<?= htmlspecialchars($row['foto_url']) ?>" />
+    <div>
+      <h3 class="font-semibold text-sm text-gray-900">
+        <?= htmlspecialchars($row['nama_produk']) ?>
+      </h3>
+      <p class="text-xs text-gray-500">
+        Warna: <?= htmlspecialchars($row['color']) ?> | Ukuran: <?= htmlspecialchars($row['size']) ?>
+      </p>
+      <p class="text-xs text-gray-500">Jumlah: <?= $row['quantity'] ?></p>
+    </div>
+  </div>
+  <div class="flex items-center space-x-6">
+    <div class="font-bold text-gray-900 text-sm">
+      Rp <?= number_format($row['harga'], 0, ',', '.') ?>
+    </div>
+    <form method="POST" action="hapus_cart.php" onsubmit="return confirm('Yakin ingin hapus produk ini?');" style="display:inline;">
+  <input type="hidden" name="cart_id" value="<?= $row['cart_id'] ?>">
+  <button type="submit" class="text-red-600 hover:text-red-800" onclick="event.stopPropagation();">
+    <i class="fas fa-trash-alt"></i>
+  </button>
+</form>
 
-        <?php if ($result->num_rows > 0): ?>
-            <div class="bg-white shadow rounded-lg p-4">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b">
-                            <th class="py-2">Produk</th>
-                            <th class="py-2">Warna</th>
-                            <th class="py-2">Ukuran</th>
-                            <th class="py-2">Jumlah</th>
-                            <th class="py-2">Harga</th>
-                            <th class="py-2">Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $grandTotal = 0; ?>
-                        <?php while ($row = $result->fetch_assoc()): ?>
-                            <?php $total = $row['harga'] * $row['quantity'];
-                            $grandTotal += $total; ?>
-                            <tr class="border-b">
-                                <td class="py-2"><?php echo htmlspecialchars($row['nama_produk']); ?></td>
-                                <td class="py-2"><?php echo htmlspecialchars($row['color']); ?></td>
-                                <td class="py-2"><?php echo htmlspecialchars($row['size']); ?></td>
-                                <td class="py-2"><?php echo $row['quantity']; ?></td>
-                                <td class="py-2">Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></td>
-                                <td class="py-2 font-semibold">Rp <?php echo number_format($total, 0, ',', '.'); ?></td>
-                            </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="5" class="text-right font-bold pt-4">Total Belanja:</td>
-                            <td class="font-bold pt-4">Rp <?php echo number_format($grandTotal, 0, ',', '.'); ?></td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-        <?php else: ?>
-            <p class="text-gray-600">Keranjang kamu kosong.</p>
-        <?php endif; ?>
+  </div>
+</article>
+
+    <?php endwhile; ?>
+
+    <div class="flex items-center justify-between px-6 py-3 border-t border-gray-200">
+      <div class="text-gray-900 font-semibold text-lg">Total Belanja:</div>
+      <div class="text-gray-900 font-bold text-lg">Rp <?= number_format($grandTotal, 0, ',', '.') ?></div>
     </div>
 
-</body>
+    <div class="flex justify-end p-6">
+      <form action="checkout.php" method="post" class="w-full max-w-xs">
+        <button type="submit" class="w-full bg-gray-900 text-white font-semibold text-sm px-6 py-3 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 transition">
+          Checkout Sekarang
+        </button>
+      </form>
+    </div>
 
+  <?php else: ?>
+    <p class="text-gray-600 text-center p-6">Keranjang kamu kosong.</p>
+  <?php endif; ?>
+</section>
+
+</body>
 </html>

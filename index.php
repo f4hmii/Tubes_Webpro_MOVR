@@ -100,9 +100,18 @@ while ($row = $result->fetch_assoc()) {
 
                 <div class="flex items-center justify-between mt-4 mb-3">
                   <span class="text-2xl font-bold text-gray-900 dark:text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
-                  <a href="add_to_cart.php?id=<?= $product['produk_id'] ?>" class="text-white bg-black hover:bg-gray-700 focus:ring-4 focus:ring-gray-500 font-medium rounded-lg text-sm px-4 py-2 dark:focus:ring-gray-500">
-                    Add to Cart
-                  </a>
+<form class="add-to-cart-form inline-block" data-produk-id="<?= $product['produk_id'] ?>">
+  <input type="hidden" name="produk_id" value="<?= $product['produk_id'] ?>">
+  <input type="hidden" name="nama_produk" value="<?= htmlspecialchars($product['nama_produk']) ?>">
+  <input type="hidden" name="harga" value="<?= $product['harga'] ?>">
+  <input type="hidden" name="color" value="default_color_here">
+  <input type="hidden" name="size" value="default_size_here">
+  <input type="hidden" name="quantity" value="1">
+  <button type="submit" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded">
+    Add to Cart
+  </button>
+</form>
+
                 </div>
 
                 <a href="checkout.php?id=<?= $product['produk_id'] ?>" class="block w-full text-center text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-green-800">
@@ -201,6 +210,44 @@ while ($row = $result->fetch_assoc()) {
 
       startAutoSlide();
     </script>
+    <script>
+  document.querySelectorAll('.add-to-cart-form').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();  // cegah reload halaman
+
+      const formData = new FormData(form);
+      try {
+        const res = await fetch('add_to_cart.php', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          showToast(data.message, 'success');
+        } else {
+          showToast(data.message || 'Terjadi kesalahan', 'error');
+        }
+      } catch (error) {
+        showToast('Gagal menghubungi server', 'error');
+      }
+    });
+  });
+
+  function showToast(message, type) {
+    const toast = document.createElement('div');
+    toast.textContent = message;
+    toast.className = `fixed bottom-5 right-5 px-5 py-3 rounded shadow-lg text-white font-semibold transition-opacity duration-300
+      ${type === 'success' ? 'bg-green-600' : 'bg-red-600'}`;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+</script>
+
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 

@@ -1,6 +1,7 @@
 <?php
 include '../db_connection.php';
-$id = $_GET['produk_id'];
+
+$id = intval($_GET['produk_id']);
 $data = $conn->query("SELECT * FROM produk WHERE produk_id=$id")->fetch_assoc();
 ?>
 <!DOCTYPE html>
@@ -14,23 +15,23 @@ $data = $conn->query("SELECT * FROM produk WHERE produk_id=$id")->fetch_assoc();
     <form method="POST" enctype="multipart/form-data">
         <div class="mb-3">
             <label>Nama</label>
-            <input type="text" name="nama" value="<?= $data['nama_produk'] ?>" class="form-control">
+            <input type="text" name="nama" value="<?= htmlspecialchars($data['nama_produk']) ?>" class="form-control" required>
         </div>
         <div class="mb-3">
             <label>Deskripsi</label>
-            <textarea name="deskripsi" class="form-control"><?= $data['deskripsi'] ?></textarea>
+            <textarea name="deskripsi" class="form-control" required><?= htmlspecialchars($data['deskripsi']) ?></textarea>
         </div>
         <div class="mb-3">
             <label>Stok</label>
-            <input type="number" name="stok" value="<?= $data['stock'] ?>" class="form-control">
+            <input type="number" name="stok" value="<?= intval($data['stock']) ?>" class="form-control" required>
         </div>
         <div class="mb-3">
             <label>Harga</label>
-            <input type="number" name="harga" value="<?= $data['harga'] ?>" class="form-control">
+            <input type="number" name="harga" value="<?= floatval($data['harga']) ?>" class="form-control" required>
         </div>
         <div class="mb-3">
             <label>Gambar</label><br>
-            <img src="../uploads/<?= $data['foto_url'] ?>" width="80"><br>
+            <img src="../uploads/<?= htmlspecialchars($data['foto_url']) ?>" width="80"><br>
             <input type="file" name="gambar" class="form-control mt-2">
         </div>
         <button class="btn btn-primary" name="update">Update</button>
@@ -39,21 +40,48 @@ $data = $conn->query("SELECT * FROM produk WHERE produk_id=$id")->fetch_assoc();
 
 <?php
 if (isset($_POST['update'])) {
-    $nama       = $_POST['nama'];
-    $deskripsi  = $_POST['deskripsi'];
-    $stok       = $_POST['stok'];
-    $harga      = $_POST['harga'];
+    $nama       = $conn->real_escape_string($_POST['nama']);
+    $deskripsi  = $conn->real_escape_string($_POST['deskripsi']);
+    $stok       = intval($_POST['stok']);
+    $harga      = floatval($_POST['harga']);
 
-    if ($_FILES['gambar']['name']) {
+    // Jika upload gambar baru
+    if (!empty($_FILES['gambar']['name'])) {
         $gambar = $_FILES['gambar']['name'];
         $tmp    = $_FILES['gambar']['tmp_name'];
-        move_uploaded_file($tmp, "upload/" . $gambar);
+        $upload_folder = "../uploads/";
+
+        // Buat nama file unik supaya gak overwrite
+        $ext = pathinfo($gambar, PATHINFO_EXTENSION);
+        $new_gambar = time() . '_' . uniqid() . '.' . $ext;
+
+        if (move_uploaded_file($tmp, $upload_folder . $new_gambar)) {
+            // Hapus gambar lama jika ada
+            if (file_exists($upload_folder . $data['foto_url'])) {
+                unlink($upload_folder . $data['foto_url']);
+            }
+            $gambar_final = $new_gambar;
+        } else {
+            echo "<div class='alert alert-danger'>Gagal mengupload gambar baru.</div>";
+            exit;
+        }
     } else {
-        $gambar = $data['gambar'];
+        $gambar_final = $data['foto_url'];
     }
 
-    $conn->query("UPDATE produk SET nama='$nama', deskripsi='$deskripsi', stok=$stok, harga=$harga, gambar='$gambar' WHERE id=$id");
-    echo "<script>location='index.php';</script>";
+    $sql_update = "UPDATE produk SET 
+        nama_produk='$nama', 
+        deskripsi='$deskripsi', 
+        stock=$stok, 
+        harga=$harga, 
+        foto_url='$gambar_final' 
+        WHERE produk_id=$id";
+
+    if ($conn->query($sql_update)) {
+        echo "<script>location='../admincontrol/kelola_produk.php';</script>";
+    } else {
+        echo "<div class='alert alert-danger'>Gagal update produk: " . $conn->error . "</div>";
+    }
 }
 ?>
 </body>
