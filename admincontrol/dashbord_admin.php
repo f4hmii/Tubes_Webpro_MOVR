@@ -92,7 +92,7 @@ $pending_pembayaran = 0;
 <div class="sidebar">
     <img src="../uploads/MOVR[logo].png" alt="Logo" />
     <h2>Admin Dashboard</h2>
-    <a href="#" class="sidebar-link active" data-page="dashboard_admin.php">Dashboard</a>
+    <a href="#" class="sidebar-link active" data-page="dashbord_content.php">Dashboard</a>
     <a href="#" class="sidebar-link" data-page="kelola_user.php">Kelola User</a>
     <a href="#" class="sidebar-link" data-page="kelola_produk.php">Kelola Produk</a>
     <a href="#" class="sidebar-link" data-page="kelola_pembayaran.php">Kelola Pembayaran</a>
@@ -103,26 +103,9 @@ $pending_pembayaran = 0;
 
 <!-- Main Content -->
 <div class="main">
-    <h1>Dashboard</h1>
-
-    <!-- Statistik Card -->
-    <!--
-    <div class="cards">
-        <div class="card bg-red">
-            <h3><span class="icon">👥</span>Total Users</h3>
-            <p><?= $total_users ?></p>
-        </div>
-        <div class="card bg-red">
-            <h3><span class="icon">🛒</span>Total Barang</h3>
-            <p><?= $total_barang ?></p>
-        </div>
-        <div class="card bg-orange">
-            <h3><span class="icon">⏳</span>Pembayaran Pending</h3>
-            <p><?= $pending_pembayaran ?></p>
-        </div>
-    </div>
-    -->
+    <?php include 'dashbord_content.php'; ?>
 </div>
+
 
 </body>
 
@@ -131,6 +114,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const links = document.querySelectorAll(".sidebar-link");
     const mainContent = document.querySelector(".main");
 
+    // Fungsi untuk klik menu berdasarkan hash
+    function clickSidebarByHash() {
+        const hash = window.location.hash.replace('#', '');
+        if (hash) {
+            const target = Array.from(links).find(l => l.getAttribute('data-page').includes(hash));
+            if (target) target.click();
+        }
+    }
+
+    // Event klik sidebar
     links.forEach(link => {
         link.addEventListener("click", function (e) {
             e.preventDefault();
@@ -151,12 +144,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .then(html => {
                     mainContent.innerHTML = html;
+                    // Update hash di URL
+                    window.location.hash = page.replace('.php', '');
                 })
                 .catch(err => {
                     mainContent.innerHTML = `<p style="color:red;">${err.message}</p>`;
                 });
         });
     });
+
+    // Auto-click sidebar jika ada hash di URL
+    clickSidebarByHash();
+
+    // Jika hash berubah (misal: setelah redirect), auto klik juga
+    window.addEventListener('hashchange', clickSidebarByHash);
 });
 </script>
 
