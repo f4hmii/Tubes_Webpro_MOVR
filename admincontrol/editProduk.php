@@ -4,6 +4,16 @@ include '../db_connection.php';
 $id = intval($_GET['produk_id']);
 $data = $conn->query("SELECT * FROM produk WHERE produk_id=$id")->fetch_assoc();
 ?>
+
+<form method="POST" enctype="multipart/form-data">
+    <!-- form input -->
+</form>
+<?php
+if (isset($_POST['update'])) {
+    // ...proses update...
+    echo "<script>location='dashbord_admin.php#kelola_produk';</script>";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +21,6 @@ $data = $conn->query("SELECT * FROM produk WHERE produk_id=$id")->fetch_assoc();
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container py-5">
-    <h2>Edit Produk</h2>
     <form method="POST" enctype="multipart/form-data">
         <div class="mb-3">
             <label>Nama</label>
@@ -45,6 +54,7 @@ if (isset($_POST['update'])) {
     $stok       = intval($_POST['stok']);
     $harga      = floatval($_POST['harga']);
 
+<<<<<<< HEAD
     // Jika upload gambar baru
     if (!empty($_FILES['gambar']['name'])) {
         $gambar = $_FILES['gambar']['name'];
@@ -82,6 +92,18 @@ if (isset($_POST['update'])) {
     } else {
         echo "<div class='alert alert-danger'>Gagal update produk: " . $conn->error . "</div>";
     }
+=======
+    if ($_FILES['gambar']['name']) {
+        $foto_url = $_FILES['gambar']['name'];
+        $tmp      = $_FILES['gambar']['tmp_name'];
+        move_uploaded_file($tmp, "../uploads/" . $foto_url);
+    } else {
+        $foto_url = $data['foto_url'];
+    }
+
+    $conn->query("UPDATE produk SET nama_produk='$nama', deskripsi='$deskripsi', stock=$stok, harga=$harga, foto_url='$foto_url' WHERE produk_id=$id");
+    echo "<script>location='dashbord_admin.php#kelola_produk';</script>";
+>>>>>>> 486e30996c3647027ce23406e5ca4fb521d437eb
 }
 ?>
 </body>
