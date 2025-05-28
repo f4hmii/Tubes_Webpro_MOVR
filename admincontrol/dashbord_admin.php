@@ -89,21 +89,28 @@ $pending_pembayaran = 0;
 <body>
 
 <!-- Sidebar -->
-<div class="sidebar">
-    <img src="../uploads/MOVR[logo].png" alt="Logo" />
-    <h2>Admin Dashboard</h2>
-    <a href="#" class="sidebar-link active" data-page="dashbord_content.php">Dashboard</a>
-    <a href="#" class="sidebar-link" data-page="kelola_user.php">Kelola User</a>
-    <a href="#" class="sidebar-link" data-page="kelola_produk.php">Kelola Produk</a>
-    <a href="#" class="sidebar-link" data-page="kelola_pembayaran.php">Kelola Pembayaran</a>
-    <a href="#" class="sidebar-link" data-page="category_admin.php">Category</a>
-    <a href="#" class="sidebar-link" data-page="verifikasi_produk.php">Verifikasi Produk</a>
-    <a href="../index.php">Logout</a>
-</div>
+<?php
+include 'sidebar.php';
+?>
 
 <!-- Main Content -->
 <div class="main">
-    <?php include 'dashbord_content.php'; ?>
+    <h1>Dashboard</h1>
+
+<div class="cards">
+    <div class="card bg-red">
+        <h3><span class="icon">👥</span>Total Users</h3>
+        <p><?= $total_users ?></p>
+    </div>
+    <div class="card bg-red">
+        <h3><span class="icon">🛒</span>Total Barang</h3>
+        <p><?= $total_barang ?></p>
+    </div>
+    <div class="card bg-orange">
+        <h3><span class="icon">⏳</span>Pembayaran Pending</h3>
+        <p><?= $pending_pembayaran ?></p>
+    </div>
+</div>
 </div>
 
 
@@ -154,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // Auto-click sidebar jika ada hash di URL
-    clickSidebarByHash();
+    clickSidebarByHash();   
 
     // Jika hash berubah (misal: setelah redirect), auto klik juga
     window.addEventListener('hashchange', clickSidebarByHash);

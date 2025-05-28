@@ -54,7 +54,6 @@ if (isset($_POST['update'])) {
     $stok       = intval($_POST['stok']);
     $harga      = floatval($_POST['harga']);
 
-<<<<<<< HEAD
     // Jika upload gambar baru
     if (!empty($_FILES['gambar']['name'])) {
         $gambar = $_FILES['gambar']['name'];
@@ -92,7 +91,7 @@ if (isset($_POST['update'])) {
     } else {
         echo "<div class='alert alert-danger'>Gagal update produk: " . $conn->error . "</div>";
     }
-=======
+
     if ($_FILES['gambar']['name']) {
         $foto_url = $_FILES['gambar']['name'];
         $tmp      = $_FILES['gambar']['tmp_name'];
@@ -103,7 +102,7 @@ if (isset($_POST['update'])) {
 
     $conn->query("UPDATE produk SET nama_produk='$nama', deskripsi='$deskripsi', stock=$stok, harga=$harga, foto_url='$foto_url' WHERE produk_id=$id");
     echo "<script>location='dashbord_admin.php#kelola_produk';</script>";
->>>>>>> 486e30996c3647027ce23406e5ca4fb521d437eb
+
 }
 ?>
 </body>
