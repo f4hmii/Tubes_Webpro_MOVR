@@ -67,7 +67,7 @@ $result = $query->get_result();
     <?php if ($result->num_rows > 0): ?>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <?php while ($product = $result->fetch_assoc()): ?>
-                <div class="relative w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm">
+                <div class="relative w-full max-w-sm bg-gray-800 border border-gray-200 rounded-lg shadow-sm">
                     <a href="../detail.php?id=<?= $product['produk_id'] ?>">
                         <img class="p-6 rounded-t-lg mx-auto max-h-48 object-contain"
                             src="../uploads/<?= htmlspecialchars($product['foto_url']) ?>"
@@ -77,12 +77,12 @@ $result = $query->get_result();
 
                     <div class="px-5 pb-5">
                         <a href="../detail.php?id=<?= $product['produk_id'] ?>">
-                            <h5 class="text-xl font-semibold tracking-tight text-gray-900"><?= $product['nama_produk'] ?></h5>
+                            <h5 class="text-xl font-semibold tracking-tight text-white"><?= $product['nama_produk'] ?></h5>
                         </a>
-                        <p class="text-sm text-gray-500 mt-1 mb-2 line-clamp-2"><?= $product['deskripsi'] ?></p>
+                        <p class="text-sm text-gray-400 mt-1 mb-2 line-clamp-2"><?= $product['deskripsi'] ?></p>
 
                         <div class="flex items-center justify-between mt-4 mb-3">
-                            <span class="text-2xl font-bold text-gray-900">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
+                            <span class="text-2xl font-bold text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
                         </div>
 
                         <div class="flex flex-col gap-2">

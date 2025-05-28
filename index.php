@@ -43,19 +43,19 @@ while ($row = $result->fetch_assoc()) {
       <div class="carousel-slides">
 
         <div class="slide">
-          <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner_desktop_2400_x_900-20241220-065408.jpg"
+          <img src="https://static.pullandbear.net/assets/public/f00e/9258/1e274fc08986/138edf1fb9f2/newin/newin.jpg?ts=1747733387345&w=2940&f=auto"
             alt="">
         </div>
         <div class="slide">
-          <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner-20240805-072521.jpg"
+          <img src="https://imagedeleg1.lacoste.com/dw/image/v2/BGSW_PRD/on/demandware.static/-/Library-Sites-LacosteContent/default/dw711667ac/images/2025/homepage/2025-02-13/STARTERFDesk_0004s_0006_Sweatshirt1_Mixte_5760x2382.png?imwidth=1905&impolicy=custom"
             alt="">
         </div>
         <div class="slide">
-          <img src="https://www.newbalance.co.id/media/weltpixel/owlcarouselslider/images/s/e/secondary_banner_copy-20241118-093422.jpg"
+          <img src="https://im.uniqlo.com/global-cms/spa/resbe03cca45cd933a1782c54b147379638fr.jpg"
             alt="">
         </div>
         <div class="slide">
-          <img src="https://i.pinimg.com/736x/d5/cf/48/d5cf48081afa823efe25b2275446725b.jpg" alt="">
+          <img src="https://2xu.com/cdn/shop/files/Fast_Track_Wide_Promo_Banner_2400x970_958e2235-1297-47e2-b18a-10b58a5c2f1c.jpg?v=1747886566" alt="">
         </div>
 
       </div>
@@ -99,18 +99,18 @@ while ($row = $result->fetch_assoc()) {
 
 
                 <div class="flex items-center justify-between mt-4 mb-3">
-                  <span class="text-2xl font-bold text-gray-900 dark:text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
-<form class="add-to-cart-form inline-block" data-produk-id="<?= $product['produk_id'] ?>">
-  <input type="hidden" name="produk_id" value="<?= $product['produk_id'] ?>">
-  <input type="hidden" name="nama_produk" value="<?= htmlspecialchars($product['nama_produk']) ?>">
-  <input type="hidden" name="harga" value="<?= $product['harga'] ?>">
-  <input type="hidden" name="color" value="default_color_here">
-  <input type="hidden" name="size" value="default_size_here">
-  <input type="hidden" name="quantity" value="1">
-  <button type="submit" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded">
-    Add to Cart
-  </button>
-</form>
+                  <span class="text-2xl font-bold text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
+                  <form class="add-to-cart-form inline-block" data-produk-id="<?= $product['produk_id'] ?>">
+                    <input type="hidden" name="produk_id" value="<?= $product['produk_id'] ?>">
+                    <input type="hidden" name="nama_produk" value="<?= htmlspecialchars($product['nama_produk']) ?>">
+                    <input type="hidden" name="harga" value="<?= $product['harga'] ?>">
+                    <input type="hidden" name="color" value="default_color_here">
+                    <input type="hidden" name="size" value="default_size_here">
+                    <input type="hidden" name="quantity" value="1">
+                    <button type="submit" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded">
+                      Add to Cart
+                    </button>
+                  </form>
 
                 </div>
 
@@ -211,42 +211,42 @@ while ($row = $result->fetch_assoc()) {
       startAutoSlide();
     </script>
     <script>
-  document.querySelectorAll('.add-to-cart-form').forEach(form => {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();  // cegah reload halaman
+      document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault(); // cegah reload halaman
 
-      const formData = new FormData(form);
-      try {
-        const res = await fetch('add_to_cart.php', {
-          method: 'POST',
-          body: formData
+          const formData = new FormData(form);
+          try {
+            const res = await fetch('add_to_cart.php', {
+              method: 'POST',
+              body: formData
+            });
+
+            const data = await res.json();
+
+            if (data.success) {
+              showToast(data.message, 'success');
+            } else {
+              showToast(data.message || 'Terjadi kesalahan', 'error');
+            }
+          } catch (error) {
+            showToast('Gagal menghubungi server', 'error');
+          }
         });
+      });
 
-        const data = await res.json();
-
-        if (data.success) {
-          showToast(data.message, 'success');
-        } else {
-          showToast(data.message || 'Terjadi kesalahan', 'error');
-        }
-      } catch (error) {
-        showToast('Gagal menghubungi server', 'error');
-      }
-    });
-  });
-
-  function showToast(message, type) {
-    const toast = document.createElement('div');
-    toast.textContent = message;
-    toast.className = `fixed bottom-5 right-5 px-5 py-3 rounded shadow-lg text-white font-semibold transition-opacity duration-300
+      function showToast(message, type) {
+        const toast = document.createElement('div');
+        toast.textContent = message;
+        toast.className = `fixed bottom-5 right-5 px-5 py-3 rounded shadow-lg text-white font-semibold transition-opacity duration-300
       ${type === 'success' ? 'bg-green-600' : 'bg-red-600'}`;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-      toast.style.opacity = '0';
-      setTimeout(() => toast.remove(), 300);
-    }, 3000);
-  }
-</script>
+        document.body.appendChild(toast);
+        setTimeout(() => {
+          toast.style.opacity = '0';
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
