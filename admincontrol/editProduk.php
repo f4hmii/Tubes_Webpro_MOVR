@@ -3,17 +3,53 @@ include '../db_connection.php';
 
 $id = intval($_GET['produk_id']);
 $data = $conn->query("SELECT * FROM produk WHERE produk_id=$id")->fetch_assoc();
-?>
 
-<form method="POST" enctype="multipart/form-data">
-    <!-- form input -->
-</form>
-<?php
 if (isset($_POST['update'])) {
-    // ...proses update...
-    echo "<script>location='dashbord_admin.php#kelola_produk';</script>";
+    $nama       = $conn->real_escape_string($_POST['nama']);
+    $deskripsi  = $conn->real_escape_string($_POST['deskripsi']);
+    $stok       = intval($_POST['stok']);
+    $harga      = floatval($_POST['harga']);
+
+    // Handle upload gambar baru
+    if (!empty($_FILES['gambar']['name'])) {
+        $gambar = $_FILES['gambar']['name'];
+        $tmp    = $_FILES['gambar']['tmp_name'];
+        $upload_folder = "../uploads/";
+
+        $ext = pathinfo($gambar, PATHINFO_EXTENSION);
+        $new_gambar = time() . '_' . uniqid() . '.' . $ext;
+
+        if (move_uploaded_file($tmp, $upload_folder . $new_gambar)) {
+            // Hapus gambar lama jika ada
+            if ($data['foto_url'] && file_exists($upload_folder . $data['foto_url'])) {
+                unlink($upload_folder . $data['foto_url']);
+            }
+            $gambar_final = $new_gambar;
+        } else {
+            echo "<div class='alert alert-danger'>Gagal mengupload gambar baru.</div>";
+            exit;
+        }
+    } else {
+        $gambar_final = $data['foto_url'];
+    }
+
+    $sql_update = "UPDATE produk SET 
+        nama_produk='$nama', 
+        deskripsi='$deskripsi', 
+        stock=$stok, 
+        harga=$harga, 
+        foto_url='$gambar_final' 
+        WHERE produk_id=$id";
+
+    if ($conn->query($sql_update)) {
+        header("Location: dashbord_admin.php#kelola_produk");
+        exit;
+    } else {
+        echo "<div class='alert alert-danger'>Gagal update produk: " . $conn->error . "</div>";
+    }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +57,7 @@ if (isset($_POST['update'])) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container py-5">
+    <h2>Edit Produk</h2>
     <form method="POST" enctype="multipart/form-data">
         <div class="mb-3">
             <label>Nama</label>
@@ -44,66 +81,7 @@ if (isset($_POST['update'])) {
             <input type="file" name="gambar" class="form-control mt-2">
         </div>
         <button class="btn btn-primary" name="update">Update</button>
-        <a href="../admincontrol/kelola_produk.php" class="btn btn-secondary">Kembali</a>
+        <a href="dashbord_admin.php#kelola_produk" class="btn btn-secondary">Kembali</a>
     </form>
-
-<?php
-if (isset($_POST['update'])) {
-    $nama       = $conn->real_escape_string($_POST['nama']);
-    $deskripsi  = $conn->real_escape_string($_POST['deskripsi']);
-    $stok       = intval($_POST['stok']);
-    $harga      = floatval($_POST['harga']);
-
-    // Jika upload gambar baru
-    if (!empty($_FILES['gambar']['name'])) {
-        $gambar = $_FILES['gambar']['name'];
-        $tmp    = $_FILES['gambar']['tmp_name'];
-        $upload_folder = "../uploads/";
-
-        // Buat nama file unik supaya gak overwrite
-        $ext = pathinfo($gambar, PATHINFO_EXTENSION);
-        $new_gambar = time() . '_' . uniqid() . '.' . $ext;
-
-        if (move_uploaded_file($tmp, $upload_folder . $new_gambar)) {
-            // Hapus gambar lama jika ada
-            if (file_exists($upload_folder . $data['foto_url'])) {
-                unlink($upload_folder . $data['foto_url']);
-            }
-            $gambar_final = $new_gambar;
-        } else {
-            echo "<div class='alert alert-danger'>Gagal mengupload gambar baru.</div>";
-            exit;
-        }
-    } else {
-        $gambar_final = $data['foto_url'];
-    }
-
-    $sql_update = "UPDATE produk SET 
-        nama_produk='$nama', 
-        deskripsi='$deskripsi', 
-        stock=$stok, 
-        harga=$harga, 
-        foto_url='$gambar_final' 
-        WHERE produk_id=$id";
-
-    if ($conn->query($sql_update)) {
-        echo "<script>location='../admincontrol/kelola_produk.php';</script>";
-    } else {
-        echo "<div class='alert alert-danger'>Gagal update produk: " . $conn->error . "</div>";
-    }
-
-    if ($_FILES['gambar']['name']) {
-        $foto_url = $_FILES['gambar']['name'];
-        $tmp      = $_FILES['gambar']['tmp_name'];
-        move_uploaded_file($tmp, "../uploads/" . $foto_url);
-    } else {
-        $foto_url = $data['foto_url'];
-    }
-
-    $conn->query("UPDATE produk SET nama_produk='$nama', deskripsi='$deskripsi', stock=$stok, harga=$harga, foto_url='$foto_url' WHERE produk_id=$id");
-    echo "<script>location='dashbord_admin.php#kelola_produk';</script>";
-
-}
-?>
 </body>
 </html>

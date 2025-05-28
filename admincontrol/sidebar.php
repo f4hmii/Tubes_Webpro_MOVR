@@ -5,7 +5,7 @@
     <a href="#" class="sidebar-link" data-page="kelola_user.php">Kelola User</a>
     <a href="#" class="sidebar-link" data-page="kelola_produk.php">Kelola Produk</a>
     <a href="#" class="sidebar-link" data-page="kelola_pembayaran.php">Kelola Pembayaran</a>
-    <a href="#" class="sidebar-link" data-page="category_admin.php">Category</a>
+    <a href="#" class="sidebar-link" data-page="kelola_kategori.php">Category</a>
     <a href="#" class="sidebar-link" data-page="verifikasi_produk.php">Verifikasi Produk</a>
     <a href="../index.php">Logout</a>
 </div>

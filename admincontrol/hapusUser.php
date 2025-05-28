@@ -9,7 +9,7 @@
         $stmt->bind_param("i", $id);
 
         if ($stmt->execute()) {
-            header("Location: kelola_user.php");
+           header("Location: dashbord_admin.php#kelola_user");
             exit();
         } else {
             echo "Gagal menghapus user.";
