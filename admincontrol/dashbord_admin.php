@@ -9,6 +9,7 @@
 $total_users = 7;
 $total_barang = 14;
 $pending_pembayaran = 0;
+
 ?>
 
 <!DOCTYPE html>
@@ -94,6 +95,7 @@ include 'sidebar.php';
 ?>
 
 <!-- Main Content -->
+
 <div class="main">
     <h1>Dashboard</h1>
 
@@ -166,6 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Jika hash berubah (misal: setelah redirect), auto klik juga
     window.addEventListener('hashchange', clickSidebarByHash);
 });
+
 </script>
 
 </html>
