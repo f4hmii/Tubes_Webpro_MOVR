@@ -4,6 +4,27 @@ include '../db_connection.php';
 $id = $_GET['produk_id'];
 $produk = $conn->query("SELECT * FROM produk WHERE produk_id = $id")->fetch_assoc();
 $kategoriList = $conn->query("SELECT * FROM kategori");
+
+
+if (isset($_POST['update'])) {
+    $nama = $_POST['nama_produk'];
+    $deskripsi = $_POST['deskripsi'];
+    $stock = $_POST['stock'];
+    $harga = $_POST['harga'];
+    $kategori_id = $_POST['kategori_id'] ?: "NULL";
+
+    $conn->query("UPDATE produk SET 
+        nama_produk = '$nama',
+        deskripsi = '$deskripsi',
+        stock = $stock,
+        harga = $harga,
+        kategori_id = $kategori_id
+        WHERE produk_id = $id
+    ");
+
+    header("Location: dashbord_admin.php#kelola_kategori");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -43,29 +64,10 @@ $kategoriList = $conn->query("SELECT * FROM kategori");
                 <?php endwhile; ?>
             </select>
         </div>
-        <button type="submit" name="update" class="btn btn-success">Simpan</button>
-        <a href="kelola_kategori.php" class="btn btn-secondary">Kembali</a>
+        <button class="btn btn-primary" name="update">Update</button>
+        <a href="dashbord_admin.php#kelola_kategori" class="btn btn-secondary">Kembali</a>
     </form>
 
-<?php
-if (isset($_POST['update'])) {
-    $nama = $_POST['nama_produk'];
-    $deskripsi = $_POST['deskripsi'];
-    $stock = $_POST['stock'];
-    $harga = $_POST['harga'];
-    $kategori_id = $_POST['kategori_id'] ?: "NULL"; // NULL jika belum dipilih
 
-    $conn->query("UPDATE produk SET 
-        nama_produk = '$nama',
-        deskripsi = '$deskripsi',
-        stock = $stock,
-        harga = $harga,
-        kategori_id = $kategori_id
-        WHERE produk_id = $id
-    ");
-
-    echo "<script>alert('Produk berhasil diperbarui');location.href='kelola_kategori.php';</script>";
-}
-?>
 </body>
 </html>

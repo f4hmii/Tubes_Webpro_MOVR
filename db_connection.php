@@ -2,6 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
+<<<<<<< HEAD
 $dbname = "testmvr";
 
 // Buat koneksi
