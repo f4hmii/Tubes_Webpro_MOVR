@@ -1,7 +1,14 @@
 <?php
 session_start();
+if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['buyer', 'seller'])) {
+    header('HTTP/1.1 403 Forbidden');
+    echo "Akses ditolak.";
+    exit();
+}
 include "view/header.php";
 include 'db_connection.php';
+
+
 
 // Ambil data dari tabel produk
 $query = "SELECT * FROM produk";
