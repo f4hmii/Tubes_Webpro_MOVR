@@ -69,7 +69,7 @@ if (isset($_POST['update'])) {
         </div>
 
         <button class="btn btn-primary" name="update">Update</button>
-        <a href="../admincontrol/kelola_user.php" class="btn btn-secondary">Kembali</a>
+        <a href="dashbord_admin.php#kelola_user" class="btn btn-secondary">Kembali</a>
     </form>
 
 

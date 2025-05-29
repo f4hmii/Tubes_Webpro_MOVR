@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 include '../db_connection.php';
 
 $kategoriList = $conn->query("SELECT * FROM kategori");
@@ -49,4 +49,4 @@ if (isset($_GET['hapus'])) {
         </tbody>
     </table>
 </body>
-</html>
+</html> -->
