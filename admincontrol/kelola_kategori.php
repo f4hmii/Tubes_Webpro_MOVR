@@ -3,40 +3,12 @@
 include '../db_connection.php';
 
 // Handle pesan
+session_start();
 $pesan = '';
-if (isset($_GET['status']) && $_GET['status'] === 'sukses' && isset($_GET['nama'])) {
-    $nama = htmlspecialchars($_GET['nama']);
-    $pesan = "<div class='alert alert-success mb-2'>Kategori <b>$nama</b> berhasil ditambah!</div>";
+if (isset($_SESSION['pesan'])) {
+    $pesan = "<div class='alert alert-success mb-2'>" . $_SESSION['pesan'] . "</div>";
+    unset($_SESSION['pesan']); // Hapus setelah ditampilkan agar tidak muncul terus
 }
-
-// Handle tambah kategori
-if (isset($_POST['tambah_kategori'])) {
-    $nama_kategori = trim($_POST['nama_kategori']);
-
-    if (!empty($nama_kategori)) {
-        // Cek apakah kategori sudah ada
-        $cek = $conn->prepare("SELECT 1 FROM kategori WHERE nama_kategori = ?");
-        $cek->bind_param("s", $nama_kategori);
-        $cek->execute();
-        $cek->store_result();
-
-        if ($cek->num_rows > 0) {
-            $pesan = "<div class='alert alert-warning mb-2'>Kategori <b>$nama_kategori</b> sudah ada!</div>";
-        } else {
-            $stmt = $conn->prepare("INSERT INTO kategori (nama_kategori) VALUES (?)");
-            $stmt->bind_param("s", $nama_kategori);
-        if ($stmt->execute()) {
-            $pesan = "<div class='alert alert-success mb-2'>Kategori <b>$nama_kategori</b> berhasil ditambah!</div>";
-            // Tidak ada header redirect!
-            } else {
-                $pesan = "<div class='alert alert-danger mb-2'>Gagal menambah kategori: " . $stmt->error . "</div>";
-            }
-            $stmt->close();
-        }
-        $cek->close();
-    }
-}
-
 
 // Ambil semua kategori dan jumlah produk
 $kategoriList = $conn->query("
@@ -63,14 +35,14 @@ $produkResult = $conn->query("
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="container py-5">
-
+    <!-- Sidebar -->
     <h2 class="mb-4">Kelola Kategori Produk</h2>
 
-    <!-- Tampilkan pesan -->
+     <!-- Tampilkan pesan -->
     <?php if ($pesan) echo $pesan; ?>
-
+    
     <!-- Form Tambah Kategori -->
-    <form method="POST" action="kelola_kategori.php" class="mb-4 d-flex gap-2">
+    <form method="POST" action="simpan_kategori.php" class="mb-4 d-flex gap-2">
         <input type="text" name="nama_kategori" class="form-control" placeholder="Nama Kategori" required>
         <button type="submit" name="tambah_kategori" class="btn btn-success">Tambah Kategori</button>
     </form>
@@ -129,13 +101,6 @@ $produkResult = $conn->query("
             <?php endwhile; ?>
         </tbody>
     </table>
-
-    <!-- Hapus query string dari URL agar pesan tidak muncul lagi saat refresh -->
-    <script>
-        if (window.location.search.includes('status=')) {
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-    </script>
 
 </body>
 </html>
