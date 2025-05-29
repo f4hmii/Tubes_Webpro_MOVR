@@ -89,6 +89,27 @@ $result = $stmt->get_result();
     <p class="text-gray-600 text-center p-6">Keranjang kamu kosong.</p>
   <?php endif; ?>
 </section>
+<script>
+  document.getElementById('addToCartForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
+    const formData = new FormData(this);
+
+    fetch('add_to_cart.php', {
+      method: 'POST',
+      body: formData,
+      credentials: 'same-origin' // supaya cookies/session ikut terkirim
+    })
+    .then(res => res.json())
+    .then(data => {
+      if (data.success) {
+        alert('Produk berhasil ditambahkan ke keranjang!');
+      } else {
+        alert('Gagal menambahkan ke keranjang: ' + data.message);
+      }
+    })
+    .catch(() => alert('Terjadi kesalahan jaringan.'));
+  });
+</script>
 </body>
 </html>

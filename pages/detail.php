@@ -139,7 +139,7 @@ $stmt2->close();
             </div>
 
             <!-- Form Tambah ke Keranjang -->
-            <form action="cart.php" method="post" class="mt-4" id="addToCartForm">
+            <form action="add_to_cart.php" method="post" class="mt-4" id="addToCartForm">
                 <input type="hidden" name="produk_id" value="<?= $produk_id ?>">
                 <input type="hidden" name="nama_produk" value="<?= htmlspecialchars($product_name) ?>">
                 <input type="hidden" name="harga" value="<?= $price ?>">

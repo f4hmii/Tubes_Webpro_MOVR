@@ -28,8 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare("INSERT INTO cart (produk_id, pengguna_id, nama_produk, harga, color, size, quantity, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())");
     $stmt->bind_param("iisdssi", $produk_id, $pengguna_id, $nama_produk, $harga, $color, $size, $quantity);
 
-    if ($stmt->execute()) {
-        echo json_encode(['success' => true, 'message' => 'Produk berhasil ditambahkan ke keranjang']);
+   if ($stmt->execute()) {
+    header('Location: detail.php?id=' . $produk_id . '&added=1');
+    exit;
+
     } else {
         http_response_code(500);
         echo json_encode(['success' => false, 'message' => 'Gagal menambahkan ke keranjang: ' . $stmt->error]);
