@@ -1,9 +1,8 @@
 <?php
 session_start();
+include '../db_connection.php';
 $error = "";
 
-// Koneksi ke database
-$conn = new mysqli("localhost", "root", "", "movr");
 
 // Cek koneksi
 if ($conn->connect_error) {

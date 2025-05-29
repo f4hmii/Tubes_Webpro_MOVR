@@ -1,185 +1,237 @@
 <?php
-session_start();
 include "../view/header.php";
-include '../db_connection.php'; // pastikan koneksi sudah benar
+include '../db_connection.php';
 
-// Ambil produk berdasarkan produk_id (misal lewat GET)
-$produk_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-if ($produk_id <= 0) {
-  die("Produk tidak ditemukan.");
+// Ambil ID produk dari URL
+if (!isset($_GET['id'])) {
+    echo "Produk tidak ditemukan.";
+    exit;
 }
 
-// Query data produk utama
-$sqlProduk = "SELECT * FROM produk WHERE produk_id = $produk_id";
-$resultProduk = $conn->query($sqlProduk);
-if ($resultProduk->num_rows == 0) {
-  die("Produk tidak ditemukan.");
-}
-$produk = $resultProduk->fetch_assoc();
+$produk_id = intval($_GET['id']);
 
-// Query gambar thumbnail
-$images = [];
-if (!empty($produk['foto_url'])) {
-  $images[] = 'uploads/' . htmlspecialchars($produk['foto_url']);
-} else {
-  // fallback jika gak ada gambar
-  $images[] = 'path/to/default-image.jpg';
+// Ambil data produk dari database
+$stmt = $conn->prepare("SELECT * FROM produk WHERE produk_id = ?");
+$stmt->bind_param("i", $produk_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$product = $result->fetch_assoc();
+
+if (!$product) {
+    echo "Produk tidak ditemukan.";
+    exit;
 }
+
+// Assign data produk
+$product_name = $product['nama_produk'];
+$price = $product['harga'];
+$stock = $product['stock'];  // stok keseluruhan terbaru
+$deskripsi = $product['deskripsi'];
+$gambarUtama = $product['foto_url'];
+$kondisi = $product['kondisi'] ?? '';
+
+// Decode stok warna dan ukuran JSON dari database (stok terbaru)
+$color_stock = json_decode($product['color_stock'], true) ?: [];
+$size_stock = json_decode($product['size_stock'], true) ?: [];
+
+// Ambil gambar detail dari tabel produk_foto_detail
+$gambarLain = [];
+$stmt2 = $conn->prepare("SELECT foto_path FROM produk_foto_detail WHERE produk_id = ?");
+$stmt2->bind_param("i", $produk_id);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+while ($row = $result2->fetch_assoc()) {
+    $gambarLain[] = $row['foto_path'];
+}
+$stmt2->close();
 ?>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta content="width=device-width, initial-scale=1" name="viewport" />
-  <title>
-    Product Page
-  </title>
-  <script src="https://cdn.tailwindcss.com">
-  </script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <title><?= htmlspecialchars($product_name) ?> - Detail Produk</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .thumbnail {
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .thumbnail:hover {
+            border-color: #4A90E2;
+        }
+
+        .thumbnail.active {
+            border-color: #1D4ED8;
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100 text-gray-900 font-sans">
-  <main class="max-w-7xl mx-auto px-4 py-8 space-y-8">
+<body class="bg-gray-50">
 
-    <section class="bg-white p-6 space-y-6">
-      <div class="flex flex-col lg:flex-row gap-6">
-        <!-- Left images -->
-        <div class="flex flex-col space-y-4">
-          <img alt="<?= htmlspecialchars($produk['nama_produk']) ?>" class="w-72 h-72 object-cover rounded-lg" src="<?= htmlspecialchars($produk['foto_url']) ?>" />
-          <div class="flex space-x-4">
-            <?php foreach ($images as $img): ?>
-              <img alt="Thumbnail <?= htmlspecialchars($produk['nama_produk']) ?>" class="w-14 h-14 object-cover rounded border border-gray-200" src="<?= $img ?>" />
-            <?php endforeach; ?>
-          </div>
-        </div>
+    <div class="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-10">
+        <!-- Gambar Produk -->
+        <div>
+            <img id="gambarUtama" class="w-full rounded-lg shadow-md mb-4"
+                src="../uploads/<?= htmlspecialchars($gambarUtama) ?>"
+                alt="Gambar Utama"
+                onerror="this.onerror=null; this.src='../uploads/image-not-found.png';" />
 
-        <!-- Right details -->
-        <div class="flex-grow space-y-4">
-          <div class="flex flex-wrap items-center gap-2 text-sm font-semibold">
-            <span class="text-5xl-gray-900"><?= htmlspecialchars($produk['nama_produk']) ?></span>
-            <!-- Tambah rating atau info lain jika ada -->
-          </div>
+            <div class="grid grid-cols-4 gap-4">
+                <?php if (!empty($gambarUtama)): ?>
+                    <img src="../uploads/<?= htmlspecialchars($gambarUtama) ?>"
+                        class="thumbnail active rounded-lg shadow-md"
+                        onclick="changeImage(this)" alt="Thumbnail Utama" />
+                <?php endif; ?>
 
-          <div>
-            <span class="text-3xl font-extrabold text-red-700">Rp <?= number_format($produk['harga'], 0, ',', '.') ?></span>
-          </div>
-
-
-          <?php
-          // Contoh koneksi sudah ada, dan $produk_id sudah didapat
-
-          $sizes = []; // inisialisasi dulu supaya tidak undefined
-
-          $sqlSizes = "SELECT size_name FROM sizes WHERE produk_id = $produk_id AND stock > 0";
-          $resultSizes = $conn->query($sqlSizes);
-
-          if ($resultSizes && $resultSizes->num_rows > 0) {
-            while ($row = $resultSizes->fetch_assoc()) {
-              $sizes[] = $row;
-            }
-          }
-          ?>
-
-          <div class="flex items-center space-x-6 text-xs sm:text-sm">
-            <?php foreach ($sizes as $size): ?>
-              <label class="flex items-center space-x-1">
-                <input class="w-4 h-4" type="checkbox" name="size[]" value="<?= htmlspecialchars($size['size_name']) ?>" />
-                <span><?= htmlspecialchars($size['size_name']) ?></span>
-              </label>
-            <?php endforeach; ?>
-          </div>
-
-          <div class="space-y-2 max-w-xs">
-            <button class="w-full bg-black text-white py-2 flex items-center justify-center space-x-2 text-sm font-semibold rounded">
-              <i class="fas fa-shopping-cart"></i>
-              <span>Tambah ke Keranjang</span>
-            </button>
-            <button class="w-full border border-gray-400 text-gray-600 py-2 flex items-center justify-center space-x-2 text-sm font-semibold rounded">
-              <i class="far fa-heart"></i>
-              <span>Wishlist</span>
-            </button>
-          </div>
-
-          <p class="text-xs max-w-xs"><?= nl2br(htmlspecialchars($produk['deskripsi'])) ?></p>
-        </div>
-      </div>
-
-
-      <!-- Product card 1 -->
-      <?php
-      // Perbaiki path include sesuai struktur folder kamu
-      include __DIR__ . '/../db_connection.php';
-
-      // Cek koneksi
-      if (!$conn) {
-        die("Connection failed: " . mysqli_connect_error());
-      }
-
-      // Ambil data produk
-      $query = "SELECT * FROM produk";
-      $result = $conn->query($query);
-
-      $products = [];
-      if ($result) {
-        while ($row = $result->fetch_assoc()) {
-          $products[] = $row;
-        }
-      } else {
-        echo "Error: " . $conn->error;
-      }
-      ?>
-
-      <div class="container" id="product-list">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
-          <?php foreach ($products as $product): ?>
-            <div class="relative w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-              <!-- Icon Love (favorite) -->
-              <form method="POST" action="favorite.php" class="absolute top-3 right-3">
-                <input type="hidden" name="produk_id" value="<?= htmlspecialchars($product['produk_id']) ?>">
-                <button type="submit" class="text-gray-500 hover:text-red-500">
-                  <i data-feather="heart" class="w-5 h-5"></i>
-                </button>
-              </form>
-
-              <a href="detail.php?id=<?= htmlspecialchars($product['produk_id']) ?>">
-                <img class="p-6 rounded-t-lg mx-auto max-h-48 object-contain" src="uploads/<?= htmlspecialchars($product['foto_url']) ?>" alt="<?= htmlspecialchars($product['nama_produk']) ?>" />
-              </a>
-
-              <div class="px-5 pb-5">
-                <a href="detail.php?id=<?= htmlspecialchars($product['produk_id']) ?>">
-                  <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"><?= htmlspecialchars($product['nama_produk']) ?></h5>
-                </a>
-                <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-2"><?= htmlspecialchars($product['deskripsi']) ?></p>
-
-                <div class="flex items-center justify-between mt-4 mb-3">
-                  <span class="text-2xl font-bold text-gray-900 dark:text-white">Rp<?= number_format($product['harga'], 0, ',', '.') ?></span>
-                  <a href="add_to_cart.php?id=<?= htmlspecialchars($product['produk_id']) ?>" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:focus:ring-blue-800">
-                    Add to Cart
-                  </a>
-                </div>
-
-                <a href="checkout.php?id=<?= htmlspecialchars($product['produk_id']) ?>" class="block w-full text-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:focus:ring-green-800">
-                  Checkout Sekarang
-                </a>
-              </div>
+                <?php foreach ($gambarLain as $gambar): ?>
+                    <img src="../uploads/<?= htmlspecialchars($gambar) ?>"
+                        class="thumbnail rounded-lg shadow-md"
+                        onclick="changeImage(this)" alt="Thumbnail Detail" />
+                <?php endforeach; ?>
             </div>
-          <?php endforeach; ?>
         </div>
-      </div>
 
+        <!-- Informasi Produk -->
+        <div>
+            <h2 class="text-4xl font-bold mb-2"><?= htmlspecialchars($product_name) ?></h2>
 
-    </section>
-  </main>
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+            <p class="text-lg text-gray-700 mb-1"><strong>Kondisi:</strong> <?= htmlspecialchars($kondisi) ?></p>
 
+            <p class="text-3xl font-bold text-red-500 mb-4">Rp <?= number_format($price, 0, ',', '.') ?></p>
 
-  <script src="https://unpkg.com/feather-icons"></script>
-  <script>
-    feather.replace();
-  </script>
+            <!-- Pilihan Warna -->
+            <div class="mb-4">
+                <label for="colorSelect" class="block font-semibold mb-1">Warna:</label>
+                <select id="colorSelect" name="color" required
+                    class="w-48 border border-gray-300 rounded px-3 py-2">
+                    <option value="">-- Pilih Warna --</option>
+                    <?php foreach ($color_stock as $color => $stok): ?>
+                        <option value="<?= htmlspecialchars($color) ?>" <?= ($stok <= 0) ? 'disabled' : '' ?>>
+                            <?= htmlspecialchars($color) ?> (Stok: <?= intval($stok) ?>)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- Pilihan Ukuran -->
+            <div class="mb-4">
+                <label for="sizeSelect" class="block font-semibold mb-1">Ukuran:</label>
+                <select id="sizeSelect" name="size" required
+                    class="w-48 border border-gray-300 rounded px-3 py-2">
+                    <option value="">-- Pilih Ukuran --</option>
+                    <?php foreach ($size_stock as $size => $stok): ?>
+                        <option value="<?= htmlspecialchars($size) ?>" <?= ($stok <= 0) ? 'disabled' : '' ?>>
+                            <?= htmlspecialchars($size) ?> (Stok: <?= intval($stok) ?>)
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- Stok Keseluruhan dan Quantity -->
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-1">Stok: <span id="stock"><?= $stock ?></span></label>
+                <input type="number" id="quantity" name="quantity" min="1" max="<?= $stock ?>" value="1"
+                    class="w-24 border px-2 py-1 rounded-md" />
+            </div>
+
+            <!-- Form Tambah ke Keranjang -->
+            <form action="cart.php" method="post" class="mt-4" id="addToCartForm">
+                <input type="hidden" name="produk_id" value="<?= $produk_id ?>">
+                <input type="hidden" name="nama_produk" value="<?= htmlspecialchars($product_name) ?>">
+                <input type="hidden" name="harga" value="<?= $price ?>">
+                <input type="hidden" name="size" id="sizeInput" required>
+                <input type="hidden" name="color" id="colorInput" required>
+                <input type="hidden" name="quantity" id="hiddenQuantity" value="1" required>
+                <button type="submit"
+                    class="mt-4 bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition">
+                    Add to Cart
+                </button>
+            </form>
+
+            <!-- Deskripsi Produk -->
+            <div class="mt-8">
+                <h3 class="text-2xl font-semibold mb-2">Deskripsi Produk</h3>
+                <p class="text-gray-700 leading-relaxed"><?= nl2br(htmlspecialchars($deskripsi)) ?></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white mt-12">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="py-8">
+                <h3 class="text-lg font-semibold mb-4">About Us</h3>
+                <p class="text-gray-400">We are a leading sportswear brand committed to providing high-quality
+                    products
+                    for athletes and fitness enthusiasts.</p>
+                <div class="mt-4">
+                    <a class="text-gray-400 hover:text-white" href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-twitter"></i></a>
+                    <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-instagram"></i></a>
+                    <a class="ml-4 text-gray-400 hover:text-white" href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="py-8">
+                <h3 class="text-lg font-semibold mb-4">Customer Service</h3>
+                <ul class="text-gray-400">
+                    <li class="mb-2"><a class="hover:text-white" href="#">Contact Us</a></li>
+                    <li class="mb-2"><a class="hover:text-white" href="#">Order Tracking</a></li>
+                    <li class="mb-2"><a class="hover:text-white" href="#">Returns & Exchanges</a></li>
+                    <li class="mb-2"><a class="hover:text-white" href="#">Shipping & Delivery</a></li>
+                    <li class="mb-2"><a class="hover:text-white" href="#">FAQs</a></li>
+                </ul>
+            </div>
+            <div class="py-8">
+                <h3 class="text-lg font-semibold mb-4">Newsletter</h3>
+                <p class="text-gray-400">Subscribe to get the latest information on new products and upcoming sales.
+                </p>
+                <form class="mt-4">
+                    <input class="w-full p-2 rounded-lg text-gray-900" placeholder="Enter your email" type="email" />
+                    <button class="mt-2 w-full bg-red-600 p-2 rounded-lg hover:bg-red-700"
+                        type="submit">Subscribe</button>
+                </form>
+            </div>
+            <div class="mt-8 text-center text-gray-400">
+                <p>©️ 2023 Movr. All rights reserved.</p>
+            </div>
+    </footer>
+
+    <script>
+        function changeImage(element) {
+            document.getElementById('gambarUtama').src = element.src;
+            document.querySelectorAll('.thumbnail').forEach(img => img.classList.remove('active'));
+            element.classList.add('active');
+        }
+
+        const form = document.getElementById('addToCartForm');
+        const sizeSelect = document.getElementById('sizeSelect');
+        const colorSelect = document.getElementById('colorSelect');
+        const sizeInput = document.getElementById('sizeInput');
+        const colorInput = document.getElementById('colorInput');
+        const quantityInput = document.getElementById('quantity');
+        const hiddenQuantity = document.getElementById('hiddenQuantity');
+
+        sizeSelect.addEventListener('change', () => {
+            sizeInput.value = sizeSelect.value;
+        });
+        colorSelect.addEventListener('change', () => {
+            colorInput.value = colorSelect.value;
+        });
+        quantityInput.addEventListener('input', () => {
+            hiddenQuantity.value = quantityInput.value;
+        });
+
+        form.addEventListener('submit', e => {
+            if (!sizeInput.value || !colorInput.value || !hiddenQuantity.value) {
+                e.preventDefault();
+                alert('Mohon pilih warna, ukuran, dan jumlah sebelum menambahkan ke keranjang.');
+            }
+        });
+    </script>
+
 </body>
 
 </html>

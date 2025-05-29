@@ -1,7 +1,7 @@
 <?php
 session_start();
-include 'db_connection.php';
-include "view/header.php";
+include '../db_connection.php';
+include "../view/header.php";
 
 if (!isset($_SESSION['id'])) {
     die("Silakan login terlebih dahulu.");
@@ -45,7 +45,7 @@ $result = $stmt->get_result();
     ?>
     <article class="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition duration-200 cursor-pointer" onclick="location.href='detail.php?id=<?= $row['produk_id'] ?>'">
   <div class="flex items-center space-x-4">
-    <img alt="<?= htmlspecialchars($row['nama_produk']) ?>" class="w-16 h-16 object-cover rounded flex-shrink-0" src="uploads/<?= htmlspecialchars($row['foto_url']) ?>" />
+    <img alt="<?= htmlspecialchars($row['nama_produk']) ?>" class="w-16 h-16 object-cover rounded flex-shrink-0" src="../uploads/<?= htmlspecialchars($row['foto_url']) ?>" />
     <div>
       <h3 class="font-semibold text-sm text-gray-900">
         <?= htmlspecialchars($row['nama_produk']) ?>

@@ -87,12 +87,12 @@ while ($row = $result->fetch_assoc()) {
               </form>
 
 
-              <a href="detail.php?id=<?= $product['produk_id'] ?>">
+              <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
                 <img class="p-6 rounded-t-lg mx-auto max-h-48 object-contain" src="uploads/<?= $product['foto_url'] ?>" alt="<?= $product['nama_produk'] ?>" />
               </a>
 
               <div class="px-5 pb-5">
-                <a href="detail.php?id=<?= $product['produk_id'] ?>">
+                <a href="pages/detail.php?id=<?= $product['produk_id'] ?>">
                   <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white"><?= $product['nama_produk'] ?></h5>
                 </a>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 mb-2 truncate whitespace-nowrap overflow-hidden"><?= $product['deskripsi'] ?></p>
