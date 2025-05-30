@@ -1,7 +1,7 @@
 
  
 
-<h1>Dashboard</h1>
+<!-- <h1>Dashboard</h1>
 
 <div class="cards">
     <div class="card bg-red">
@@ -16,4 +16,4 @@
         <h3><span class="icon">⏳</span>Pembayaran Pending</h3>
         <p><?= $pending_pembayaran ?></p>
     </div>
-</div>
+</div> -->

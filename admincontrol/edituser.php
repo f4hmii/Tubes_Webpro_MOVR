@@ -3,6 +3,34 @@ include '../db_connection.php';
 $id = intval($_GET['pengguna_id']);
 $data = $conn->query("SELECT * FROM pengguna WHERE pengguna_id=$id")->fetch_assoc();
 ?>
+<?php
+if (isset($_POST['update'])) {
+    $username      = $_POST['username'];
+    $nama_pengguna = $_POST['nama_pengguna'];
+    $email         = $_POST['email'];
+    $telepon       = $_POST['telepon'];
+    $alamat        = $_POST['alamat'];
+    $role          = $_POST['role'];
+
+    $query = "UPDATE pengguna SET 
+        username='$username',
+        nama_pengguna='$nama_pengguna',
+        email='$email',
+        nomor_telepon='$telepon',
+        alamat='$alamat',
+        role='$role'
+        WHERE pengguna_id=$id";
+
+    $result = $conn->query($query);
+
+    if ($result) {
+        header("Location: dashbord_admin.php#kelola_user");
+        exit;
+    } else {
+        echo "<div class='alert alert-danger'>Gagal update: " . $conn->error . "</div>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,35 +69,9 @@ $data = $conn->query("SELECT * FROM pengguna WHERE pengguna_id=$id")->fetch_asso
         </div>
 
         <button class="btn btn-primary" name="update">Update</button>
-        <a href="../admincontrol/kelola_user.php" class="btn btn-secondary">Kembali</a>
+        <a href="dashbord_admin.php#kelola_user" class="btn btn-secondary">Kembali</a>
     </form>
 
-<?php
-if (isset($_POST['update'])) {
-    $username      = $_POST['username'];
-    $nama_pengguna = $_POST['nama_pengguna'];
-    $email         = $_POST['email'];
-    $telepon       = $_POST['telepon'];
-    $alamat        = $_POST['alamat'];
-    $role          = $_POST['role'];
 
-    $query = "UPDATE pengguna SET 
-        username='$username',
-        nama_pengguna='$nama_pengguna',
-        email='$email',
-        nomor_telepon='$telepon',
-        alamat='$alamat',
-        role='$role'
-        WHERE pengguna_id=$id";
-
-    $result = $conn->query($query);
-
-    if ($result) {
-        echo "<script>location.href='../admincontrol/kelola_user.php';</script>";
-    } else {
-        echo "<div class='alert alert-danger'>Gagal update: " . $conn->error . "</div>";
-    }
-}
-?>
 </body>
 </html>

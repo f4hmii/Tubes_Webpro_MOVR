@@ -2,7 +2,6 @@
 session_start();
 include "header.php";
 include '../db_connection.php';
-
 $kategori = isset($_GET['kategori']) ? $_GET['kategori'] : 'semua';
 
 if ($kategori == 'semua') {
