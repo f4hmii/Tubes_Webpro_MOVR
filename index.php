@@ -1,9 +1,12 @@
 <?php
 session_start();
-if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['buyer', 'seller'])) {
-    header('HTTP/1.1 403 Forbidden');
-    echo "Akses ditolak.";
-    exit();
+if (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] === 'admin') {
+        // Kalau admin coba akses index.php, langsung redirect ke dashboard admin
+        header("Location: admincontrol/dashbord_admin.php");
+        exit();
+    }
+    // buyer dan seller tetap bisa lanjut akses index.php
 }
 include "view/header.php";
 include 'db_connection.php';
