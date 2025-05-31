@@ -86,11 +86,6 @@ $result = $query->get_result();
                         </div>
 
                         <div class="flex flex-col gap-2">
-                            <a href="../cart/add_to_cart.php?id=<?= $product['produk_id'] ?>"
-                                class="block w-full text-center text-white bg-black hover:bg-gray-500 font-medium rounded-lg text-sm px-5 py-2.5">
-                                Tambah ke Keranjang
-                            </a>
-
                             <form action="delete_favorite.php" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini dari favorit?');">
                                 <input type="hidden" name="produk_id" value="<?= $product['produk_id'] ?>">
                                 <button type="submit"

@@ -1,12 +1,12 @@
 <?php
 session_start();
 if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] === 'admin') {
-        // Kalau admin coba akses index.php, langsung redirect ke dashboard admin
-        header("Location: admincontrol/dashbord_admin.php");
-        exit();
-    }
-    // buyer dan seller tetap bisa lanjut akses index.php
+  if ($_SESSION['role'] === 'admin') {
+    // Kalau admin coba akses index.php, langsung redirect ke dashboard admin
+    header("Location: admincontrol/dashbord_admin.php");
+    exit();
+  }
+  // buyer dan seller tetap bisa lanjut akses index.php
 }
 include "view/header.php";
 include 'db_connection.php';
@@ -117,9 +117,6 @@ while ($row = $result->fetch_assoc()) {
                     <input type="hidden" name="color" value="default_color_here">
                     <input type="hidden" name="size" value="default_size_here">
                     <input type="hidden" name="quantity" value="1">
-                    <button type="submit" class="text-white bg-black hover:bg-gray-700 px-4 py-2 rounded">
-                      Add to Cart
-                    </button>
                   </form>
 
                 </div>
