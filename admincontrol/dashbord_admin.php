@@ -5,17 +5,17 @@ session_start();
 //     echo "Akses ditolak.";
 //     exit();
 // }
-if (isset($_SESSION['role'])) {
-    if ($_SESSION['role'] === 'admin') {
-        // Kalau admin coba akses index.php, langsung redirect ke dashboard admin
-        header("Location: admincontrol/dashbord_admin.php");
-        exit();
-    }
-    // buyer dan seller tetap bisa lanjut akses index.php
-}
+// if (isset($_SESSION['role'])) {
+//     if ($_SESSION['role'] === 'admin') {
+//         // Kalau admin coba akses index.php, langsung redirect ke dashboard admin
+//         header("Location: admincontrol/dashbord_admin.php");
+//         exit();
+//     }
+//     // buyer dan seller tetap bisa lanjut akses index.php
+// }
 // Kalau belum login (session role belum ada), tetap boleh akses index.php (public)
-include "view/header.php";
-include 'db_connection.php';
+include "../view/header.php";
+include '../db_connection.php';
 
 
 
