@@ -74,12 +74,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
       <a href="pages/chet.php" title="Chet" style="margin-right: 10px;">
         <i data-feather="message-circle"></i>
       </a>
-
-
-      <a href="/pages/cart.php" title="Keranjang" style="margin-right: 10px;">
-=======
       <a href="http://localhost/TUBES_WEBPRO_MOVR/pages/cart.php" title="Keranjang" style="margin-right: 10px;">
->>>>>>> 497d3b01ac6fdbe8c3643ad917015a648a48d583
         <i data-feather="shopping-cart"></i>
       </a>
 

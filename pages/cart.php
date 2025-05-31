@@ -80,7 +80,7 @@ $result = $stmt->get_result();
       </div>
 
       <div class="flex justify-end p-6">
-        <form action="../checkout.php" method="post" class="w-full max-w-xs">
+        <form action="checkout.php" method="post" class="w-full max-w-xs">
           <button type="submit" class="w-full bg-gray-900 text-white font-semibold text-sm px-6 py-3 rounded hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600 transition">
             Checkout Sekarang
           </button>
