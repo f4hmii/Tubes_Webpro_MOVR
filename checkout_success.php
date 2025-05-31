@@ -1,5 +1,5 @@
 <?php
-include "view/header.php";
+include "../view/header.php";
 $transaksi_id = $_GET['transaksi_id'] ?? 0;
 ?>
 

@@ -51,14 +51,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
     }
 
     // 3. Kosongkan cart
-    $stmtClearCart = $conn->prepare("DELETE FROM cart WHERE pengguna_id = ?");
-    if ($stmtClearCart) {
-        $stmtClearCart->bind_param("i", $pengguna_id);
-        $stmtClearCart->execute();
-        $stmtClearCart->close();
-    } else {
-        die("Gagal menghapus keranjang: " . $conn->error);
+    $query = "
+    SELECT c.*, p.nama_produk, p.foto_url 
+    FROM cart c 
+    JOIN produk p ON c.produk_id = p.produk_id 
+    WHERE c.pengguna_id = ?
+";
+    $stmt = $conn->prepare($query);
+    if (!$stmt) {
+        die("Prepare failed: " . $conn->error);
     }
+
+    $stmt->bind_param("i", $pengguna_id);
+    if (!$stmt->execute()) {
+        die("Execute failed: " . $stmt->error);
+    }
+
+    $result = $stmt->get_result();
 
 
     // Redirect ke halaman sukses atau nota
