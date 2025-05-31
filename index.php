@@ -13,8 +13,8 @@ include 'db_connection.php';
 
 
 
-// Ambil data dari tabel produk
-$query = "SELECT * FROM produk";
+// Ambil data dari tabel produk yang sudah diverifikasi oleh admin
+$query = "SELECT * FROM produk WHERE verified = 1";
 $result = $conn->query($query);
 
 // Gabungkan produk dengan ukuran (size)
@@ -22,6 +22,7 @@ $products = [];
 while ($row = $result->fetch_assoc()) {
   $products[] = $row;
 }
+
 ?>
 
 <html>
