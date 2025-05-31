@@ -4,14 +4,14 @@ include '../db_connection.php';
 // Proses update status (GET)
 if (isset($_GET['update_status'])) {
     $id = intval($_GET['pembayaran_id']);
-    $status = $_GET['status_pembayaran'];
+    $status = $_GET['status'];
 
-    $allowed_status = ['pending', 'confirmed', 'rejected'];
+    $allowed_status = ['Pending', 'Approved', 'Rejected'];
     if (!in_array($status, $allowed_status)) {
         die("Status tidak valid!");
-    }   
+    }
 
-    $stmt = $conn->prepare("UPDATE pembayaran SET status_pembayaran=? WHERE pembayaran_id=?");
+    $stmt = $conn->prepare("UPDATE pembayaran SET status=? WHERE pembayaran_id=?");
     if (!$stmt) {
         die("Prepare failed: " . $conn->error);
     }
@@ -83,21 +83,20 @@ if (!$result) {
                         <td><?= htmlspecialchars($row['tanggal_pembayaran']) ?></td>
                         <td>
                             <span class="badge bg-<?= 
-                                $row['status_pembayaran'] == 'confirmed' ? 'success' : 
-                                ($row['status_pembayaran'] == 'rejected' ? 'danger' : 'secondary') ?>">
-                                <?= htmlspecialchars(ucfirst($row['status_pembayaran'])) ?>
+                                $row['status'] == 'Approved' ? 'success' : 
+                                ($row['status'] == 'Rejected' ? 'danger' : 'secondary') ?>">
+                                <?= htmlspecialchars($row['status']) ?>
                             </span>
                         </td>
                         <td>
                            <form method="get" action="kelola_pembayaran.php" class="d-flex align-items-center gap-2">
                             <input type="hidden" name="update_status" value="1" />
                             <input type="hidden" name="pembayaran_id" value="<?= intval($row['pembayaran_id']) ?>" />
-                            <select name="status_pembayaran" class="form-select form-select-sm" required>
-                                <option value="pending" <?= $row['status_pembayaran'] == 'pending' ? 'selected' : '' ?>>Pending</option>
-                                <option value="confirmed" <?= $row['status_pembayaran'] == 'confirmed' ? 'selected' : '' ?>>Confirmed</option>
-                                <option value="rejected" <?= $row['status_pembayaran'] == 'rejected' ? 'selected' : '' ?>>Rejected</option>
+                            <select name="status" class="form-select form-select-sm" required>
+                                <option value="Pending" <?= $row['status'] == 'Pending' ? 'selected' : '' ?>>Pending</option>
+                                <option value="Approved" <?= $row['status'] == 'Approved' ? 'selected' : '' ?>>Approved</option>
+                                <option value="Rejected" <?= $row['status'] == 'Rejected' ? 'selected' : '' ?>>Rejected</option>
                             </select>
-
                             <button type="submit" class="btn btn-sm btn-primary">Update</button>
                         </form>
                         </td>
