@@ -85,11 +85,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
 
         <?php if ($checkoutSukses): ?>
             <!-- Pesan Checkout Berhasil -->
-            <div class="text-center text-green-600">
+            <div class="text-center text-black">
                 <h3 class="text-2xl font-semibold mb-4">Checkout Berhasil!</h3>
                 <p>Terima kasih telah melakukan pembelian.</p>
                 <p class="mt-2">Nomor Transaksi: <strong>#<?= htmlspecialchars($transaksi_id) ?></strong></p>
-                <a href="index.php" class="inline-block mt-6 px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-700">Kembali ke Beranda</a>
+                <a href="../index.php" class="inline-block mt-6 px-4 py-2 bg-gray-900 text-white rounded hover:bg-gray-700">Kembali ke Beranda</a>
             </div>
         <?php elseif (count($items) > 0): ?>
             <!-- Form Checkout -->
