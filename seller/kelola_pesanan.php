@@ -19,7 +19,7 @@ $query = $conn->prepare("
         t.tanggal,
         t.alamat_pengiriman,
         t.metode_pembayaran,
-        t.status_transaksi,
+        t.status_pembayaran,
         p.nama_pengguna AS buyer_name,
         GROUP_CONCAT(CONCAT(prod.nama_produk, ' (', td.quantity, 'x) - Ukuran: ', td.ukuran, ', Warna: ', td.warna, ' @ Rp', FORMAT(td.harga, 0, 'id_ID')) SEPARATOR '|||') AS products_list,
         GROUP_CONCAT(prod.foto_url SEPARATOR '|||') AS product_photos
@@ -33,9 +33,9 @@ $query = $conn->prepare("
         produk prod ON td.produk_id = prod.produk_id
     WHERE
         prod.seller_id = ?
-        AND t.status_transaksi IN ('paid') -- Hanya yang sudah dibayar dan siap diproses
+        AND t.status_pembayaran IN ('paid') -- Hanya yang sudah dibayar dan siap diproses
     GROUP BY
-        t.transaksi_id, t.total_harga, t.tanggal, t.alamat_pengiriman, t.metode_pembayaran, t.status_transaksi, p.nama_pengguna
+        t.transaksi_id, t.total_harga, t.tanggal, t.alamat_pengiriman, t.metode_pembayaran, t.status_pembayaran, p.nama_pengguna
     ORDER BY
         t.tanggal DESC
 ");

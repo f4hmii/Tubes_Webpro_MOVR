@@ -35,8 +35,8 @@ if ($role === 'seller') {
         JOIN transaksi_detail td ON t.transaksi_id = td.transaksi_id
         JOIN produk p ON td.produk_id = p.produk_id
         WHERE p.seller_id = ?
-          AND t.status_transaksi IN ('paid', 'pending') -- Ganti 'pending' jika Anda menambahkan 'pending' di enum
-          AND t.status_transaksi NOT IN ('shipped', 'completed', 'cancelled')
+          AND t.status_pembayaran IN ('dibayar', 'belum') 
+          AND t.status_pembayaran NOT IN ('shipped', 'completed', 'cancelled')
     ");
     $stmt_orders_to_process->bind_param("i", $pengguna_id);
     $stmt_orders_to_process->execute();
@@ -55,7 +55,7 @@ if ($role === 'seller') {
         FROM transaksi t
         JOIN transaksi_detail td ON t.transaksi_id = td.transaksi_id
         JOIN produk p ON td.produk_id = p.produk_id
-        WHERE p.seller_id = ? AND t.status_transaksi = 'paid'
+        WHERE p.seller_id = ? AND t.status_pembayaran = 'dibayar'
     ");
     $stmt_products_paid->bind_param("i", $pengguna_id);
     $stmt_products_paid->execute();
