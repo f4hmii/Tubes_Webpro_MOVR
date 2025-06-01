@@ -71,7 +71,7 @@ $result = $stmt->get_result();
         </article>
       <?php endwhile; ?>
 
-      <!-- Total belanja keseluruhan di luar loop produk -->
+      <!-- Total belanja keseluruhan -->
       <div class="flex items-center justify-between px-6 py-3 border-t border-gray-200">
         <div class="text-gray-900 font-semibold text-lg">Total Belanja:</div>
         <div class="text-gray-900 font-bold text-lg" id="grandTotal">

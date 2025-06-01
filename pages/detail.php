@@ -25,12 +25,12 @@ if (!$product) {
 // Assign data produk
 $product_name = $product['nama_produk'];
 $price = $product['harga'];
-$stock = $product['stock'];  // stok keseluruhan terbaru
+$stock = $product['stock'];
 $deskripsi = $product['deskripsi'];
 $gambarUtama = $product['foto_url'];
 $kondisi = $product['kondisi'] ?? '';
 
-// Decode stok warna dan ukuran JSON dari database (stok terbaru)
+// stok warna dan ukuran dari database (stok terbaru)
 $color_stock = json_decode($product['color_stock'], true) ?: [];
 $size_stock = json_decode($product['size_stock'], true) ?: [];
 

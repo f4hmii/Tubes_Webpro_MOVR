@@ -32,7 +32,7 @@ if ($result->num_rows > 0) {
     exit;
   }
 
-  // Tangani aksi jadikan default
+  //  jadikan default
   if (isset($_GET['set_default'])) {
     $id_alamat = intval($_GET['set_default']);
     $conn->query("UPDATE alamat_pengiriman SET is_default = 0 WHERE pengguna_id = $pengguna_id");
@@ -41,7 +41,7 @@ if ($result->num_rows > 0) {
     exit;
   }
 
-  // Tangani aksi edit alamat (saat submit form edit alamat)
+  //  edit alamat 
   if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['edit_alamat_id'])) {
     $id_edit = intval($_POST['edit_alamat_id']);
     $alamat_baru = trim($_POST['alamat_edit']);

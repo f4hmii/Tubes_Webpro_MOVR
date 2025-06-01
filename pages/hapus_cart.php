@@ -20,6 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
     }
 }
-// Setelah hapus, redirect kembali ke halaman cart
+
 header("Location: cart.php");
 exit;
