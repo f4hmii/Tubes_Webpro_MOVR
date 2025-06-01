@@ -88,6 +88,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
     }
 
     if (!isset($error)) {
+
+    // fairuz tambah produk bukti pembayaran
+        $upload_dir = "../uploads/";
+        $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
+
+        // Upload bukti pembayaran
+        $gambar     = $_FILES['bukti_pembayaran']['name'];
+        $tmp_name   = $_FILES['bukti_pembayaran']['tmp_name'];
+        $file_ext   = strtolower(pathinfo($gambar, PATHINFO_EXTENSION));
+        $new_filename = '';
+
+        if (in_array($file_ext, $allowed_ext)) {
+            $new_filename = "bukti_pembayaran_". time() . '_' . uniqid() . '.' . $file_ext;
+            $target_file = $upload_dir . $new_filename;
+            if (!move_uploaded_file($tmp_name, $target_file)) {
+                echo "<div class='alert alert-danger'>Gagal mengupload bukti pembayaran.</div>";
+                exit;
+            }
+        } else {
+            echo $gambar;
+            echo $tmp_name;
+            var_dump($allowed_ext);  
+            echo "<div class='alert alert-warning'>Format bukti pembayaran tidak diizinkan.</div>";
+            exit;
+        }
+    // selesai fairuz
+
         $conn->begin_transaction();
         try {
             $stmtInsertTransaksi = $conn->prepare("INSERT INTO transaksi (pengguna_id, alamat_pengiriman, metode_pembayaran, total_harga, tanggal) VALUES (?, ?, ?, ?, NOW())");
@@ -100,6 +127,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                 $stmtInsertDetail->bind_param("iiid", $transaksi_id, $item['produk_id'], $item['quantity'], $item['harga']);
                 if (!$stmtInsertDetail->execute()) throw new Exception("Gagal menyimpan detail transaksi.");
             }
+
+            //proses insert bukti pembayaran fairuz
+            $stmtInsertPembayaran = $conn->prepare("INSERT INTO pembayaran (pesanan_id, metode_pembayaran, tanggal_pembayaran, jumlah_pembayaran, status_pembayaran, bukti_pembayaran) VALUES (?, ?,NOW(),?,?, ?)");
+            $stmtInsertPembayaran->bind_param("issd", $transaksi_id, 1, $totalHarga, "pending", $new_filename);
+            if (!$stmtInsertPembayaran->execute()) throw new Exception("Gagal menyimpan pembayaran.");
+            $pembayaran_id =  $stmtInsertPembayaran->insert_id;
 
             $stmtClearCart = $conn->prepare("DELETE FROM cart WHERE pengguna_id = ?");
             $stmtClearCart->bind_param("i", $pengguna_id);
@@ -139,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                 <a href="../index.php" class="mt-4 inline-block px-4 py-2 bg-black text-white rounded hover:bg-gray-700">Kembali ke Beranda</a>
             </div>
         <?php elseif (count($items) > 0): ?>
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
                 <div class="mb-4">
                     <label class="block font-medium mb-2">Alamat Pengiriman</label>
 
@@ -199,6 +232,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                     </select>
                 </div>
 
+                 <!-- fairuz -->
+                 <div id="bukti_pembayaran" class="mb-4">
+                    <label class="block font-medium mb-2">Bukti Pembayaran</label>
+                    <input type="file" name="bukti_pembayaran" class="form-control block w-full text-medium text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:placeholder-gray-400" required >
+                </div>
+                <!-- selesai -->
+                
                 <?php foreach ($items as $item): ?>
                     <div class="flex justify-between items-center py-3 border-b">
                         <div class="flex items-center gap-4">
