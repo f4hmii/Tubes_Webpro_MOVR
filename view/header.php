@@ -23,7 +23,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
     </div>
 
     <ul>
-      <li><a href="../index.php">Home</a></li>
+      <li><a href="http://localhost/TUBES_WEBPRO_MOVR/">Home</a></li>
       <li><a href="aboutfairuz.html">About</a></li>
       <li><a href="../index.php">Produk</a></li>
       <li><a href="announcement.html">Announcement</a></li>
@@ -70,7 +70,7 @@ $role = isset($_SESSION['role']) ? $_SESSION['role'] : null;
       <a href="pages/chet.php" title="Chet" style="margin-right: 10px;">
         <i data-feather="message-circle"></i>
       </a>
-      <a href="pages/cart.php" title="Keranjang" style="margin-right: 10px;">
+      <a href="http://localhost/TUBES_WEBPRO_MOVR/pages/cart.php" title="Keranjang" style="margin-right: 10px;">
         <i data-feather="shopping-cart"></i>
       </a>
 

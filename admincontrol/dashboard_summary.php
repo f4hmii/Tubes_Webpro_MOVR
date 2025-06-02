@@ -39,10 +39,6 @@
         .sidebar a.active {
             background-color: rgb(80, 81, 82);
         }
-        .main {
-            margin-left: 240px;
-            padding: 30px;
-        }
         .cards {
             display: flex;
             gap: 20px;
@@ -77,7 +73,6 @@
 
 <!-- Sidebar -->
 <?php
-include 'sidebar.php';
 include '../db_connection.php';
 
 // Ambil data summary dari database
@@ -99,7 +94,7 @@ if (!$result) {
 ?>
 
 <!-- Main Content -->
-<div class="main">
+<div class="main-dashboard">
     <h1>Dashboard</h1>
 
 <div class="cards">
@@ -128,50 +123,61 @@ if (!$result) {
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     const links = document.querySelectorAll(".sidebar-link");
-    const mainContent = document.querySelector(".main");
+    const mainContent = document.querySelector(".main-dashboard");
 
-    // Fungsi untuk klik menu berdasarkan hash
+    // Fungsi memuat halaman via AJAX
+    function loadPage(page, updateHash = true) {
+        console.log("Memuat halaman:", page);
+
+        fetch(page)
+            .then(response => {
+                if (!response.ok) throw new Error("Gagal memuat halaman");
+                return response.text();
+            })
+            .then(html => {
+                mainContent.innerHTML = html;
+                if (updateHash && page !== "dashbord_admin.php") {
+                    window.location.hash = page.replace('.php', '');
+                } else if (!updateHash || page === "dashbord_admin.php") {
+                    history.replaceState(null, '', window.location.pathname); // Hapus hash
+                }
+            })
+            .catch(err => {
+                mainContent.innerHTML = `<p style="color:red;">${err.message}</p>`;
+            });
+    }
+
+    // Fungsi klik berdasarkan hash di URL
     function clickSidebarByHash() {
         const hash = window.location.hash.replace('#', '');
         if (hash) {
-            const target = Array.from(links).find(l => l.getAttribute('data-page').includes(hash));
+            const target = Array.from(links).find(l => {
+                const page = l.getAttribute('data-page')?.replace('.php', '');
+                return page === hash;
+            });
             if (target) target.click();
+        } else {
+            // Default: load dashboard
+            loadPage("dashbord_admin.php", false);
+            links.forEach(l => l.classList.remove("active"));
+            const dashboardLink = Array.from(links).find(l => l.getAttribute('data-page') === 'dashbord_admin.php');
+            if (dashboardLink) dashboardLink.classList.add("active");
         }
     }
 
-    // Event klik sidebar
+    // Event klik menu sidebar
     links.forEach(link => {
         link.addEventListener("click", function (e) {
             e.preventDefault();
 
-            // Hapus semua kelas 'active'
+            // Aktifkan link yang diklik
             links.forEach(l => l.classList.remove("active"));
-
-            // Tambahkan ke yang diklik
             this.classList.add("active");
 
             const page = this.getAttribute("data-page");
-            // if (!page || page === "dashbord_admin.php") {
-            //     // Jika tidak ada halaman yang ditentukan, kembali ke dashboard
-            //     page = "";
-            //     window.location.hash = ""; // Hapus hash dari URL
-            //     return;
-            // }
-            console.log("Memuat halaman:", page);
-            // AJAX request
-            fetch(page)
-                .then(response => {
-                    if (!response.ok) throw new Error("Gagal memuat halaman");
-                    return response.text();
-                })
-                .then(html => {
-                    mainContent.innerHTML = html;
-                    // Update hash di URL
-                    window.location.hash = page.replace('.php', '');
-                })
-                .catch(err => {
-                    mainContent.innerHTML = `<p style="color:red;">${err.message}</p>`;
-                });
+            const isDashboard = page === "dashbord_admin.php";
+
+            loadPage(page, !isDashboard);
         });
     });
 

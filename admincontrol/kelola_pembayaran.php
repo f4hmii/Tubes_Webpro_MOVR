@@ -29,7 +29,20 @@ exit;
 }
 
 // Ambil data pembayaran
-$result = $conn->query("SELECT * FROM pembayaran ORDER BY tanggal_pembayaran DESC");
+$result = $conn->query("SELECT 
+                pembayaran.pembayaran_id,
+                pengguna.nama_pengguna, 
+                pembayaran.jumlah_pembayaran, 
+                metode_pembayaran.nama_bank, 
+                metode_pembayaran.metode,
+                pembayaran.bukti_pembayaran,
+                pembayaran.tanggal_pembayaran,
+                pembayaran.status_pembayaran
+                FROM `pembayaran`
+                INNER JOIN transaksi ON pembayaran.pesanan_id = transaksi.transaksi_id
+                INNER JOIN pengguna ON transaksi.pengguna_id = pengguna.pengguna_id
+                INNER JOIN metode_pembayaran ON pembayaran.metode_pembayaran = metode_pembayaran.id 
+                ORDER BY tanggal_pembayaran DESC");
 if (!$result) {
     die("Query failed: " . $conn->error);
 }
@@ -69,12 +82,12 @@ if (!$result) {
                     <tr>
                         <td><?= $no++ ?></td>
                         <td><?= htmlspecialchars($row['nama_pengguna']) ?></td>
-                        <td>Rp<?= number_format($row['jumlah_pembayaran'], 0, ',', '.') ?></td>
-                        <td><?= htmlspecialchars($row['metode_pembayaran']) ?></td>
+                        <td>Rp <?= number_format($row['jumlah_pembayaran'], 0, ',', '.') ?></td>
+                        <td><?= htmlspecialchars($row['nama_bank']) . ' - ' . htmlspecialchars($row['metode']) ?></td>
                         <td><?= !empty($row['pengiriman']) ? htmlspecialchars($row['pengiriman']) : '-' ?></td>
                         <td>
                             <?php if (!empty($row['bukti_pembayaran'])): ?>
-                                <img src="data:image/jpeg;base64,<?= $bukti_pembayaran; ?>" width="100" height="100" class="img-thumbnail" />
+                                <img src="../uploads/<?= htmlspecialchars($row['bukti_pembayaran']); ?>" width="100" height="100" class="img-thumbnail" />
                             <?php else: ?>
                                 <span class="text-muted">Tidak Ada</span>
                             <?php endif; ?>
@@ -92,11 +105,10 @@ if (!$result) {
                             <input type="hidden" name="update_status" value="1" />
                             <input type="hidden" name="pembayaran_id" value="<?= intval($row['pembayaran_id']) ?>" />
                             <select name="status_pembayaran" class="form-select form-select-sm" required>
-                                <option value="pending" <?= $row['status_pembayaran'] == 'pending' ? 'selected' : '' ?>>Pending</option>
                                 <option value="confirmed" <?= $row['status_pembayaran'] == 'confirmed' ? 'selected' : '' ?>>Confirmed</option>
                                 <option value="rejected" <?= $row['status_pembayaran'] == 'rejected' ? 'selected' : '' ?>>Rejected</option>
                             </select>
-                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                            <button type="submit" class="btn btn-sm btn-primary" <?= strtolower($row['status_pembayaran']) !== 'pending' ? 'disabled' : '' ?>>Update</button>
                         </form>
                         </td>
                     </tr>

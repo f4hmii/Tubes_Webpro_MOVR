@@ -29,6 +29,12 @@ $stmt->bind_param("i", $pengguna_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
+// fairuz
+$stmt= $conn->prepare("SELECT * FROM metode_pembayaran");
+$stmt->execute();
+$resultMetode = $stmt->get_result();
+
+
 // Ambil alamat pengguna dari database
 $stmtAlamat = $conn->prepare("SELECT id, alamat FROM alamat_pengiriman WHERE pengguna_id = ?");
 $stmtAlamat->bind_param("i", $pengguna_id);
@@ -53,7 +59,7 @@ $transaksi_id = 0;
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
     $alamat_option = $_POST['alamat_option'] ?? 'existing';
     $alamat_pengiriman = '';
-    $metode_pembayaran = $_POST['metode_pembayaran'] ?? '';
+    $metode_pembayaran = $_POST['metode_pembayaran'] ?? 0;
 
     if ($alamat_option === 'new') {
         $alamat_baru = trim($_POST['alamat_baru'] ?? '');
@@ -128,11 +134,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                 if (!$stmtInsertDetail->execute()) throw new Exception("Gagal menyimpan detail transaksi.");
             }
 
-            //proses insert bukti pembayaran fairuz
+            // proses insert bukti pembayaran fairuz
+            $status_pembayaran = "pending"; // 1 untuk status pending
             $stmtInsertPembayaran = $conn->prepare("INSERT INTO pembayaran (pesanan_id, metode_pembayaran, tanggal_pembayaran, jumlah_pembayaran, status_pembayaran, bukti_pembayaran) VALUES (?, ?,NOW(),?,?, ?)");
-            $stmtInsertPembayaran->bind_param("issd", $transaksi_id, 1, $totalHarga, "pending", $new_filename);
+            $stmtInsertPembayaran->bind_param("iidss", $transaksi_id, $metode_pembayaran, $totalHarga, $status_pembayaran, $new_filename);
             if (!$stmtInsertPembayaran->execute()) throw new Exception("Gagal menyimpan pembayaran.");
             $pembayaran_id =  $stmtInsertPembayaran->insert_id;
+            // selesai fairuz
 
             $stmtClearCart = $conn->prepare("DELETE FROM cart WHERE pengguna_id = ?");
             $stmtClearCart->bind_param("i", $pengguna_id);
@@ -204,7 +212,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                     <textarea name="alamat_baru" id="alamat_baru" disabled class="w-full border rounded p-2" rows="3"></textarea>
                 </div>
 
-                <div class="mb-4">
+                <!-- <div class="mb-4">
                     <label class="block font-medium mb-2">Metode Pembayaran</label>
                     <select name="metode_pembayaran" id="metode_pembayaran" required class="w-full border rounded p-2" onchange="tampilkanOpsi()">
                         <option value="">Pilih Metode</option>
@@ -212,25 +220,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                         <option value="E-Wallet">E-Wallet</option>
                         <option value="COD">COD (Bayar di Tempat)</option>
                     </select>
+                </div> -->
+                
+                <!-- metode pembayaran fairuz -->
+                 <div class="mb-4">
+                    <label class="block font-medium mb-2">Metode Pembayaran</label>
+                    <select name="metode_pembayaran" id="metode_pembayaran" required class="w-full border rounded p-2" onchange="tampilkanOpsi()">
+                        <option value="">Pilih Metode</option>
+                        <?php while ($rowMetode = $resultMetode->fetch_assoc()): ?>
+                            <option value="<?= htmlspecialchars($rowMetode['id']) ?>"><?= htmlspecialchars($rowMetode['nama_bank']) . ' - ' . htmlspecialchars($rowMetode['metode']) . ' | ' .  htmlspecialchars($rowMetode['no_akun'])?></option>
+                        <?php endwhile; ?>
+                    </select>
                 </div>
+                <!-- selesai -->
 
-                <div id="opsi_transfer" class="mb-4 hidden">
+                <!-- <div id="opsi_transfer" class="mb-4 hidden">
                     <label class="block mb-1">Pilih Bank</label>
                     <select name="opsi_transfer" class="w-full border p-2 rounded">
                         <option value="BCA">BCA</option>
                         <option value="MANDIRI">MANDIRI</option>
                         <option value="BNI">BNI</option>
                     </select>
-                </div>
+                </div> -->
 
-                <div id="opsi_ewallet" class="mb-4 hidden">
+                <!-- <div id="opsi_ewallet" class="mb-4 hidden">
                     <label class="block mb-1">Pilih E-Wallet</label>
                     <select name="opsi_ewallet" class="w-full border p-2 rounded">
                         <option value="DANA">DANA</option>
                         <option value="GOPAY">GOPAY</option>
                         <option value="SHOPEEPAY">SHOPEEPAY</option>
                     </select>
-                </div>
+                </div> -->
 
                  <!-- fairuz -->
                  <div id="bukti_pembayaran" class="mb-4">
