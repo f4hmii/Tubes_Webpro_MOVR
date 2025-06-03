@@ -8,7 +8,7 @@ if (!isset($_SESSION['id'])) {
 }
 $pengguna_id = intval($_SESSION['id']);
 
-// Hapus alamat jika ada request
+// Hapus alamat
 if (isset($_GET['delete_alamat'])) {
     $alamat_id = intval($_GET['delete_alamat']);
     $stmtDelete = $conn->prepare("DELETE FROM alamat_pengiriman WHERE id = ? AND pengguna_id = ?");

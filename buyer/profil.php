@@ -24,7 +24,7 @@ if ($result->num_rows > 0) {
   $user = $result->fetch_assoc();
   $pengguna_id = $user['pengguna_id'];
 
-  // Tangani aksi penghapusan alamat
+  // Tangani penghapusan alamat
   if (isset($_GET['delete'])) {
     $id_alamat = intval($_GET['delete']);
     $conn->query("DELETE FROM alamat_pengiriman WHERE id = $id_alamat AND pengguna_id = $pengguna_id");
