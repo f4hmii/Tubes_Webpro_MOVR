@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
             echo "<div class='alert alert-warning'>Format bukti pembayaran tidak diizinkan.</div>";
             exit;
         }
-    // selesai fairuz
+    // selesai
 
         $conn->begin_transaction();
         try {
@@ -134,13 +134,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                 if (!$stmtInsertDetail->execute()) throw new Exception("Gagal menyimpan detail transaksi.");
             }
 
-            // proses insert bukti pembayaran fairuz
+            // proses insert bukti pembayaran
             $status_pembayaran = "pending"; // 1 untuk status pending
             $stmtInsertPembayaran = $conn->prepare("INSERT INTO pembayaran (pesanan_id, metode_pembayaran, tanggal_pembayaran, jumlah_pembayaran, status_pembayaran, bukti_pembayaran) VALUES (?, ?,NOW(),?,?, ?)");
             $stmtInsertPembayaran->bind_param("iidss", $transaksi_id, $metode_pembayaran, $totalHarga, $status_pembayaran, $new_filename);
             if (!$stmtInsertPembayaran->execute()) throw new Exception("Gagal menyimpan pembayaran.");
             $pembayaran_id =  $stmtInsertPembayaran->insert_id;
-            // selesai fairuz
+            // selesai
 
             $stmtClearCart = $conn->prepare("DELETE FROM cart WHERE pengguna_id = ?");
             $stmtClearCart->bind_param("i", $pengguna_id);
