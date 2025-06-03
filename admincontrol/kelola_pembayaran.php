@@ -66,7 +66,6 @@ if (!$result) {
                     <th>Pembeli</th>
                     <th>Total Harga</th>
                     <th>Metode Pembayaran</th>
-                    <th>Pengiriman</th>
                     <th>Bukti Pembayaran</th>
                     <th>Tanggal Pembayaran</th>
                     <th>Status</th>
@@ -84,7 +83,7 @@ if (!$result) {
                         <td><?= htmlspecialchars($row['nama_pengguna']) ?></td>
                         <td>Rp <?= number_format($row['jumlah_pembayaran'], 0, ',', '.') ?></td>
                         <td><?= htmlspecialchars($row['nama_bank']) . ' - ' . htmlspecialchars($row['metode']) ?></td>
-                        <td><?= !empty($row['pengiriman']) ? htmlspecialchars($row['pengiriman']) : '-' ?></td>
+        
                         <td>
                             <?php if (!empty($row['bukti_pembayaran'])): ?>
                                 <img src="../uploads/<?= htmlspecialchars($row['bukti_pembayaran']); ?>" width="100" height="100" class="img-thumbnail" />

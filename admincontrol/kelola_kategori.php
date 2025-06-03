@@ -65,42 +65,7 @@ $produkResult = $conn->query("
         </ul>
     </div>
 
-    <!-- Daftar Produk -->
-    <h5 class="mb-3">Daftar Produk</h5>
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-            <tr>
-                <th>Nama Produk</th>
-                <th>Deskripsi</th>
-                <th>Stok</th>
-                <th>Harga</th>
-                <th>Kategori</th>
-                <th>Gambar</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($row = $produkResult->fetch_assoc()): ?>
-                <tr>
-                    <td><?= htmlspecialchars($row['nama_produk']) ?></td>
-                    <td><?= htmlspecialchars($row['deskripsi']) ?></td>
-                    <td><?= $row['stock'] ?></td>
-                    <td>Rp <?= number_format($row['harga'], 0, ',', '.') ?></td>
-                    <td><?= $row['nama_kategori'] ?? '<em>Belum Ditentukan</em>' ?></td>
-                    <td>
-                        <?php if ($row['foto_url']): ?>
-                            <img src="../uploads/<?= $row['foto_url'] ?>" width="60" height="60" style="object-fit:cover;">
-                        <?php else: ?>
-                            <span class="text-muted">Tidak Ada</span>
-                        <?php endif; ?>
-                    </td>
-                    <td>
-                        <a href="edit_kategori_produk.php?produk_id=<?= $row['produk_id'] ?>" class="btn btn-sm btn-primary">Edit</a>
-                    </td>
-                </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
+  
 
 </body>
 </html>

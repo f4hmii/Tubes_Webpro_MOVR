@@ -47,7 +47,7 @@ while ($size = $sizes->fetch_assoc()) {
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h4>Detail Produk #<?= $row['produk_id'] ?></h4>
-            <a href="verifikasi_produk.php" class="btn btn-secondary">Kembali</a>
+            <a href="dashbord_admin.php#verifikasi_produk" class="btn btn-secondary">Kembali</a>
         </div>
         <div class="card-body">
             <div class="row">

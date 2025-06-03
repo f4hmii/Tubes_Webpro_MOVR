@@ -24,7 +24,7 @@ $produk = $conn->query("
 ");
 
 if (!$produk || $produk->num_rows == 0) {
-    $_SESSION['error'] = "Produk tidak ditemukan";
+    $_SESSION['error'] = "Produk tidak ditemukan";  
     header("Location: verifikasi_produk.php");
     exit;
 }
@@ -68,6 +68,6 @@ if ($action === 'approve') {
     $_SESSION['error'] = "Aksi tidak valid";
 }
 
-header("Location: verifikasi_produk.php");
+header("Location: dashbord_admin.php#verifikasi_produk");
 exit;
 ?>

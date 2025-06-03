@@ -3,12 +3,14 @@ include '../db_connection.php';
 
 $id = intval($_GET['produk_id']);
 $data = $conn->query("SELECT * FROM produk WHERE produk_id=$id")->fetch_assoc();
+$kategoriList = $conn->query("SELECT * FROM kategori");
 
 if (isset($_POST['update'])) {
     $nama       = $conn->real_escape_string($_POST['nama']);
     $deskripsi  = $conn->real_escape_string($_POST['deskripsi']);
     $stok       = intval($_POST['stok']);
     $harga      = floatval($_POST['harga']);
+    $kategori_id = $_POST['kategori_id'] ?: "NULL";
 
     // Handle upload gambar baru
     if (!empty($_FILES['gambar']['name'])) {
@@ -38,7 +40,8 @@ if (isset($_POST['update'])) {
         deskripsi='$deskripsi', 
         stock=$stok, 
         harga=$harga, 
-        foto_url='$gambar_final' 
+        foto_url='$gambar_final',
+        kategori_id = $kategori_id 
         WHERE produk_id=$id";
 
     if ($conn->query($sql_update)) {
@@ -74,6 +77,19 @@ if (isset($_POST['update'])) {
         <div class="mb-3">
             <label>Harga</label>
             <input type="number" name="harga" value="<?= floatval($data['harga']) ?>" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label>Kategori</label>
+            <select name="kategori_id" class="form-control" required>
+                <option value="">-- Pilih Kategori --</option>
+                <?php
+                $kategoriList->data_seek(0); // reset pointer jika sudah di-fetch sebelumnya
+                while ($kat = $kategoriList->fetch_assoc()): ?>
+                    <option value="<?= $kat['kategori_id'] ?>" <?= $kat['kategori_id'] == $data['kategori_id'] ? 'selected' : '' ?>>
+                        <?= htmlspecialchars($kat['nama_kategori']) ?>
+                    </option>
+                <?php endwhile; ?>
+            </select>
         </div>
         <div class="mb-3">
             <label>Gambar</label><br>
