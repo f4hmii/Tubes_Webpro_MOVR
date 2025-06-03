@@ -212,16 +212,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                     <textarea name="alamat_baru" id="alamat_baru" disabled class="w-full border rounded p-2" rows="3"></textarea>
                 </div>
 
-                <!-- <div class="mb-4">
-                    <label class="block font-medium mb-2">Metode Pembayaran</label>
-                    <select name="metode_pembayaran" id="metode_pembayaran" required class="w-full border rounded p-2" onchange="tampilkanOpsi()">
-                        <option value="">Pilih Metode</option>
-                        <option value="Transfer Bank">Transfer Bank</option>
-                        <option value="E-Wallet">E-Wallet</option>
-                        <option value="COD">COD (Bayar di Tempat)</option>
-                    </select>
-                </div> -->
-
                 <!-- metode pembayaran-->
                 <div class="mb-4">
                     <label class="block font-medium mb-2">Metode Pembayaran</label>
@@ -232,32 +222,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                         <?php endwhile; ?>
                     </select>
                 </div>
-                <!-- selesai -->
+          
 
-                <!-- <div id="opsi_transfer" class="mb-4 hidden">
-                    <label class="block mb-1">Pilih Bank</label>
-                    <select name="opsi_transfer" class="w-full border p-2 rounded">
-                        <option value="BCA">BCA</option>
-                        <option value="MANDIRI">MANDIRI</option>
-                        <option value="BNI">BNI</option>
-                    </select>
-                </div> -->
-
-                <!-- <div id="opsi_ewallet" class="mb-4 hidden">
-                    <label class="block mb-1">Pilih E-Wallet</label>
-                    <select name="opsi_ewallet" class="w-full border p-2 rounded">
-                        <option value="DANA">DANA</option>
-                        <option value="GOPAY">GOPAY</option>
-                        <option value="SHOPEEPAY">SHOPEEPAY</option>
-                    </select>
-                </div> -->
-
-                <!---->
                 <div id="bukti_pembayaran" class="mb-4">
                     <label class="block font-medium mb-2">Bukti Pembayaran</label>
                     <input type="file" name="bukti_pembayaran" class="form-control block w-full text-medium text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:placeholder-gray-400" required>
                 </div>
-                <!-- selesai -->
 
                 <?php foreach ($items as $item): ?>
                     <div class="flex justify-between items-center py-3 border-b">
