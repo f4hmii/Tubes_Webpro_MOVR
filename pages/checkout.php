@@ -29,8 +29,8 @@ $stmt->bind_param("i", $pengguna_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// fairuz
-$stmt= $conn->prepare("SELECT * FROM metode_pembayaran");
+// Ambil daftar metode pembayaran
+$stmt = $conn->prepare("SELECT * FROM metode_pembayaran");
 $stmt->execute();
 $resultMetode = $stmt->get_result();
 
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
 
     if (!isset($error)) {
 
-    // fairuz tambah produk bukti pembayaran
+        //tambah produk bukti pembayaran
         $upload_dir = "../uploads/";
         $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
 
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
         $new_filename = '';
 
         if (in_array($file_ext, $allowed_ext)) {
-            $new_filename = "bukti_pembayaran_". time() . '_' . uniqid() . '.' . $file_ext;
+            $new_filename = "bukti_pembayaran_" . time() . '_' . uniqid() . '.' . $file_ext;
             $target_file = $upload_dir . $new_filename;
             if (!move_uploaded_file($tmp_name, $target_file)) {
                 echo "<div class='alert alert-danger'>Gagal mengupload bukti pembayaran.</div>";
@@ -115,11 +115,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
         } else {
             echo $gambar;
             echo $tmp_name;
-            var_dump($allowed_ext);  
+            var_dump($allowed_ext);
             echo "<div class='alert alert-warning'>Format bukti pembayaran tidak diizinkan.</div>";
             exit;
         }
-    // selesai
+        // selesai
 
         $conn->begin_transaction();
         try {
@@ -221,14 +221,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                         <option value="COD">COD (Bayar di Tempat)</option>
                     </select>
                 </div> -->
-                
-                <!-- metode pembayaran fairuz -->
-                 <div class="mb-4">
+
+                <!-- metode pembayaran-->
+                <div class="mb-4">
                     <label class="block font-medium mb-2">Metode Pembayaran</label>
                     <select name="metode_pembayaran" id="metode_pembayaran" required class="w-full border rounded p-2" onchange="tampilkanOpsi()">
                         <option value="">Pilih Metode</option>
                         <?php while ($rowMetode = $resultMetode->fetch_assoc()): ?>
-                            <option value="<?= htmlspecialchars($rowMetode['id']) ?>"><?= htmlspecialchars($rowMetode['nama_bank']) . ' - ' . htmlspecialchars($rowMetode['metode']) . ' | ' .  htmlspecialchars($rowMetode['no_akun'])?></option>
+                            <option value="<?= htmlspecialchars($rowMetode['id']) ?>"><?= htmlspecialchars($rowMetode['nama_bank']) . ' - ' . htmlspecialchars($rowMetode['metode']) . ' | ' .  htmlspecialchars($rowMetode['no_akun']) ?></option>
                         <?php endwhile; ?>
                     </select>
                 </div>
@@ -252,13 +252,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                     </select>
                 </div> -->
 
-                 <!-- fairuz -->
-                 <div id="bukti_pembayaran" class="mb-4">
+                <!---->
+                <div id="bukti_pembayaran" class="mb-4">
                     <label class="block font-medium mb-2">Bukti Pembayaran</label>
-                    <input type="file" name="bukti_pembayaran" class="form-control block w-full text-medium text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:placeholder-gray-400" required >
+                    <input type="file" name="bukti_pembayaran" class="form-control block w-full text-medium text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:placeholder-gray-400" required>
                 </div>
                 <!-- selesai -->
-                
+
                 <?php foreach ($items as $item): ?>
                     <div class="flex justify-between items-center py-3 border-b">
                         <div class="flex items-center gap-4">
