@@ -58,7 +58,7 @@ $result = mysqli_query($conn, "SELECT
                 <td><?= htmlspecialchars($row['nama_kategori']) ?></td>
                 <td>Rp<?= number_format($row['harga'], 0, ',', '.') ?></td>
                 <td>
-                    <a href="editProduk.php?produk_id=<?= $row['produk_id'] ?>" class="btn btn-warning btn-sm mb-1">Edit</a>
+                    
                     <a href="hapusProduk.php?produk_id=<?= $row['produk_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
                 </td>
             </tr>

@@ -18,14 +18,7 @@ $kategoriList = $conn->query("
     GROUP BY k.kategori_id
 ");
 
-// Ambil semua produk
-$produkResult = $conn->query("
-    SELECT 
-        p.produk_id, p.nama_produk, p.deskripsi, p.stock, p.harga, p.foto_url,
-        k.nama_kategori
-    FROM produk p
-    LEFT JOIN kategori k ON p.kategori_id = k.kategori_id
-");
+
 ?>
 
 <!DOCTYPE html>
