@@ -1,20 +1,9 @@
 <?php
-include '../db_connection.php'; // koneksi ke DB
+include '../db_connection.php';
 
-// Proses update status (kalau kamu pakai fitur ini)
-if (isset($_POST['update_status'])) {
-    $id = intval($_POST['id']);
-    $status = $_POST['status'];
-    $stmt = $conn->prepare("UPDATE pengguna SET status=? WHERE id=?");
-    $stmt->bind_param("si", $status, $id);
-    $stmt->execute();
-    $stmt->close();
-}
-
-// Ambil data pengguna
-$result = mysqli_query($conn, "SELECT * FROM pengguna ORDER BY pengguna_id ASC");
+// Ambil data pengguna dari database
+$result = mysqli_query($conn, "SELECT * FROM pengguna");
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,28 +27,29 @@ $result = mysqli_query($conn, "SELECT * FROM pengguna ORDER BY pengguna_id ASC")
                     <th>Role</th>
                     <th>Action</th>
                 </tr>
-            </thead>
-            <tbody>
-                <?php
-                $no = 1;
-                while ($row = mysqli_fetch_assoc($result)) {
-                ?>
-                    <tr>
-                        <td><?= $no++ ?></td>
-                        <td><?= htmlspecialchars($row['username']) ?></td>
-                        <td><?= htmlspecialchars($row['nama_pengguna']) ?></td>
-                        <td><?= htmlspecialchars($row['email']) ?></td>
-                        <td><?= htmlspecialchars($row['nomor_telepon']) ?></td>
-                        <td><?= htmlspecialchars($row['alamat']) ?></td>
-                        <td><?= htmlspecialchars($row['role']) ?></td>
-                        <td class="d-flex gap-2">
-                            <a href="edituser.php?pengguna_id=<?= $row['pengguna_id'] ?>" class="btn btn-sm btn-warning">Edit</a>
-                            <a href="hapusUser.php?pengguna_id=<?= $row['pengguna_id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakin ingin menghapus?')">Hapus</a>
-                        </td>
-                    </tr>
-                <?php } ?>
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+             </thead>
+<tbody>
+    <?php
+    $no = 1;
+    while ($row = mysqli_fetch_assoc($result)) :
+    ?>
+        <tr class="<?= $row['status_aktif'] == 0 ? 'opacity-50' : '' ?>">
+            <td><?= $no++ ?></td>
+            <td><?= htmlspecialchars($row['username']) ?></td>
+            <td><?= htmlspecialchars($row['nama_pengguna']) ?></td>
+            <td><?= htmlspecialchars($row['email']) ?></td>
+            <td><?= htmlspecialchars($row['nomor_telepon']) ?></td>
+            <td><?= htmlspecialchars($row['alamat']) ?></td>
+            <td><?= htmlspecialchars($row['role']) ?></td>
+            <td class="d-flex gap-2">
+                <a href="edituser.php?pengguna_id=<?= $row['pengguna_id'] ?>" class="btn btn-sm btn-warning">
+                    Edit
+                </a>
+                <?php if ($row['status_aktif'] == 1) : ?>
+                    <a href="nonaktifkanUser.php?pengguna_id=<?= $row['pengguna_id'] ?>" class="btn btn-sm btn-secondary">
+                        Nonaktifkan
+                    </a>
+            </td>
+        </tr>
+    <?php endwhile; ?>
+</tbody>
