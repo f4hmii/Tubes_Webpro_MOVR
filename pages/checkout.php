@@ -61,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
     $alamat_pengiriman = '';
     $metode_pembayaran = $_POST['metode_pembayaran'] ?? 0;
 
-    //simpan 
     if ($alamat_option === 'new') {
         $alamat_baru = trim($_POST['alamat_baru'] ?? '');
         if (empty($alamat_baru)) {
@@ -75,8 +74,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                 $error = "Gagal menyimpan alamat baru.";
             }
         }
-
-        //lama
     } else {
         $alamat_id_terpilih = intval($_POST['alamat_terpilih'] ?? 0);
         $stmtAmbilAlamat = $conn->prepare("SELECT alamat FROM alamat_pengiriman WHERE id = ? AND pengguna_id = ?");
@@ -85,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
         $resAlamatTerpilih = $stmtAmbilAlamat->get_result();
         $rowAlamatTerpilih = $resAlamatTerpilih->fetch_assoc();
 
-        //cek
         if ($rowAlamatTerpilih) {
             $alamat_pengiriman = $rowAlamatTerpilih['alamat'];
         } else {
@@ -139,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
             }
 
             // proses insert bukti pembayaran
-            $status_pembayaran = "pending"; 
+            $status_pembayaran = "pending"; // 1 untuk status pending
             $stmtInsertPembayaran = $conn->prepare("INSERT INTO pembayaran (pesanan_id, metode_pembayaran, tanggal_pembayaran, jumlah_pembayaran, status_pembayaran, bukti_pembayaran) VALUES (?, ?,NOW(),?,?, ?)");
             $stmtInsertPembayaran->bind_param("iidss", $transaksi_id, $metode_pembayaran, $totalHarga, $status_pembayaran, $new_filename);
             if (!$stmtInsertPembayaran->execute()) throw new Exception("Gagal menyimpan pembayaran.");
@@ -226,7 +222,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
                         <?php endwhile; ?>
                     </select>
                 </div>
-
+          
 
                 <div id="bukti_pembayaran" class="mb-4">
                     <label class="block font-medium mb-2">Bukti Pembayaran</label>
