@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($items) > 0) {
             }
 
             // proses insert bukti pembayaran
-            $status_pembayaran = "pending"; // 1 untuk status pending
+            $status_pembayaran = "pending"; 
             $stmtInsertPembayaran = $conn->prepare("INSERT INTO pembayaran (pesanan_id, metode_pembayaran, tanggal_pembayaran, jumlah_pembayaran, status_pembayaran, bukti_pembayaran) VALUES (?, ?,NOW(),?,?, ?)");
             $stmtInsertPembayaran->bind_param("iidss", $transaksi_id, $metode_pembayaran, $totalHarga, $status_pembayaran, $new_filename);
             if (!$stmtInsertPembayaran->execute()) throw new Exception("Gagal menyimpan pembayaran.");
