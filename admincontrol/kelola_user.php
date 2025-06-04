@@ -29,27 +29,38 @@ $result = mysqli_query($conn, "SELECT * FROM pengguna");
                 </tr>
              </thead>
 <tbody>
-    <?php
-    $no = 1;
-    while ($row = mysqli_fetch_assoc($result)) :
-    ?>
-        <tr class="<?= $row['status_aktif'] == 0 ? 'opacity-50' : '' ?>">
-            <td><?= $no++ ?></td>
-            <td><?= htmlspecialchars($row['username']) ?></td>
-            <td><?= htmlspecialchars($row['nama_pengguna']) ?></td>
-            <td><?= htmlspecialchars($row['email']) ?></td>
-            <td><?= htmlspecialchars($row['nomor_telepon']) ?></td>
-            <td><?= htmlspecialchars($row['alamat']) ?></td>
-            <td><?= htmlspecialchars($row['role']) ?></td>
-            <td class="d-flex gap-2">
+<?php
+$no = 1;
+while ($row = mysqli_fetch_assoc($result)) {
+?>
+    <tr class="<?= $row['status_aktif'] == 0 ? 'opacity-50' : '' ?>">
+        <td><?= $no++ ?></td>
+        <td><?= htmlspecialchars($row['username']) ?></td>
+        <td><?= htmlspecialchars($row['nama_pengguna']) ?></td>
+        <td><?= htmlspecialchars($row['email']) ?></td>
+        <td><?= htmlspecialchars($row['nomor_telepon']) ?></td>
+        <td><?= htmlspecialchars($row['alamat']) ?></td>
+        <td><?= htmlspecialchars($row['role']) ?></td>
+        <td class="d-flex gap-2">
+            <?php if ($row['status_aktif'] == 1): ?>
                 <a href="edituser.php?pengguna_id=<?= $row['pengguna_id'] ?>" class="btn btn-sm btn-warning">
                     Edit
                 </a>
-                <?php if ($row['status_aktif'] == 1) : ?>
-                    <a href="nonaktifkanUser.php?pengguna_id=<?= $row['pengguna_id'] ?>" class="btn btn-sm btn-secondary">
-                        Nonaktifkan
-                    </a>
-            </td>
-        </tr>
-    <?php endwhile; ?>
+                <a href="nonaktifkanUser.php?pengguna_id=<?= $row['pengguna_id'] ?>" class="btn btn-sm btn-secondary">
+                    Nonaktifkan
+                </a>
+            <?php else: ?>
+                <a class="btn btn-sm btn-warning disabled" tabindex="-1" aria-disabled="true" style="pointer-events: none;">
+                    Edit
+                </a>
+                <a href="aktifkanUser.php?pengguna_id=<?= $row['pengguna_id'] ?>" class="btn btn-sm btn-success">
+                    Aktifkan
+                </a>
+            <?php endif; ?>
+        </td>
+    </tr>
+<?php
+}
+?>
 </tbody>
+

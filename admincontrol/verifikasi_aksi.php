@@ -49,25 +49,15 @@ if ($action === 'approve') {
         $_SESSION['success'] = "Produk berhasil disetujui dan sekarang sudah muncul di toko online";
     }
 } elseif ($action === 'reject') {
-    if (!$conn->query("DELETE FROM produk WHERE produk_id = $id")) {
-        $_SESSION['error'] = "Gagal menghapus produk: " . $conn->error;
+    $pesan_admin = "Produk tidak sesuai dengan ketentuan.";
+    $updateQuery = "UPDATE produk SET verified = -1, pesan_admin = '{$conn->real_escape_string($pesan_admin)}' WHERE produk_id = $id";
+    if (!$conn->query($updateQuery)) {
+        $_SESSION['error'] = "Gagal menolak produk: " . $conn->error;
     } else {
-        $to = $produk_data['seller_email'];
-        $subject = "Produk Anda Ditolak";
-        $message = "Halo " . $produk_data['seller_name'] . ",\n\n";
-        $message .= "Maaf, produk Anda '" . $produk_data['nama_produk'] . "' tidak memenuhi syarat untuk dijual di toko kami.\n\n";
-        $message .= "Silakan periksa kembali produk Anda atau hubungi admin untuk informasi lebih lanjut.\n\n";
-        $message .= "Terima kasih,\nTim Admin";
-        $headers = "From: admin@tokoonline.com";
-
-        mail($to, $subject, $message, $headers);
-
-        $_SESSION['success'] = "Produk berhasil ditolak dan dihapus dari sistem";
+        // Kirim email ke seller (opsional)
+        $_SESSION['success'] = "Produk berhasil ditolak dan sudah diberi pesan ke seller.";
     }
-} else {
-    $_SESSION['error'] = "Aksi tidak valid";
 }
-
 header("Location: dashbord_admin.php#verifikasi_produk");
 exit;
 ?>

@@ -93,6 +93,16 @@ if ($role === 'buyer') {
     $stmt_buyer_orders->close();
 }
 
+// Ambil produk yang di-reject (verified = -1)
+$produk_rejected = [];
+$stmt = $conn->prepare("SELECT nama_produk, pesan_admin FROM produk WHERE seller_id = ? AND verified = -1");
+$stmt->bind_param("i", $pengguna_id);
+$stmt->execute();
+$result = $stmt->get_result();
+while ($row = $result->fetch_assoc()) {
+    $produk_rejected[] = $row;
+}
+$stmt->close();
 // 7. Wallet (placeholder)
 $wallet_balance = "Rp0";
 
@@ -198,6 +208,33 @@ $wallet_balance = "Rp0";
        <?php endif; ?>
       </p>
      </div>
+
+     <div class="flex flex-col items-center space-y-2">
+    <i class="fas fa-times-circle text-3xl text-red-400"></i>
+    <p class="font-semibold text-red-400">
+        Produk Ditolak (<?= count($produk_rejected) ?>)
+    </p>
+
+        
+    <?php if (count($produk_rejected) > 0): ?>
+        <div class="bg-red-100 rounded p-2 mt-2 w-40 text-xs text-left text-red-700 max-h-32 overflow-y-auto">
+            <ul class="list-disc pl-4">
+                <?php foreach ($produk_rejected as $pr): ?>
+                    <li>
+                        <?= htmlspecialchars($pr['nama_produk']) ?>
+                        <?php if (!empty($pr['pesan_admin'])): ?>
+                            <br>
+                            <span class="italic"><?= htmlspecialchars($pr['pesan_admin']) ?></span>
+                        <?php endif; ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php else: ?>
+        <div class="text-xs text-gray-400 mt-2">Tidak ada produk ditolak</div>
+    <?php endif; ?>
+</div>
+
      <div class="flex flex-col items-center space-y-2">
       <i class="fas fa-wallet text-3xl">
       </i>
